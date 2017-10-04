@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<!--[if lt IE 8]> <html class="no-js loggedout oldie ie7" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="no-js loggedout oldie ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--><html class='no-js loggedout' lang='en'><!--<![endif]-->
+<head>
+<script>
+  (function (H){
+  H.className=H.className.replace(/\bno-js\b/,'js');
+  if (('; '+document.cookie).match(/; _ted_user_id=/)) H.className=H.className.replace(/\bloggedout\b/,'loggedin');
+  })(document.documentElement)
+</script><meta charset='utf-8'>
+<title>TED Talks</title>
+<meta name="description" content="TED Talks are influential videos from expert speakers on education, business, science, tech and creativity, with subtitles in 100+ languages. Ideas free to stream and download." />
+<meta name="rss-feed" content="https://www.ted.com/feeds/talks.rss" />
+<meta name="keywords" content="TED, Talks, Themes, Speakers, Technology, Entertainment, Design" />
+<link rel="mask-icon" href="https://pa.tedcdn.com/mask-icon.svg" color="#E62B1E" sizes="any" />
+<meta name="theme-color" content="#E62B1E" />
+<link rel="shortcut icon" href="https://pa.tedcdn.com/favicon.ico" />
+<meta name="HandheldFriendly" content="True" />
+<meta name="MobileOptimized" content="320" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="apple-mobile-web-app-title" content="TED Talks" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="apple-touch-icon" href="https://pa.tedcdn.com/apple-touch-icon.png" />
+<link rel="apple-touch-icon-precomposed" href="https://pa.tedcdn.com/apple-touch-icon-precomposed.png" />
+<meta name="application-name" content="TED Talks" />
+<meta name="msapplication-config" content="https://www.ted.com/browserconfig.xml" />
+<meta name="msapplication-TileColor" content="#000000" />
+<meta http-equiv="cleartype" content="on" />
+<meta name="title" content="TED Talks" /><!-- (+-CONTENT-IS-LIVE-SUCCESS-+) --><link rel="stylesheet" href="https://pa.tedcdn.com/stylesheets/global.css?1506963868">
+<link rel="stylesheet" href="https://pa.tedcdn.com/stylesheets/shed.css?1506963868">
+<link rel="stylesheet" href="https://pa.tedcdn.com/stylesheets/talks.css?1506963868"><script>
+  if(top != self) top.location.replace(location);
+</script><script>
+  (function(i,r,l,d,o){
+    i.__gaIn=function(){(i[r].q=i[r].q||[]).push(arguments)};
+    i['GoogleAnalyticsObject']=r;i[r]=i[r]||__gaIn,i[r].l=1*new Date();
+    if(l && d!="yes" && d!="1") o.userId=l[1];
+    __ga('create',"UA-40781755-2",'ted.com',o);
+    __ga('set',"dimension3",'logged'+(l ? 'In' : 'Out'));
+  })(window,"__ga",('; '+document.cookie).match(/; _ted_user_id=(\d+);/),(window.navigator && window.navigator.doNotTrack),{});
+</script><script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+  
+  googletag.cmd.push(function() {
+    googletag.pubads().enableAsyncRendering();
+    googletag.enableServices();
+  });
+  
+  function gptProxy(data) {
+    g('ads.gptAd', data);
+  }
+</script><script>
+  _q=[];q=function(){_q.push(arguments)};
+  _g=[];g=function(){_g.push(arguments)};
+  
+  TED = {"env":"production","assetBuster":1506963864,"playerPath":"//pb.tedcdn.com/assets/player/flash_hls/player_4_01_002.swf","assetHost":"https://pa.tedcdn.com","authHost":"https://auth.ted.com","settingsUrl":"https://www.ted.com/settings/account","signInUrl":"/session/new","signOutUrl":"https://auth.ted.com/session/logout","signInHelpUrl":"https://auth.ted.com/account/password/new","signUpUrl":"/users/new","csClientId":"7341760","gaDimensions":{"breakpoint":"dimension1","talkId":"dimension2","authState":"dimension3","playlistId":"dimension5","testId":"dimension7","embedZone":"dimension8","gaClientId":"dimension9","tedUserId":"dimension10","playContext":"dimension11","sourceContext":"dimension12","playbackRate":"dimension13","playerMode":"dimension14","proxy":"dimension15","playToken":"dimension16","subtitleLanguage":"dimension17","playerPresentation":"dimension18"}};
+  TED.headReady = new Date();
+  TED.signOutUrl += '?referer=' + location.protocol + '//' + location.host + '/session/logout';
+  
+  TED.startTime = new Date();
+  TED.isFirstVisit = !document.cookie.match(/; _ga=/);
+  
+  TED.abby = (function () {
+    var abs=(document.cookie.match(/_abby_(\w+)=(\w+)/g) || []), dms=[], ts={}, t;
+    for (var i=-1, l=abs.length; ++i < l;) {
+      t = abs[i].match(/_abby_(\w+)=(\w+)/);
+      ts[t[1]] = t[2];
+      tstr = t[1] + ':' + t[2];
+      if (dms.indexOf(tstr) < 0) dms.push(tstr);
+    }
+    if (dms.length) {
+      __ga('set', "dimension7", dms.join(','));
+    }
+    return {tests: ts}
+  }());
+  
+  require = {"baseUrl":"https://pa.tedcdn.com/javascripts","map":{"*":{"Handlebars":"hbs/handlebars","underscore":"lodash","vendor/swfobject":"swfobject"}},"waitSeconds":0,"deps":["libs"],"paths":{"libs":"libs.js?3c2b34f3461ab898578d8832e06af9fb","core":"core.js?705d3ed1f0366cdc8170b678b0108917","screens/embed":"screens/embed.js?b3562ce0eaa286d3c67e433d214e4c9f","screens/swatch":"screens/swatch.js?36560917c4c98d59b30ab0929886483d","screens/surprise_me":"screens/surprise_me.js?4af5d63aa3c9ec91cae3a1b0bd0942d0","screens/pages":"screens/pages.js?9866f7338ed611773fe541b91ed3021f","screens/talk":"screens/talk.js?6e8b2fb7d651e02648f00934ef4df1df","screens/tedx":"screens/tedx.js?87546f1963a49c838412ed3d033d66e7","screens/topics":"screens/topics.js?27941735d5b8cce7617d0345bfdce849","screens/dashboard_hotels":"screens/dashboard_hotels.js?441d35576e6d6fefeb084b8f6a16f0ea","screens/home":"screens/home.js?d4b8c20cf3b575d334424261f54e5ab8","screens/settings":"screens/settings.js?9dd961a952db1f86d594a44c355115ce","screens/profiles":"screens/profiles.js?8b91b3bbd62b1949544d5cbc00bd4792","screens/global":"screens/global.js?3cdf8df24207aeba7a9ff3dd46703ec8","screens/dashboard_sessions":"screens/dashboard_sessions.js?18d738640289f343f9b350091db78d27","screens/dashboard":"screens/dashboard.js?7ce402cb73940f963f7cdb207a1a86df","screens/playlists":"screens/playlists.js?1dfc11609dd38a05fa9b33d500ff3b87","screens/dashboard_tedx":"screens/dashboard_tedx.js?b50f4cb8df9993cefbfebe3df5e122e3","screens/comments":"screens/comments.js?52414b7fccd6271f12ece4b0a7ef7510","screens/dashboard_attendees":"screens/dashboard_attendees.js?776b0557f2c9d25aba33da4f5673c129","screens/search":"screens/search.js?7c68839623a277e6754a6e1a5f73be0f","screens/newsletter":"screens/newsletter.js?d52de6f95a06b2398b89407650427f17","screens/talks":"screens/talks.js?7dbb52ca5350f519d1cc2d300861fec7","dq":"libs.js?3c2b34f3461ab898578d8832e06af9fb","jquery":"libs.js?3c2b34f3461ab898578d8832e06af9fb","jqueryujs":"libs.js?3c2b34f3461ab898578d8832e06af9fb","lodash":"libs.js?3c2b34f3461ab898578d8832e06af9fb","swfobject":"libs.js?3c2b34f3461ab898578d8832e06af9fb","react":"libs.js?3c2b34f3461ab898578d8832e06af9fb","prop-types":"libs.js?3c2b34f3461ab898578d8832e06af9fb","react-dom":"libs.js?3c2b34f3461ab898578d8832e06af9fb","Backbone":"libs.js?3c2b34f3461ab898578d8832e06af9fb","hbs/handlebars":"libs.js?3c2b34f3461ab898578d8832e06af9fb"}};
+</script>
+<script>
+  TED.abby.overridden = false;
+  TED.abby.disabled = false;
+  TED.abby.tests.sharemore = "b";
+  TED["controller"]="talks"
+</script>
+<script src="https://pa.tedcdn.com/javascripts/core.js?1506963868" data-main="screens/talks" async="async"></script></head>
+<body class='talks-body'>
+<div class='shoji' id='shoji'>
+<div class='shoji__fixtures' id='shoji-fixtures'></div>
+<div class='shoji__door'>
+<div class='page shoji__washi'>
+<noscript>
+<div class='alert alert--flash alert--warning'>
+<div class='container'>
+<div class='h9'>You have JavaScript disabled</div>
+For the best experience, please turn JavaScript on.
+<a href='http://enable-javascript.com/'>Here's how</a>
+</div>
+</div>
+</noscript>
+<script>
+  (function(d,h){
+    if (('; '+d.cookie).match(/; _uconf=0;/)) {
+      d.write(h);
+      g('uconf.init',"uconf","uconf-close");
+    }
+  }(document,"<div class='alert alert--flash alert--warning' id='uconf'>\n<div class='container'>\n<div class='alert__container'><h4 class='h10 m5'>Your account isn't active yet.</h4>Please click on the confirmation link we sent you.\nIf you don't receive the email within ten minutes, we can\n<a href='https://auth.ted.com/account/confirmation/new'>send it again</a>.\n<a class='alert__close g g-button-modal-close' href='#' id='uconf-close'>Close</a>\n</div>\n</div>\n</div>\n"))
+</script><nav class='Main-nav Main-nav--uninitialized Main-nav/Popper' id='main-nav' role='navigation'>
+<div class='Main-nav/Popper__smoke Main-nav__smoke z-i:9' id='main-nav-popper-smoke'></div>
+<div class='hide-lg fl:l d:n@lg' role='presentation'>
+<a aria-haspopup class='Main-nav__item Main-nav__label f-w:700 t-t:u undec' href='#' onclick="g('mainNav.openHamburger'); return false" role='button'><span class='if-no-svg'>Menu</span>
+<svg baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0, 0, 512, 512" class="if-svg Main-nav__icon Main-nav__icon--hamburger"><title>Main menu</title><path d="M12 80h488v56H12V80zM12 228h488v56H12v-56zM12 376h488v56H12v-56z"/></svg></a>
+</div>
+<a class='Main-nav__home-button ga-link' data-ga-action='home' data-ga-category='navigation.item' data-ga-label='/' href='/' rel='home'>
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="54" viewBox="0, 0, 96, 54" class="Main-nav__logo"><title>TED</title><rect x="0" y="0" width="640" height="360" fill="none"/><path d="M21.244 21.053h-6.761V14.85h21.012v6.203h-6.762V39.15h-7.489V21.053zm15.414-6.203h20.43v6.203H44.147v2.992h12.941v5.837H44.147v3.065h12.941v6.203h-20.43v-24.3zm21.666 0h12.287c8.071 0 10.906 5.984 10.906 12.114 0 7.443-3.926 12.186-12.36 12.186H58.324v-24.3zm7.489 18.097h2.908c4.653 0 5.308-3.794 5.308-6.056 0-1.533-.509-5.765-5.89-5.765H65.74l.073 11.821z" fill="#E62B1E"/></svg>
+<div class='Main-nav__motto c:gray f-w:200 fl:l p-x:0 show-lg' role='presentation'><span class=''>Ideas worth spreading</span></div>
+</a>
+<div class='pos:a right:0 Main-nav__bar' role='presentation'>
+<ul class='sl fl:l show-lg' role='menubar'>
+<li class='pos:r fl:l z-i:10 Main-nav__category' data-popper-name='watch' data-popper-root role='presentation'>
+<a aria-haspopup class='Main-nav__category__label Main-nav__item Main-nav__label f-w:700 t-t:u undec' data-popper-target href='#' onclick='return false' role='menuitem'>Watch</a>
+<ul aria-hidden class='Main-nav/Popper__popup Main-nav__category__list popup popup--inverse popup--tailed popup--tailed--center popup--tailed--top sl' role='menu'>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='watch' data-ga-category='navigation.item' data-ga-label='/talks' href='/talks'>
+<div class='f-w:700 m-b:.1'>TED Talks</div>
+<div class='c:gray'>Browse the library of TED talks and speakers</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='watch' data-ga-category='navigation.item' data-ga-label='/playlists' href='/playlists'>
+<div class='f-w:700 m-b:.1'>Playlists</div>
+<div class='c:gray'>100+ collections of TED Talks, for curious minds</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='watch' data-ga-category='navigation.item' data-ga-label='/watch/ted-ed' href='/watch/ted-ed'>
+<div class='f-w:700 m-b:.1'>TED-Ed videos</div>
+<div class='c:gray'>Watch, share and create lessons with TED-Ed</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='watch' data-ga-category='navigation.item' data-ga-label='/watch/tedx-talks' href='/watch/tedx-talks'>
+<div class='f-w:700 m-b:.1'>TEDx Talks</div>
+<div class='c:gray'>Talks from independently organized local events</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='watch' data-ga-category='navigation.item' data-ga-label='/surpriseme' href='/surpriseme'>
+<div class='f-w:700 m-b:.1'>Surprise Me</div>
+<div class='c:gray'>The easy option. Let us choose for you!</div>
+</a>
+</li>
+</ul>
+</li>
+<li class='pos:r fl:l z-i:10 Main-nav__category' data-popper-name='discover' data-popper-root role='presentation'>
+<a aria-haspopup class='Main-nav__category__label Main-nav__item Main-nav__label f-w:700 t-t:u undec' data-popper-target href='#' onclick='return false' role='menuitem'>Discover</a>
+<ul aria-hidden class='Main-nav/Popper__popup Main-nav__category__list popup popup--inverse popup--tailed popup--tailed--center popup--tailed--top sl' role='menu'>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='discover' data-ga-category='navigation.item' data-ga-label='/topics' href='/topics'>
+<div class='f-w:700 m-b:.1'>Topics</div>
+<div class='c:gray'>Explore TED offerings by topic</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='discover' data-ga-category='navigation.item' data-ga-label='/read/ted-books' href='/read/ted-books'>
+<div class='f-w:700 m-b:.1'>TED Books</div>
+<div class='c:gray'>Short books to feed your craving for ideas</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='discover' data-ga-category='navigation.item' data-ga-label='http://ideas.ted.com' href='http://ideas.ted.com'>
+<div class='f-w:700 m-b:.1'>Ideas Blog</div>
+<div class='c:gray'>Our daily coverage of the world of ideas</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='discover' data-ga-category='navigation.item' data-ga-label='/newsletter' href='/newsletter'>
+<div class='f-w:700 m-b:.1'>Newsletter</div>
+<div class='c:gray'>Inspiration delivered straight to your inbox</div>
+</a>
+</li>
+</ul>
+</li>
+<li class='pos:r fl:l z-i:10 Main-nav__category' data-popper-name='attend' data-popper-root role='presentation'>
+<a aria-haspopup class='Main-nav__category__label Main-nav__item Main-nav__label f-w:700 t-t:u undec' data-popper-target href='#' onclick='return false' role='menuitem'>Attend</a>
+<ul aria-hidden class='Main-nav/Popper__popup Main-nav__category__list popup popup--inverse popup--tailed popup--tailed--center popup--tailed--top sl' role='menu'>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='attend' data-ga-category='navigation.item' data-ga-label='/attend/conferences' href='/attend/conferences'>
+<div class='f-w:700 m-b:.1'>Conferences</div>
+<div class='c:gray'>Take part in our events: TED, TEDGlobal and more</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='attend' data-ga-category='navigation.item' data-ga-label='/tedx/events' href='/tedx/events'>
+<div class='f-w:700 m-b:.1'>TEDx events</div>
+<div class='c:gray'>Find and attend local, independently organized events</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='attend' data-ga-category='navigation.item' data-ga-label='/attend/ted-on-screen' href='/attend/ted-on-screen'>
+<div class='f-w:700 m-b:.1'>TED on screen</div>
+<div class='c:gray'>Experience TED from home or in theaters</div>
+</a>
+</li>
+</ul>
+</li>
+<li class='pos:r fl:l z-i:10 Main-nav__category' data-popper-name='participate' data-popper-root role='presentation'>
+<a aria-haspopup class='Main-nav__category__label Main-nav__item Main-nav__label f-w:700 t-t:u undec' data-popper-target href='#' onclick='return false' role='menuitem'>Participate</a>
+<ul aria-hidden class='Main-nav/Popper__popup Main-nav__category__list popup popup--inverse popup--tailed popup--tailed--center popup--tailed--top sl' role='menu'>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='participate' data-ga-category='navigation.item' data-ga-label='/participate/nominate' href='/participate/nominate'>
+<div class='f-w:700 m-b:.1'>Nominate</div>
+<div class='c:gray'>Recommend speakers, TED Prize recipients, Fellows and more</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='participate' data-ga-category='navigation.item' data-ga-label='/participate/organize-a-local-tedx-event' href='/participate/organize-a-local-tedx-event'>
+<div class='f-w:700 m-b:.1'>Organize a local TEDx event</div>
+<div class='c:gray'>Rules and resources to help you plan a local TEDx event</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='participate' data-ga-category='navigation.item' data-ga-label='/participate/translate' href='/participate/translate'>
+<div class='f-w:700 m-b:.1'>Translate</div>
+<div class='c:gray'>Bring TED to the non-English speaking world</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='participate' data-ga-category='navigation.item' data-ga-label='/participate/ted-prize' href='/participate/ted-prize'>
+<div class='f-w:700 m-b:.1'>TED Prize</div>
+<div class='c:gray'>Get involved in the yearly prize for world-changing ideas</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='participate' data-ga-category='navigation.item' data-ga-label='/participate/ted-fellows-program' href='/participate/ted-fellows-program'>
+<div class='f-w:700 m-b:.1'>TED Fellows</div>
+<div class='c:gray'>Join or support innovators from around the globe</div>
+</a>
+</li>
+</ul>
+</li>
+<li class='pos:r fl:l z-i:10 Main-nav__category' data-popper-name='about' data-popper-root role='presentation'>
+<a aria-haspopup class='Main-nav__category__label Main-nav__item Main-nav__label f-w:700 t-t:u undec' data-popper-target href='#' onclick='return false' role='menuitem'>About</a>
+<ul aria-hidden class='Main-nav/Popper__popup Main-nav__category__list popup popup--inverse popup--tailed popup--tailed--center popup--tailed--top sl' role='menu'>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='about' data-ga-category='navigation.item' data-ga-label='/about/our-organization' href='/about/our-organization'>
+<div class='f-w:700 m-b:.1'>Our organization</div>
+<div class='c:gray'>Our mission, history, team, and more</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='about' data-ga-category='navigation.item' data-ga-label='/about/conferences' href='/about/conferences'>
+<div class='f-w:700 m-b:.1'>Conferences</div>
+<div class='c:gray'>TED Conferences, past, present, and future</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='about' data-ga-category='navigation.item' data-ga-label='/about/programs-initiatives' href='/about/programs-initiatives'>
+<div class='f-w:700 m-b:.1'>Programs &amp; Initiatives</div>
+<div class='c:gray'>Details about TED's world-changing initiatives</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='about' data-ga-category='navigation.item' data-ga-label='/about/partner-with-ted' href='/about/partner-with-ted'>
+<div class='f-w:700 m-b:.1'>Partner with TED</div>
+<div class='c:gray'>Learn how you can partner with us</div>
+</a>
+</li>
+<li role='menuitem'>
+<a class='d:b hover/bg:gray-ll Main-nav__fs-1 p-x:4 p-y:.8 undec ga-link' data-ga-action='about' data-ga-category='navigation.item' data-ga-label='http://blog.ted.com' href='http://blog.ted.com'>
+<div class='f-w:700 m-b:.1'>TED Blog</div>
+<div class='c:gray'>Updates from TED and highlights from our global community</div>
+</a>
+</li>
+</ul>
+</li>
+</ul>
+<div class='Main-nav__divider nav__divider fl:l show-lg'></div>
+<div class='loggedin-only fl:l pos:r z-i:10' data-popper-name='account' data-popper-root><a class='Main-nav__item Main-nav__account-button' data-popper-target href='/dashboard' id='main-nav-account-button' onclick='return false' role='button' title='Your account'>
+<div class='Main-nav__account-button__avatar'>
+<div class='Main-nav__account-button__badge'></div>
+</div>
+</a>
+<div aria-hidden class='Main-nav/Popper__popup Main-nav__category__list Main-nav__category__list--account popup popup--inverse popup--tailed popup--tailed--center popup--tailed--top' id='main-nav-account-menu' role='menu'></div></div>
+<a class='Main-nav__item Main-nav__label auth-login f-w:700 fl:l loggedout-only t-t:u undec' href='/session/new'>Log in</a>
+<div class='Main-nav__divider fl:l show-lg'></div>
+<div class='fl:l show-lg'>
+<a class='Main-nav__item' href='/search' id='main-nav-search' role='button'>
+<svg baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 512 512" class="Main-nav__icon Main-nav__icon--search"><title>Search</title><path d="M221.414 12.31C105.96 12.31 12 106.164 12 221.475c0 115.34 93.96 209.202 209.452 209.202 41.684 0 80.52-12.4 113.205-33.512l89.652 89.576c17.304 17.267 45.413 17.267 62.697 0 17.342-17.322 17.304-45.374 0-62.677l-89.634-89.5c21.13-32.646 33.512-71.406 33.512-113.09-.02-115.31-93.92-209.163-209.47-209.163zm167.5 209.165c0 92.267-75.136 167.27-167.462 167.27-92.344 0-167.462-75.04-167.462-167.27 0-92.22 75.118-167.25 167.462-167.193 92.326 0 167.424 74.973 167.463 167.193z"/></svg>
+</a>
+</div>
+</div>
+<form action='/search' aria-hidden class='Main-nav__search pos:a right:0' id='main-nav-search-form' role='search'>
+<div class='Main-nav__search__content left:0 pos:a'>
+<div class='Main-nav__divider fl:l'></div>
+<label>
+<span class='screen-reader-text'>
+Search:
+</span>
+<input aria-label='Search' autocorrect='off' class='Main-nav__fs-6 Main-nav__search__input' name='q' placeholder='Type to search' tabindex='-1' title='Press Enter to begin search'>
+</label>
+<a aria-label='Close' class='Main-nav__search__close fl:r' href='#' role='button' tabindex='-1'>
+<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0, 0, 30, 30" class="Main-nav__icon"><title>Cancel search</title><path d="M24.5 6.718L6.936 24.282 24.5 6.718zm-18 0l17.564 17.564L6.5 6.718z" stroke="#414141" stroke-width="2" stroke-linecap="square" fill="none"/></svg>
+</a>
+</div>
+</form>
+</nav>
+<div id='main-nav-slideouts'></div>
+<script>g("mainNav.init",{"menuItems":[{"label":"Watch","name":"watch","items":[{"url":"/talks","label":"TED Talks","info":"Browse the library of TED talks and speakers"},{"url":"/playlists","label":"Playlists","info":"100+ collections of TED Talks, for curious minds"},{"url":"/watch/ted-ed","label":"TED-Ed videos","info":"Watch, share and create lessons with TED-Ed"},{"url":"/watch/tedx-talks","label":"TEDx Talks","info":"Talks from independently organized local events"},{"url":"/surpriseme","label":"Surprise Me","info":"The easy option. Let us choose for you!"}]},{"label":"Discover","name":"discover","items":[{"url":"/topics","label":"Topics","info":"Explore TED offerings by topic"},{"url":"/read/ted-books","drilldown":true,"label":"TED Books","info":"Short books to feed your craving for ideas"},{"url":"http://ideas.ted.com","label":"Ideas Blog","info":"Our daily coverage of the world of ideas","external":true},{"url":"/newsletter","label":"Newsletter","info":"Inspiration delivered straight to your inbox"}]},{"label":"Attend","name":"attend","items":[{"url":"/attend/conferences","drilldown":true,"label":"Conferences","info":"Take part in our events: TED, TEDGlobal and more"},{"url":"/tedx/events","label":"TEDx events","info":"Find and attend local, independently organized events"},{"url":"/attend/ted-on-screen","label":"TED on screen","info":"Experience TED from home or in theaters"}]},{"label":"Participate","name":"participate","items":[{"url":"/participate/nominate","label":"Nominate","info":"Recommend speakers, TED Prize recipients, Fellows and more"},{"url":"/participate/organize-a-local-tedx-event","drilldown":true,"label":"Organize a local TEDx event","info":"Rules and resources to help you plan a local TEDx event"},{"url":"/participate/translate","drilldown":true,"label":"Translate","info":"Bring TED to the non-English speaking world"},{"url":"/participate/ted-prize","drilldown":true,"label":"TED Prize","info":"Get involved in the yearly prize for world-changing ideas"},{"url":"/participate/ted-fellows-program","label":"TED Fellows","info":"Join or support innovators from around the globe"}]},{"label":"About","name":"about","items":[{"url":"/about/our-organization","drilldown":true,"label":"Our organization","info":"Our mission, history, team, and more"},{"url":"/about/conferences","drilldown":true,"label":"Conferences","info":"TED Conferences, past, present, and future"},{"url":"/about/programs-initiatives","label":"Programs & Initiatives","info":"Details about TED's world-changing initiatives"},{"url":"/about/partner-with-ted","drilldown":true,"label":"Partner with TED","info":"Learn how you can partner with us"},{"url":"http://blog.ted.com","label":"TED Blog","info":"Updates from TED and highlights from our global community","external":true}]}]})</script><div class='main talks-main' role='main'>
+<header class='talks-header'>
+<div class='container'>
+<div class='h1 m4 text-primary talks-header__title'>
+<span class='h1__alt'></span>
+2500+ talks
+<span class='h1__alt'>to stir your curiosity</span>
+</div>
+<div class='h5'>Find just the right one</div>
+</div>
+</header>
+
+<form action='' class='filters m1 talks-filters' id='filters' method='get'>
+<div class='filters__top'>
+<div class='container'>
+<div class='filters__opener hide-sm'>
+Browse all talks
+</div>
+<div class='filters__top__content'>
+<div class='row row-skinny'>
+<div class='col col-lg-10'>
+<div class='row row-skinny'>
+<div class='col col-lg-3 filters__filter'>
+<div class='pos:r'>
+<input autocorrect='off' class='filters__filter__input form-control' name='q' placeholder='Search talks&hellip;'>
+<svg class="filters__filter__setter pos:a right:0 top:0" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-5 -5 50 50" role="button" tabindex="0" style="cursor:pointer">
+  <title>Search</title>
+  <path d="M2 2h36v36H2V2z" fill="#FFF"/>
+  <path d="M17.769 5.081c-7.006 0-12.708 5.695-12.708 12.693 0 6.999 5.702 12.695 12.711 12.695 2.529 0 4.886-.752 6.869-2.033l5.441 5.435a2.695 2.695 0 0 0 3.805 0 2.688 2.688 0 0 0 0-3.803l-5.44-5.431a12.59 12.59 0 0 0 2.034-6.863c-.001-6.998-5.7-12.693-12.712-12.693zm10.165 12.693c0 5.599-4.56 10.151-10.162 10.151-5.604 0-10.163-4.554-10.163-10.151 0-5.597 4.559-10.15 10.163-10.146 5.602 0 10.16 4.549 10.162 10.146z" fill="#666"/>
+</svg>
+
+</div>
+</div>
+<div class='col col-sm-10 col-lg-9'>
+<div class='row row-skinny'>
+<div class='col col-sm-4 filters__filter'>
+<select class='form-control form-control--dropdown form-control--small filters__filter__select' data-filter-multiple='true' id='topics' name='topics'>
+<option>Topics</option>
+<optgroup label='Popular topics'>
+<option value='Technology'>Technology</option>
+<option value='Entertainment'>Entertainment</option>
+<option value='Design'>Design</option>
+<option value='Business'>Business</option>
+<option value='Science'>Science</option>
+<option value='Global issues'>Global issues</option>
+
+</optgroup>
+<option disabled role='presentation'></option>
+<option value='...'>See all topics</option>
+</select>
+</div>
+<div class='col col-sm-4 filters__filter'>
+<select class='form-control form-control--dropdown form-control--small filters__filter__select' id='languages' name='language'>
+<option>Languages</option>
+<optgroup label='Top languages'>
+<option value='en'>English</option>
+<option lang='es' title='Spanish' value='es'>Español</option>
+<option lang='ja' title='Japanese' value='ja'>日本語</option>
+<option lang='pt-BR' title='Portuguese, Brazilian' value='pt-br'>Português brasileiro</option>
+<option lang='zh' title='Chinese, Traditional' value='zh-tw'>中文 (繁體)</option>
+<option lang='ko' title='Korean' value='ko'>한국어</option>
+</optgroup>
+<option disabled role='presentation'></option>
+<option value='...'>See all languages</option>
+</select>
+</div>
+<div class='col col-sm-4 filters__filter'>
+<select class='form-control form-control--dropdown form-control--small filters__filter__select' name='duration'>
+<option value="">Duration</option>
+<option value="0-6">0–6 minutes</option>
+<option value="6-12">6–12 minutes</option>
+<option value="12-18">12–18 minutes</option>
+<option value="18+">18+ minutes</option>
+</select>
+</div>
+</div>
+</div>
+<div class='col col-sm-2 show-sm hide-lg'>
+<button class='button button--wide js-filters-more'>More</button>
+</div>
+</div>
+</div>
+<div class='col col-sm-2 show-lg'>
+<button class='button js-filters-more' style='min-width:7em'>More</button>
+</div>
+<div class='col col-sm-10 talks-filters__additional'>
+<div class='row row-skinny'>
+<div class='col col-sm-4 col-lg-3 col-lg-offset-3 filters__filter'>
+<select class='form-control form-control--dropdown form-control--small filters__filter__select' id='events' name='event'>
+<option>Events</option>
+<option value="ted conference">TED Conference</option>
+<option value="tedglobal">TEDGlobal</option>
+<option value="tedx">TEDx</option>
+<optgroup label='Recent events'>
+<option value='2017'>TED2017</option>
+<option value='2016'>TED2016</option>
+<option value='tedglobal&gt;geneva'>TEDGlobal>Geneva</option>
+<option value='ty2015'>TEDYouth 2015</option>
+<option value='tedgloballondon'>TEDGlobal>London</option>
+<option value='tedwomen2015'>TEDWomen 2015</option>
+<option value='t2015'>TED2015</option>
+</optgroup>
+<option disabled role='presentation'></option>
+<option value='...'>See all events</option>
+</select>
+</div>
+<div class='col col-sm-4 col-lg-3 filters__filter'>
+<a class='button button--wide' href='/people/speakers'>
+Find a speaker
+&#x25B8;
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class='filters__filter hide-sm'>
+<div class='row row-skinny row-oh-2up'>
+<div class='col'>
+<input type="submit" name="commit" value="Submit" class="button button--wide button--dark filters__apply" />
+</div>
+<div class='col'>
+<button class='button button--wide filters__clear'>Clear</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='filters__bottom'>
+<div class='container'>
+<div class='row row-skinny'>
+<div class='col col-sm-8 col-lg-9 filters__active'>
+<div class='filters__active__label'>
+Active filters:
+</div>
+<div class='filters__active__stubs'>
+<a class='l3 filters__clear' href='#'>Clear</a>
+</div>
+</div>
+<div class='col col-sm-4 col-lg-3 filters__sort filters__active__sort'>
+<div class='row row-skinny'>
+<div class='col col-sm-4 text-right show-sm'>
+<label class='filters__label' for='filters-sort'>Sort by:</label>
+</div>
+<div class='col col-sm-8'>
+<select name="sort" id="filters-sort" class="form-control form-control--dropdown form-control--small filters__sort__select"><optgroup label="Sort by..." Newest="newest" Oldest="oldest" Most viewed="popular" Jaw-dropping="jaw-dropping" Funny="funny" Persuasive="persuasive" Courageous="courageous" Ingenious="ingenious" Fascinating="fascinating" Inspiring="inspiring" Beautiful="beautiful" Informative="informative"><option value="newest">Newest</option>
+<option value="oldest">Oldest</option>
+<option value="popular">Most viewed</option>
+<option value="jaw-dropping">Jaw-dropping</option>
+<option value="funny">Funny</option>
+<option value="persuasive">Persuasive</option>
+<option value="courageous">Courageous</option>
+<option value="ingenious">Ingenious</option>
+<option value="fascinating">Fascinating</option>
+<option value="inspiring">Inspiring</option>
+<option value="beautiful">Beautiful</option>
+<option value="informative">Informative</option></optgroup></select>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>
+<div class='container results' id='browse-results'>
+<div class='row row-sm-4up row-lg-6up row-skinny'>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/carl_safina_what_are_animals_thinking_and_feeling'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="1166" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/64d8942901952055e14cfd146622618c46043bb2_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">19:26</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Carl Safina</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/carl_safina_what_are_animals_thinking_and_feeling'>
+What are animals thinking and feeling?
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Beautiful, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/anote_tong_my_country_will_be_underwater_soon_unless_we_work_together'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="1275" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/fdfeb3082f3bf3cb3a35f8df39347c79b0aeb37d_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">21:15</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Anote Tong</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/anote_tong_my_country_will_be_underwater_soon_unless_we_work_together'>
+My country will be underwater soon — unless we work together
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Persuasive
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/nonny_de_la_pena_the_future_of_news_virtual_reality'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="567" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/ddaf3e1ce01e2c3ee875970d3c7bf8bb4e9e92c3_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration"> 9:27</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Nonny de la Peña</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/nonny_de_la_pena_the_future_of_news_virtual_reality'>
+The future of news? Virtual reality
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/josh_luber_why_sneakers_are_a_great_investment'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="711" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/3146c5a3402cc8d271207eb48300c7ed98262c28_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">11:51</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Josh Luber</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/josh_luber_why_sneakers_are_a_great_investment'>
+Why sneakers are a great investment
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Fascinating
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/jean_paul_mari_the_chilling_aftershock_of_a_brush_with_death'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="930" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/66e122f4205e293e4d3a81a96a857ca401e1c2d9_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">15:30</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Jean-Paul Mari</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/jean_paul_mari_the_chilling_aftershock_of_a_brush_with_death'>
+The chilling aftershock of a brush with death
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Courageous, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/chelsea_shields_how_i_m_working_for_change_inside_my_church'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="756" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/fdc5961387a74f59d7785e515eda25ccb76ff52f_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">12:36</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Chelsea Shields</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/chelsea_shields_how_i_m_working_for_change_inside_my_church'>
+How I'm working for change inside my church
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Courageous
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/andreas_ekstrom_the_moral_bias_behind_your_search_results'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="558" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/90eeddc216ca86ad2fbf99d0823a39fe681e7513_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration"> 9:18</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Andreas Ekström</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/andreas_ekstrom_the_moral_bias_behind_your_search_results'>
+The moral bias behind your search results
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Persuasive
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/jenni_chang_and_lisa_dazols_this_is_what_lgbt_life_is_like_around_the_world'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="710" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/f3d0420b123a32fe10941e2cda324cf4f195bf15_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">11:50</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Jenni Chang and Lisa Dazols</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/jenni_chang_and_lisa_dazols_this_is_what_lgbt_life_is_like_around_the_world'>
+This is what LGBT life is like around the world
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Beautiful
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/kaki_king_a_musical_escape_into_a_world_of_light_and_color'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="691" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/ee7d7b0abbc72ed262e4ccc93e3bbb4be3a7e452_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">11:31</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Kaki King</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/kaki_king_a_musical_escape_into_a_world_of_light_and_color'>
+A musical escape into a world of light and color
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Beautiful, Fascinating
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/harald_haas_a_breakthrough_new_kind_of_wireless_internet'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="444" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/d2dba45393b333dff9751f5e9d068f6ba03f349a_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration"> 7:24</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Harald Haas</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/harald_haas_a_breakthrough_new_kind_of_wireless_internet'>
+Forget Wi-Fi. Meet the new Li-Fi Internet
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Fascinating
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/patricia_medici_the_coolest_animal_you_know_nothing_about_and_how_we_can_save_it'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="692" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/c5b34633c771fdd970e027ef01dda942dc9a11c4_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">11:32</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Patrícia Medici</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/patricia_medici_the_coolest_animal_you_know_nothing_about_and_how_we_can_save_it'>
+The coolest animal you know nothing about ... and how we can save it
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Informative
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/melissa_fleming_a_boat_carrying_500_refugees_sunk_at_sea_the_story_of_two_survivors'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="1155" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/d7978ab526f1922c090ced88497e7f80c1f6174c_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">19:15</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Melissa Fleming</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/melissa_fleming_a_boat_carrying_500_refugees_sunk_at_sea_the_story_of_two_survivors'>
+A boat carrying 500 refugees sunk at sea. The story of two survivors
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Beautiful
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/nancy_lublin_the_heartbreaking_text_that_inspired_a_crisis_help_line'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="579" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/302b5ddbb830b2be25cbb628216acdf89e72a195_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration"> 9:39</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Nancy Lublin</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/nancy_lublin_the_heartbreaking_text_that_inspired_a_crisis_help_line'>
+How data from a crisis text line is saving lives
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Nov 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Beautiful
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/daniel_levitin_how_to_stay_calm_when_you_know_you_ll_be_stressed'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="740" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/2fafdaf65535f886a087fcc875dee66e7ff70547_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">12:20</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Daniel Levitin</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/daniel_levitin_how_to_stay_calm_when_you_know_you_ll_be_stressed'>
+How to stay calm when you know you'll be stressed
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/mathias_jud_art_that_lets_you_talk_back_to_nsa_spies'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="776" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/86d74020299b5fce92e47bf9a9d9ee7a4a1a9c7b_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">12:56</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Mathias Jud</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/mathias_jud_art_that_lets_you_talk_back_to_nsa_spies'>
+Art that lets you talk back to NSA spies
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Informative
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/christine_sun_kim_the_enchanting_music_of_sign_language'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="917" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/2f0d8f23511830353514f7bb7a31c0dbd8a70dd1_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">15:17</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Christine Sun Kim</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/christine_sun_kim_the_enchanting_music_of_sign_language'>
+The enchanting music of sign language
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Beautiful, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/cesar_harada_how_i_teach_kids_to_love_science'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="588" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/50f20fdf4e841d45d6a16658e8167f0ae35e378f_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration"> 9:48</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Cesar Harada</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/cesar_harada_how_i_teach_kids_to_love_science'>
+How I teach kids to love science
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Informative
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/hilary_cottam_social_services_are_broken_how_we_can_fix_them'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="1015" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/afb813c390ea9265fffffdd3fea7c1e76a141a5c_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">16:55</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Hilary Cottam</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/hilary_cottam_social_services_are_broken_how_we_can_fix_them'>
+Social services are broken. How we can fix them
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Informative
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/francesco_sauro_deep_under_the_earth_s_surface_discovering_beauty_and_science'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="877" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/64e494bbcb3d5e0c93f11d1f255990db5a876686_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">14:37</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Francesco Sauro</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/francesco_sauro_deep_under_the_earth_s_surface_discovering_beauty_and_science'>
+Deep under the Earth's surface, discovering beauty and science
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Fascinating, Beautiful
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/tom_uglow_an_internet_without_screens_might_look_like_this'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="503" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/04210e05cfb511bd0cec7a4ae49ec98a8f233c4b_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration"> 8:23</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Tea Uglow</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/tom_uglow_an_internet_without_screens_might_look_like_this'>
+An Internet without screens might look like this
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Informative
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/jennifer_doudna_we_can_now_edit_our_dna_but_let_s_do_it_wisely'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="953" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/aa33beda36e8737f3ec0029a9df20dc8448f164d_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">15:53</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Jennifer Doudna</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/jennifer_doudna_we_can_now_edit_our_dna_but_let_s_do_it_wisely'>
+ How CRISPR lets us edit our DNA
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Fascinating
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/will_potter_the_secret_us_prisons_you_ve_never_heard_of_before'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="895" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/a1f6ba3d17e6e9d7404ee1ff61546579c2126b52_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">14:55</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Will Potter</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/will_potter_the_secret_us_prisons_you_ve_never_heard_of_before'>
+The secret US prisons you've never heard of before
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Courageous, Informative
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/meklit_hadero_the_unexpected_beauty_of_everyday_sounds'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="783" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/3085bac9fb6e6d3a1132abb7cad0026dd77118b8_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">13:03</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Meklit Hadero</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/meklit_hadero_the_unexpected_beauty_of_everyday_sounds'>
+The unexpected beauty of everyday sounds
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Beautiful, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/anders_fjellberg_two_nameless_bodies_washed_up_on_the_beach_here_are_their_stories'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="881" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/414f232fce96dc6a85d03cbab4eda2302ebbb675_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">14:41</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Anders Fjellberg</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/anders_fjellberg_two_nameless_bodies_washed_up_on_the_beach_here_are_their_stories'>
+Two nameless bodies washed up on the beach. Here are their stories
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Courageous
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/alyson_mcgregor_why_medicine_often_has_dangerous_side_effects_for_women'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="929" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/1b1a683e5ebe9dcb2fdde87144516ce3aa0e025d_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">15:29</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Alyson McGregor</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/alyson_mcgregor_why_medicine_often_has_dangerous_side_effects_for_women'>
+Why medicine often has dangerous side effects for women
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Persuasive
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/vijay_kumar_the_future_of_flying_robots'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="789" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/87f82eddb91d2c806ebb11465d846c47f481902c_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">13:09</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Vijay Kumar</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/vijay_kumar_the_future_of_flying_robots'>
+The future of flying robots
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/michael_green_how_we_can_make_the_world_a_better_place_by_2030'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="879" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/7e282e3b442c167b2993f0ef4a51d5e641174c1d_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">14:39</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Michael Green</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/michael_green_how_we_can_make_the_world_a_better_place_by_2030'>
+How we can make the world a better place by 2030
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/teitur_home_is_a_song_i_ve_always_remembered'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="649" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/8a93dd2e23f0b10e2dbb2bb352dfab11a2a083bc_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">10:49</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Teitur</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/teitur_home_is_a_song_i_ve_always_remembered'>
+Home is a song I've always remembered
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Beautiful, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/sandrine_thuret_you_can_grow_new_brain_cells_here_s_how'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="664" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/ec6df2369a3294452ed45750f41e6468c3a58621_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">11:04</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Sandrine Thuret</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/sandrine_thuret_you_can_grow_new_brain_cells_here_s_how'>
+You can grow new brain cells. Here's how
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Fascinating
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/neri_oxman_design_at_the_intersection_of_technology_and_biology'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="1056" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/a4817b9887ab589f58ea7258b3e4cecbafa126c2_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">17:36</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Neri Oxman</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/neri_oxman_design_at_the_intersection_of_technology_and_biology'>
+Design at the intersection of technology and biology
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Fascinating, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/siddhartha_mukherjee_soon_we_ll_cure_diseases_with_a_cell_not_a_pill'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="1055" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/41ac82f3910374b1dee363913218e5f632a22630_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">17:35</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Siddhartha Mukherjee</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/siddhartha_mukherjee_soon_we_ll_cure_diseases_with_a_cell_not_a_pill'>
+Soon we'll cure diseases with a cell, not a pill
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Fascinating
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/alice_bows_larkin_we_re_too_late_to_prevent_climate_change_here_s_how_we_adapt'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="863" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/f6879e1c78d4a069735bf745ecfede71ccf4a352_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">14:23</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Alice Bows-Larkin</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/alice_bows_larkin_we_re_too_late_to_prevent_climate_change_here_s_how_we_adapt'>
+Climate change is happening. Here's how we adapt
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Informative, Persuasive
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/emilie_wapnick_why_some_of_us_don_t_have_one_true_calling'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="746" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/11e3541d75d4afba6badc2c3c058b8cb4bfe5863_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">12:26</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Emilie Wapnick</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/emilie_wapnick_why_some_of_us_don_t_have_one_true_calling'>
+Why some of us don't have one true calling
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Fascinating
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/martin_pistorius_how_my_mind_came_back_to_life_and_no_one_knew'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="848" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/a72a925408a497864046056efff653b2c04f8a2a_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">14:08</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Martin Pistorius</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/martin_pistorius_how_my_mind_came_back_to_life_and_no_one_knew'>
+How my mind came back to life — and no one knew
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Oct 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Courageous
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/mac_stone_stunning_photos_of_the_endangered_everglades'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="1155" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/b2236fa5fe68cf8d207f7679b6da0d717d817c39_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">19:15</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Mac Stone</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/mac_stone_stunning_photos_of_the_endangered_everglades'>
+Stunning photos of the endangered Everglades
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Sep 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Beautiful, Inspiring
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class='col'>
+<div class='m3'>
+<div class='talk-link'>
+<div class='media media--sm-v'>
+<div class='media__image media__image--thumb talk-link__image'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/taiye_selasi_don_t_ask_where_i_m_from_ask_where_i_m_a_local'>
+<span class="thumb thumb--video thumb--crop-top"><span class="thumb__sizer"><span class="thumb__tugger"><img alt="" class=" thumb__image" play="991" src="https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/13e6ec8601cf8e0705fa80ffb2c4e4fea204d1e4_2880x1620.jpg?quality=89&amp;w=320" crop="top" /><span class="thumb__aligner"></span></span></span><span class="thumb__duration">16:31</span></span>
+</a>
+</div>
+<div class='media__message'>
+<h4 class='h12 talk-link__speaker'>Taiye Selasi</h4>
+<h4 class='h9 m5'>
+<a class=' ga-link' data-ga-context='talks' href='/talks/taiye_selasi_don_t_ask_where_i_m_from_ask_where_i_m_a_local'>
+Don't ask where I'm from, ask where I'm a local
+</a>
+</h4>
+<div class='meta'>
+<span class='meta__item'>
+Posted
+<span class='meta__val'>
+Sep 2015
+</span>
+</span>
+<span class='meta__row'>
+Rated
+<span class='meta__val'>
+Inspiring, Beautiful
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div class='results__pagination'>
+<div class="pagination"><a class="pagination__prev pagination__flipper pagination__link" rel="prev" href="/talks?page=13">Previous</a><span class=pagination__separator>|</span><a class="pagination__item pagination__link" href="/talks?page=1">1</a><span class="pagination__item pagination__gap">&hellip;</span><a class="pagination__item pagination__link" href="/talks?page=12">12</a><span class=pagination__separator>|</span><a rel="prev" class="pagination__item pagination__link" href="/talks?page=13">13</a><span class=pagination__separator>|</span><span class="pagination__item pagination__current">14</span><span class=pagination__separator>|</span><a rel="next" class="pagination__item pagination__link" href="/talks?page=15">15</a><span class=pagination__separator>|</span><a class="pagination__item pagination__link" href="/talks?page=16">16</a><span class="pagination__item pagination__gap">&hellip;</span><a class="pagination__item pagination__link" href="/talks?page=72">72</a><span class=pagination__separator>|</span><a class="pagination__next pagination__flipper pagination__link" rel="next" href="/talks?page=15">Next</a></div>
+</div>
+</div>
+<div class='m1'></div>
+<script>q("browse.init",{"sources":{"topics":"/topics/combo","language":"/languages/combo","event":"/events/combo"},"defaultSorts":{"Newest":"newest","Oldest":"oldest","Most viewed":"popular","Jaw-dropping":"jaw-dropping","Funny":"funny","Persuasive":"persuasive","Courageous":"courageous","Ingenious":"ingenious","Fascinating":"fascinating","Inspiring":"inspiring","Beautiful":"beautiful","Informative":"informative"},"ratingSorts":{"Jaw-dropping":"jaw-dropping","Funny":"funny","Persuasive":"persuasive","Courageous":"courageous","Ingenious":"ingenious","Fascinating":"fascinating","Inspiring":"inspiring","Beautiful":"beautiful","Informative":"informative"}})</script></div>
+<footer class='footer'>
+<div class='container'>
+<div class='footer__content'>
+<a class="g-logo-small footer__logo" href="/">TED</a>
+<div class='footer__content__links'>
+<nav class='footer__section' role='navigation'>
+<h3 class='footer__title'>
+Programs &amp; initiatives
+</h3>
+<ul class='footer__links'>
+<li class='m5'><a class="footer__link" href="/about/programs-initiatives/tedx-program">TEDx</a></li>
+<li class='m5'><a class="footer__link" href="/about/programs-initiatives/ted-prize">TED Prize</a></li>
+<li class='m5'><a class="footer__link" href="/about/programs-initiatives/ted-fellows-program">TED Fellows</a></li>
+<li class='m5'><a class="footer__link" href="/about/programs-initiatives/ted-ed">TED Ed</a></li>
+<li class='m5'><a class="footer__link" href="/about/programs-initiatives/ted-translators">TED Translators</a></li>
+<li class='m5'><a class="footer__link" href="/about/programs-initiatives/ted-books">TED Books</a></li>
+<li class='m5'><a class="footer__link" href="/about/programs-initiatives/ted-institute">TED Institute</a></li>
+</ul>
+</nav>
+<nav class='footer__section' role='navigation'>
+<h3 class='footer__title'>
+Ways to get TED
+</h3>
+<ul class='footer__links'>
+<li class='m5'><a class="footer__link" rel="nofollow" target="_blank" href="//www.npr.org/programs/ted-radio-hour/">TED Radio Hour on NPR</a></li>
+<li class='m5'><a class="footer__link" href="/about/programs-initiatives/ted-talks/ways-to-get-ted-talks">More ways to get TED</a></li>
+</ul>
+</nav>
+<nav class='footer__section' role='navigation'>
+<h3 class='footer__title'>Follow TED</h3>
+<ul class='footer__links'>
+<li class='m5'><a class="footer__link" target="_blank" href="//www.facebook.com/TED">Facebook</a></li>
+<li class='m5'><a class="footer__link" target="_blank" href="//twitter.com/tedtalks">Twitter</a></li>
+<li class='m5'><a class="footer__link" rel="publisher" target="_blank" href="//plus.google.com/+TED">Google+</a></li>
+<li class='m5'><a class="footer__link" target="_blank" href="//www.pinterest.com/tednews">Pinterest</a></li>
+<li class='m5'><a class="footer__link" target="_blank" href="//instagram.com/ted">Instagram</a></li>
+<li class='m5'><a class="footer__link" target="_blank" href="//www.youtube.com/ted">YouTube</a></li>
+<li><a class="footer__link" href="http://blog.ted.com">TED Blog</a></li>
+</ul>
+</nav>
+<nav class='footer__section' role='navigation'>
+<h3 class='footer__title'>Our community</h3>
+<ul class='footer__links'>
+<li class='m5'><a class="footer__link" href="/people/speakers">TED Speakers</a></li>
+<li class='m5'><a class="footer__link" href="/people/fellows">TED Fellows</a></li>
+<li class='m5'><a class="footer__link" href="/people/translators">TED Translators</a></li>
+<li class='m5'><a class="footer__link" rel="nofollow" href="/people/tedx">TEDx Organizers</a></li>
+<li class='m5'><a class="footer__link" href="/people">TED Community</a></li>
+</ul>
+</nav>
+</div>
+<div class='footer__content__forms'>
+<form action='/subscriptions' class='footer__section footer__section--form footer-newsletter' id='newsletter-signup' method='post'>
+<h3 class='footer__title'>Get TED email updates</h3>
+<div id='newsletter-signup-details'>
+<p>Subscribe to receive email notifications
+whenever new talks are published.</p>
+<ul class='footer-newsletter__options'>
+<li class='footer-newsletter__option'>
+<label>
+<input checked id='newsletter-signup-daily' name='subscription[list][]' type='checkbox' value='daily'>
+Daily
+</label>
+</li>
+<li class='footer-newsletter__option'>
+<label>
+<input id='newsletter-signup-weekly' name='subscription[list][]' type='checkbox' value='weekly'>
+Weekly
+</label>
+</li>
+</ul>
+<div class='form-group footer-newsletter__signup-email-group'>
+<label for='newsletter-signup-email'>
+Your email address
+</label>
+<input class='form-control' id='newsletter-signup-email' name='subscription[email]' size='16'>
+</div>
+<div class='footer-newsletter__error-wrapper'>
+<p class='footer-newsletter__error' id='newsletter-signup-error-blankemail'>
+Please enter an email address.
+</p>
+<p class='footer-newsletter__error' id='newsletter-signup-error-email'>
+Please enter a valid email address.
+</p>
+<p class='footer-newsletter__error' id='newsletter-signup-error-suggestion'>
+Did you mean
+<span>
+<a class='newsletter-signup-error__data' href='#'></a>?
+</span>
+</p>
+<p class='footer-newsletter__error' id='newsletter-signup-error-subscription'>
+Please check
+<em>Daily</em>
+or
+<em>Weekly</em>
+and try again.
+</p>
+<p class='footer-newsletter__error' id='newsletter-signup-error-unknown'>
+Please check your details and try again.
+</p>
+<p class='footer-newsletter__error' id='newsletter-signup-error-uncaught'>
+Please check your details and try again.
+</p>
+<p class='footer-newsletter__error' id='newsletter-signup-error-other'>
+Sorry, we're currently having trouble
+processing new newsletter signups.
+Please try again later.
+</p>
+</div>
+<input class='button' type='submit' value='Submit'>
+</div>
+<div class='footer-newsletter__success' id='newsletter-signup-success'>
+<p>
+Thanks! Please check your inbox
+for a confirmation email.
+</p>
+<p>
+If you want to get even more from TED,
+like the ability to save talks to watch later,&nbsp;<a href='/users/new'>sign up for a TED account now</a>&#46;
+</p>
+</div>
+</form>
+<form class='footer__section' style='display:none;'>
+<h3 class='footer__title'>Language Selector</h3>
+<p>TED.com translations are made possible by volunteer
+translators. Learn more about the
+<a href="/pages/open_translation_project">Open Translation Project</a>.</p>
+<select class='form-control' disabled>
+<option>English</option>
+</select>
+</form>
+</div>
+</div>
+</div>
+<div class='footer__services'>
+<div class='container footer__services__container'>
+<nav role='navigation'>
+<ul class='footer__links'>
+<li><a class="footer__service" href="/about/our-organization/our-policies-terms/ted-talks-usage-policy">TED Talks Usage Policy</a></li>
+<li><a class="footer__service" href="/about/our-organization/our-policies-terms/privacy-policy">Privacy Policy</a></li>
+<li><a class="footer__service" href="/about/partner-with-ted">Advertising / Partnership</a></li>
+<li><a class="footer__service" href="/about/our-organization/our-policies-terms/ted-com-terms-of-use">TED.com Terms of Use</a></li>
+<li><a class="footer__service" target="_blank" href="/contact">Contact</a></li>
+<li><a class="footer__service" href="/about/our-organization/jobs-at-ted">Jobs</a></li>
+<li><a class="footer__service" href="/about/our-organization/contact-us/press-and-media-information">Press</a></li>
+<li><a class="footer__service" href="//support.ted.com ">Help</a></li>
+</ul>
+</nav>
+<p class='footer__service footer__service--info' role='contentinfo'>
+&copy; TED Conferences, LLC
+</p>
+</div>
+</div>
+</footer></div>
+<a class='shoji__lattice' href='#' id='shoji-lattice'></a>
+</div>
+</div>
+<script>
+  (function() {
+    var gads = document.createElement("script");
+    gads.async = true;
+    gads.type = "text/javascript";
+    var useSSL = "https:" == document.location.protocol;
+    gads.src = (useSSL ? "https:" : "http:") + "//www.googletagservices.com/tag/js/gpt.js";
+    var node = document.getElementsByTagName("script")[0];
+    node.parentNode.insertBefore(gads, node);
+  })();
+</script><script>
+  (function(s,o,b,a,m){
+    a=s.createElement(o),m=s.getElementsByTagName(o)[0];
+    a.async=1;a.src=b;
+    m.parentNode.insertBefore(a,m)
+  })(document,'script','https://www.google-analytics.com/analytics.js');
+</script><script>
+  var _comscore = _comscore || [];
+  _comscore.push({ c1: "2", c2: "7341760" });
+  (function() {
+    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+    s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+    el.parentNode.insertBefore(s, el);
+  })();
+</script><script>
+  (function(d,s,c,u,e,m,r){r=(d.location.search||'').match(/[?&](geo=[A-Z]{2})\b/);if(r||d.cookie.indexOf(c)==-1){e=d.createElement(s),m=d.getElementsByTagName(s)[0];e.async=1;e.src=u+(r?'&'+r[1]:'');m.parentNode.insertBefore(e,m)}})(document,'script','; _tcn=1','https://geo-assets.tedcdn.com/cookie-notice/tcn.js?cb=1.0.2')
+</script></body></html>
