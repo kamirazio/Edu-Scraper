@@ -1,7 +1,7 @@
 # import MySQLdb
 # import MySQLdb.cursors
 # from MySQLdb.cursors import DictCursor
-from flask import jsonify
+# from flask import jsonify
 # from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy as sa
 from sqlalchemy.sql import and_, or_, not_, func
@@ -12,7 +12,7 @@ from datetime import datetime
 import json
 import uuid
 
-from yt_modules import Users, Videos, Tasks, Scripts, Classrooms, Tasksets, Games, Jacet, Ejdic, Words
+from ytmlpy.yt_modules import Users, Videos, Tasks, Scripts, Classrooms, Tasksets, Games, Jacet, Ejdic, Words
 
 class ORMDB:
     def __init__(self,dbname):
@@ -455,12 +455,12 @@ class ORMDB:
         print(plot)
         ins = self.scriptsT.insert().values(
                 tid = tid,
-                vid = obj['vid'],
+                # vid = obj['vid'],
                 video_id = obj['video_id'],
                 q_num = int(plot['q_num']),
                 timestamp = plot['timestamp'],
                 script_main = plot['script_main'],
-                script_local = plot['script_local'],
+                # script_local = plot['script_local'],
                 question = plot['question'],
                 token = plot['token'],
                 stopword = plot['stopword'],
@@ -652,18 +652,18 @@ class ORMDB:
         print(obj, tid, uid, origin, follow_id, len)
         ins = self.tasksT.insert().values(
                 uuid = tid,
-                vid = obj['vid'],
-                user_id = obj['user_id'],
+                # vid = obj['vid'],
+                # user_id = obj['user_id'],
                 uid = uid,
                 video_id = obj['video_id'],
                 video_key = obj['video_key'],
                 lang = obj['lang'],
-                local_lang = obj['local_lang'],
+                # local_lang = obj['local_lang'],
                 host = obj['host'],
 
                 status = 1,
                 memo = obj['memo'],
-                mode = obj['mode'],
+                # mode = obj['mode'],
                 chunk = bool(obj['chunk']),
 
                 # score = obj['score'],
@@ -792,20 +792,21 @@ class ORMDB:
         else:
             return None
 
-    def getVideoInfoByID(self, session, video_id, lang, local_lang):
+    def getVideoInfoByID(self, session, video_id, lang):
         # self.session = self.Session()
         print("======= getVideoInfo by ID=======")
         # print(video_id, lang, local_lang)
         res = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == lang).first()
-        res2 = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == local_lang).first()
-        # print(res)
+        # res2 = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == local_lang).first()
+        print(res.id)
         # print(res2)
         if res:
             video_dict = {
-                'vid': res2.id,
+                # 'vid': res2.id,
+                'vid': res.id,
                 'video_id': res.video_id,
                 'lang': lang,
-                'local_lang': local_lang,
+                # 'local_lang': local_lang,
 
                 'vid': res.id,
                 'video_key': res.video_key,
@@ -813,11 +814,11 @@ class ORMDB:
 
                 'url': res.url,
                 'title': res.title,
-                'title_local': res2.title,
+                # 'title_local': res2.title,
 
                 'author': res.author,
                 'plot': res.plot,
-                'plot_local': res2.plot,
+                # 'plot_local': res2.plot,
                 'plot_id': res.plot_id,
                 'description': res.description,
                 'memo': res.memo,
@@ -886,8 +887,8 @@ class ORMDB:
 
         return video_data.__dict__
 
-    def insertVideoInfo(self,video_info_data):
-        self.session = self.Session()
+    def insertVideoInfo(self, session, video_info_data):
+        # self.session = self.Session()
         print("======= insertVideoInfo =======")
 
         ins = self.videosT.insert().values(
@@ -931,11 +932,11 @@ class ORMDB:
             )
 
         result = self.conn.execute(ins)
-        self.session.commit()
-        self.session.close()
+        session.commit()
+        # self.session.close()
 
         print('result %s' % result.inserted_primary_key)
-        video_data = self.session.query(Videos).filter(Videos.id == result.inserted_primary_key[0]).one()
+        video_data = session.query(Videos).filter(Videos.id == result.inserted_primary_key[0]).one()
 
         return video_data.__dict__
 

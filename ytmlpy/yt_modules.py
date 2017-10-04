@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import sessionmaker, reconstructor, relationship
 from sqlalchemy.ext.serializer import loads, dumps
 from datetime import datetime
-import pytz
+# import pytz
 from contextlib import contextmanager
 from sqlalchemy.sql import func
 

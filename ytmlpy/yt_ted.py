@@ -8,7 +8,7 @@ __license__ = 'GPLv3'
 
 from bs4 import BeautifulSoup
 # import HTMLTextExtractor
-from HTMLTextExtractor import HTMLTextExtractor
+from ytmlpy.HTMLTextExtractor import HTMLTextExtractor
 import requests
 import json
 import re
@@ -17,7 +17,7 @@ from urllib.request import urlopen
 import urllib
 import chardet
 
-import yt_utils
+from ytmlpy import yt_utils
 
 class TEDScraper:
 
