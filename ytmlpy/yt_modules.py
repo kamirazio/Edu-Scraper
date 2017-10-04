@@ -146,7 +146,7 @@ class Games(Base):
         return "<Games class>"
 
 class Scripts(Base):
-    __tablename__ = 'scripts'
+    __tablename__ = 'scripts_ex'
     id = Column(Integer, primary_key=True, autoincrement=True)
     # uuid = Column(String, index=True)
     tid = Column(String, index=True)
@@ -186,7 +186,7 @@ class Scripts(Base):
 
 
 class Tasks(Base):
-    __tablename__ = 'tasks'
+    __tablename__ = 'tasks_ex'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     uuid = Column(String, index=True)
@@ -231,7 +231,7 @@ class Tasks(Base):
 
 
 class Videos(Base):
-    __tablename__ = 'videos'
+    __tablename__ = 'videos_ex'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     video_id = Column(String, index=True)

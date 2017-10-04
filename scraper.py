@@ -3,8 +3,10 @@
 
 from ytmlpy.yt_mysql import ORMDB
 mydb = ORMDB('ytml')
+
 file_base1 = './row_html/ted_talks_%s.html'
-file_base2 = './subtitle/ted_talks_%d_%s.txt'
+
+file_base2 = './subtitle/ted_talks_%s_%s.txt'
 
 from sqlalchemy.ext.declarative import DeclarativeMeta
 import json
@@ -33,6 +35,7 @@ url_base = 'https://www.ted.com%s'
 file_base = './row_html/ted_talks_%s.html'
 
 from lxml import html
+import time
 
 def parse_item(item):
     talk_link = item.xpath('.//h4[@class="h9 m5"]/a/@href')
@@ -127,7 +130,7 @@ def multi_spider():
             data.append(link)
 
             video_data = getVideoInfo(link)
-            save_text(video_data['subtitle'], file_base2 % (page_num, video_data['video_id']))
+            save_text(video_data['subtitle'], file_base2 % (str(page_num),video_data['video_id']))
 
             res = createTask(video_data)
             print(res)
@@ -136,21 +139,22 @@ def multi_spider():
 
     print(len(data))    # returns 36
     print(data)
-    save_text(data, 'link_list_20171004')
+    save_text(data, 'link_list_20171004.txt')
     print("===== FIN :) =====")
 
 def single_spider():
     page_num = 1
     root = html.parse(file_base1 % page_num)
-    print(root.xpath('//body//text()'))
+    # print(root.xpath('//body//text()'))
     items = root.xpath('//div[@id="browse-results"]//div[@class="col"]')
-    # print(len(items))
+    print(len(items))
     # data = []
-    # link = parse_item(items[0])
-    # video_data = getVideoInfo(link)
-    # save_text("video_data['subtitle']", file_base2 % page_num)
-    # # res = createTask(video_data)
-    # print(res)
+    link = parse_item(items[0])
+    video_data = getVideoInfo(link)
+    save_text(video_data['subtitle'], file_base2 % (str(page_num),video_data['video_id']))
+    res = createTask(video_data)
+    print(res)
     print("===== FIN :) =====")
 
 single_spider()
+# multi_spider()

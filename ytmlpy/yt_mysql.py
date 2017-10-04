@@ -34,9 +34,9 @@ class ORMDB:
         self.meta = sa.MetaData()
         self.meta.reflect(bind = self.engine)
 
-        self.scriptsT = self.meta.tables['scripts']
-        self.videosT = self.meta.tables['videos']
-        self.tasksT = self.meta.tables['tasks']
+        self.scriptsT = self.meta.tables['scripts_ex']
+        self.videosT = self.meta.tables['videos_ex']
+        self.tasksT = self.meta.tables['tasks_ex']
         self.classroomsT = self.meta.tables['classrooms']
         self.tasksetsT = self.meta.tables['tasksets']
         self.gamesT = self.meta.tables['games']
@@ -814,7 +814,7 @@ class ORMDB:
 
                 'url': res.url,
                 'title': res.title,
-                # 'title_local': res2.title,
+                'subtitle': res.subtitle,
 
                 'author': res.author,
                 'plot': res.plot,
