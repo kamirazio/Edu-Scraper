@@ -92,7 +92,7 @@ def analyzeScripts(obj, scripts):
             print('<<<<< getQuestionIndex1')
             question_list = getQuestionIndex1(q_cnt, prob_val_list)
 
-            if question_list is Not None:
+            if question_list is not None:
 
                 print("======= plot : q_num %d ========" % i)
                 # バグ修正

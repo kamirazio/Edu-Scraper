@@ -89,7 +89,6 @@ def createTask(obj):
             session.close()
         else:
             add_text('might has error : \n%s\n\n' % obj['video_key'], error_file)
-
     else:
         task = None
 
