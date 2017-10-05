@@ -5,6 +5,7 @@ import json
 
 import math
 import numpy as np
+from scipy.stats import norm
 
 from ytmlpy import yt_nlp
 from ytmlpy import yt_utils
@@ -19,7 +20,7 @@ def analyzeScripts(obj, scripts):
 
     obj['chunk'] = 1
     obj['user_level'] = 3000
-    obj['blank_rate'] = 0.2
+    obj['blank_rate'] = 30
     end_sign = ['.','?','!',';',':']
     pattern = "(\.|\?|\!)(\'|\")"
     repatter = re.compile(pattern)
@@ -206,27 +207,42 @@ def getProbability(user_profile, anly_list):
         # print(anly_list['stopword'][i])
         # print(anly_list['jacet'][i])
 
-        # ------ 4th branch Experience ------#
+        # ------ 4th Dependancy branch  ------#
 
-        # ------ 5th branch Jacet8000 ------#
-        level = int(user_profile['user_level']) if user_profile['user_level'] else 3000
-        distance = abs(int(anly_list['jacet'][i]) - ( level * 0.001 ))
-        prob = round( prob * distance, 5)
+
+        # ------ 5th branch Experience ------#
+
+
+        # ------ 6th branch Jacet8000 ------#
+        u_level = int(user_profile['user_level']) if user_profile['user_level'] else 3000
+        u_level = 1/8000 * u_level
+
+        # x = np.arange(0, 1, 0.01)
+        # y = norm.pdf(x,  loc=user_level, scale=1)
+
+        v_level = int(anly_list['jacet'][i])
+        # print("v_level = %d" % v_level)
+        x1 = 1/8000 * v_level
+        y1 = norm.pdf(x1,  loc=u_level, scale=1)
+        # distance = abs(int(anly_list['jacet'][i]) - ( level * 0.001 ))
+        # print("p value = %d" % y1)
+        prob = round(prob * y1, 10)
+        # print("prob = %d" % prob)
         prob_val_list.append(prob)
 
     # print('==== 出現確率 ====')
     # print(prob_val_list)
     return prob_val_list
 
-def fixScriptLocal(sub_scripts,timestamp):
-    content = ""
-    flag = True
-    while flag and len(sub_scripts) > 0:
-        sub_end_time = int(sub_scripts[0]['startTime']) + int(sub_scripts[0]['duration'])
-        content = str(content) +' '+ str(sub_scripts[0]['content'])
-        sub_scripts.pop(0)
-        flag = timestamp[1] > sub_end_time
-    return content
+# def fixScriptLocal(sub_scripts,timestamp):
+#     content = ""
+#     flag = True
+#     while flag and len(sub_scripts) > 0:
+#         sub_end_time = int(sub_scripts[0]['startTime']) + int(sub_scripts[0]['duration'])
+#         content = str(content) +' '+ str(sub_scripts[0]['content'])
+#         sub_scripts.pop(0)
+#         flag = timestamp[1] > sub_end_time
+#     return content
 
 def getQuestionIndex1(q_cnt, prob_val_list):
     q_index_list=[]
@@ -251,72 +267,72 @@ def getQuestionIndex1(q_cnt, prob_val_list):
     print(q_index_list)
     return q_index_list
 
-def getQuestionIndex2(q_cnt, prob_val_list):
-    q_index_list=[]
-    #探す対象リスト:prob_arrはnumpy
-    prob_arr = np.array(prob_val_list)
-    sum_prob_val = np.sum(prob_arr)
-    ratio = prob_arr/sum_prob_val
-    print(ratio)
-    # print(np.sum(ratio))
-    val_holder = np.where(prob_arr > 0)
-    val_cnt = len(val_holder[0])
-    print(q_cnt, val_cnt)
+# def getQuestionIndex2(q_cnt, prob_val_list):
+#     q_index_list=[]
+#     #探す対象リスト:prob_arrはnumpy
+#     prob_arr = np.array(prob_val_list)
+#     sum_prob_val = np.sum(prob_arr)
+#     ratio = prob_arr/sum_prob_val
+#     print(ratio)
+#     # print(np.sum(ratio))
+#     val_holder = np.where(prob_arr > 0)
+#     val_cnt = len(val_holder[0])
+#     print(q_cnt, val_cnt)
+#
+#     print('2の特徴：出現確率によって問題を決定する')
+#     q_cnt = q_cnt if q_cnt < val_cnt else val_cnt
+#     indices = np.random.choice(len(prob_val_list), q_cnt, p=ratio, replace=False)
+#     # indices = np.random.choice(len(prob_val_list), q_cnt, replace=False)
+#     print(indices)
+#
+#     for i in range(len(prob_val_list)):
+#         if i in indices:
+#             q_index_list.append(1)
+#         else:
+#             q_index_list.append(0)
+#
+#     print(q_index_list)
+#     print("q_index_list success")
+#     return q_index_list
 
-    print('2の特徴：出現確率によって問題を決定する')
-    q_cnt = q_cnt if q_cnt < val_cnt else val_cnt
-    indices = np.random.choice(len(prob_val_list), q_cnt, p=ratio, replace=False)
-    # indices = np.random.choice(len(prob_val_list), q_cnt, replace=False)
-    print(indices)
 
-    for i in range(len(prob_val_list)):
-        if i in indices:
-            q_index_list.append(1)
-        else:
-            q_index_list.append(0)
-
-    print(q_index_list)
-    print("q_index_list success")
-    return q_index_list
-
-
-def getExperienceTest():
-    user_id = 1
-    lemma_list = ['of','study','boring']
-
-    for i in range(len(lemma_list)):
-        ex_list = mydb.getWordExperience( lemma_list[i], user_id)
-    return 'done'
-
-def getExperience(user_id):
-
-    ex_list = []
-
-    for i in range(len(lemma_list)):
-        exs_res = mydb.getWordExperience(lemma_list[i], user_id)
-
-        exs.append(exs_res[0])
-        successes.append(exs_res[1])
-        fails.append(exs_res[2])
-        dics.append(exs_res[3])
-        saves.append(exs_res[4])
-
-        # ex_fail_list.append(ex_list['status'])
-        #
-        # if ex_list[i]['status'] == -1:
-        #
-        #     't_dict':
-        # }
-        #
-        #  = [] # 1:check 0:pass
-        # t_save = [] # 1:save_box1 2:save_box2 0:unreserve
-        # # t_listen = [] # num:listen
-        # t_repeat = [] # num:repeat
-        # mark = # r05ea4 letter-> letter:pass num:miss 0:cheat
-        # t_miss = [] # num: miss 0: no miss
-        # t_cheat = [] # num:cheat 0: no cheat
-        # t_skip = [] # 1:skip 0:not skip
-
-        ex_index_list.append();
-
-    return ex_index_list
+# def getExperienceTest():
+#     user_id = 1
+#     lemma_list = ['of','study','boring']
+#
+#     for i in range(len(lemma_list)):
+#         ex_list = mydb.getWordExperience( lemma_list[i], user_id)
+#     return 'done'
+#
+# def getExperience(user_id):
+#
+#     ex_list = []
+#
+#     for i in range(len(lemma_list)):
+#         exs_res = mydb.getWordExperience(lemma_list[i], user_id)
+#
+#         exs.append(exs_res[0])
+#         successes.append(exs_res[1])
+#         fails.append(exs_res[2])
+#         dics.append(exs_res[3])
+#         saves.append(exs_res[4])
+#
+#         # ex_fail_list.append(ex_list['status'])
+#         #
+#         # if ex_list[i]['status'] == -1:
+#         #
+#         #     't_dict':
+#         # }
+#         #
+#         #  = [] # 1:check 0:pass
+#         # t_save = [] # 1:save_box1 2:save_box2 0:unreserve
+#         # # t_listen = [] # num:listen
+#         # t_repeat = [] # num:repeat
+#         # mark = # r05ea4 letter-> letter:pass num:miss 0:cheat
+#         # t_miss = [] # num: miss 0: no miss
+#         # t_cheat = [] # num:cheat 0: no cheat
+#         # t_skip = [] # 1:skip 0:not skip
+#
+#         ex_index_list.append();
+#
+#     return ex_index_list
