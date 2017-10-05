@@ -116,6 +116,11 @@ def save_text(text, filename):
         f.write(text)
         print('記入')
 
+def add_text(text, filename):
+    with open(filename, 'a') as f:
+        f.write(text)
+        print('追記: %s' % text)
+
 def multi_spider():
     data = []
     for page_num in range(22, npages+1):
@@ -130,9 +135,17 @@ def multi_spider():
             data.append(link)
 
             video_data = getVideoInfo(link)
+            if video_data == None:
+                add_text('skip:%s' % link, error_file)
+                continue
+
             save_text(video_data['subtitle'], file_base2 % (str(page_num),video_data['video_id']))
 
             res = createTask(video_data)
+            if res == None:
+                add_text('error:%s' % link, error_file)
+                continue
+
             print(res)
             print("==========")
             time.sleep(20)
