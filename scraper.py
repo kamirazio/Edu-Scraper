@@ -118,7 +118,7 @@ def save_text(text, filename):
 
 def multi_spider():
     data = []
-    for page_num in range(1, npages+1):
+    for page_num in range(22, npages+1):
         root = html.parse(file_base1 % page_num)
         # print(root.xpath('//body//text()'))
         items = root.xpath('//div[@id="browse-results"]//div[@class="col"]')
