@@ -5,8 +5,8 @@ from ytmlpy.yt_mysql import ORMDB
 mydb = ORMDB('ytml')
 
 file_base1 = './row_html/ted_talks_%s.html'
+
 file_base2 = './subtitle/ted_talks_%s_%s.txt'
-error_file = './subtitle/error.txt'
 
 from sqlalchemy.ext.declarative import DeclarativeMeta
 import json
@@ -51,10 +51,7 @@ def getScriptJson(session, video_id, lang):
     print("<<<<< mydb.getVideoInfo")
     session = mydb.Session()
     video_data = mydb.getVideoInfoByID(session, video_id, lang)
-    if video_data['plot']:
-        scripts = json.loads(video_data['plot'])
-    else:
-        scripts['captions'] = None
+    scripts = json.loads(video_data['plot'])
     # sub_scripts = json.loads(video_data['plot_local'])
     return scripts['captions']
 
@@ -65,26 +62,22 @@ def createTask(obj):
     session = mydb.Session()
     scripts = getScriptJson(session, obj['video_id'], obj['lang'])
     print(scripts)
-    if scripts:
-        plot_list = yt_q_generator.analyzeScripts(obj, scripts)
-        print(plot_list)
-        #
-        print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
+    plot_list = yt_q_generator.analyzeScripts(obj, scripts)
+    print(plot_list)
+    #
+    print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
 
-        print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
-        # print(obj)
-        tid = mydb.insertScripts(session, obj, plot_list)
-        print(" mydb.createTask >>>>>")
-        origin = 0
-        follow_id = 0
-        obj['uid'] = 'test20171004'
-        # obj['vid'] if obj['vid'] == None else 0
-        task = mydb.createTask(session, obj, tid, obj['uid'], origin, follow_id, len(plot_list))
-        session.close()
-    else:
-        task = None
-
-    return 'true' if task != None else 'false'
+    print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
+    # print(obj)
+    tid = mydb.insertScripts(session, obj, plot_list)
+    print(" mydb.createTask >>>>>")
+    origin = 0
+    follow_id = 0
+    obj['uid'] = 'test20171004'
+    # obj['vid'] if obj['vid'] == None else 0
+    task = mydb.createTask(session, obj, tid, obj['uid'], origin, follow_id, len(plot_list))
+    session.close()
+    return 'OK' if task != None else 'Failed in creating task X0'
 
 def getVideoInfo(url):
 
@@ -115,7 +108,6 @@ def getVideoInfo(url):
 
     else:
         print('======= HAVE Vdata =======')
-        video_data = None
 
     return video_data
 
@@ -131,7 +123,7 @@ def add_text(text, filename):
 
 def multi_spider():
     data = []
-    for page_num in range(1, npages+1):
+    for page_num in range(22, npages+1):
         root = html.parse(file_base1 % page_num)
         # print(root.xpath('//body//text()'))
         items = root.xpath('//div[@id="browse-results"]//div[@class="col"]')
