@@ -127,7 +127,7 @@ def save_text(text, filename):
 def add_text(text, filename):
     with open(filename, 'a') as f:
         f.write(text)
-        print('追記')
+        print('追記: %s' % text)
 
 def multi_spider():
     data = []
