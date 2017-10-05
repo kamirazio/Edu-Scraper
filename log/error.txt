@@ -1,3 +1,6 @@
 no video data : 
 https://www.ted.com/talks/seema_bansal_how_to_fix_a_broken_education_system_without_any_more_money
 
+skip:
+https://www.ted.com/talks/helen_pearson_lessons_from_the_longest_study_on_human_development
+

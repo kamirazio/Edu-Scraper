@@ -188,6 +188,6 @@ def single_spider(page_num,order):
     save_text('Finished scraping : \n%s\n\n' % link , scraped_file % tstr)
     print("===== FIN Single :) =====")
 
-single_spider(10,1)
+# single_spider(10,1)
 # npages = 72
-# multi_spider(72)
+multi_spider(72)
