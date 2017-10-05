@@ -1,0 +1,9 @@
+bin/
+flask/
+include/
+lib/
+nouse/
+ted_spider/
+access.log
+error.log
+pip-selfcheck.json
