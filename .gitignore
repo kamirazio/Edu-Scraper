@@ -1,3 +1,10 @@
 bin/
+flask/
+include/
+lib/
+nouse/
 env/
 ted_spider/
+access.log
+error.log
+pip-selfcheck.json

@@ -1,19 +1,12 @@
 
-url_base = 'https://www.ted.com%s'
-file_base1 = './row_html/ted_talks_%s.html'
-file_base2 = './subtitle/ted_talks_%s_%s.txt'
-error_file = './log/error.txt'
-access_file = './log/access.txt'
-scraped_file = './log/link_list_%s.txt'
-
-from datetime import datetime as dt
-tdatetime = dt.now()
-tstr = tdatetime.strftime('%Y-%m-%d')
-
 #===================================================== DB
 
 from ytmlpy.yt_mysql import ORMDB
 mydb = ORMDB('ytml')
+
+file_base1 = './row_html/ted_talks_%s.html'
+
+file_base2 = './subtitle/ted_talks_%s_%s.txt'
 
 from sqlalchemy.ext.declarative import DeclarativeMeta
 import json
@@ -36,7 +29,10 @@ class AlchemyEncoder(json.JSONEncoder):
 
 #===================================================== DB
 
-
+npages = 72
+page_num = 1
+url_base = 'https://www.ted.com%s'
+file_base = './row_html/ted_talks_%s.html'
 
 from lxml import html
 import time
@@ -55,11 +51,7 @@ def getScriptJson(session, video_id, lang):
     print("<<<<< mydb.getVideoInfo")
     session = mydb.Session()
     video_data = mydb.getVideoInfoByID(session, video_id, lang)
-
-    if video_data['plot']:
-        scripts = json.loads(video_data['plot'])
-    else:
-        scripts['captions'] = None
+    scripts = json.loads(video_data['plot'])
     # sub_scripts = json.loads(video_data['plot_local'])
     return scripts['captions']
 
@@ -70,28 +62,24 @@ def createTask(obj):
     session = mydb.Session()
     scripts = getScriptJson(session, obj['video_id'], obj['lang'])
     print(scripts)
-    if scripts:
-        plot_list = yt_q_generator.analyzeScripts(obj, scripts)
-        print(plot_list)
-        #
-        print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
+    plot_list = yt_q_generator.analyzeScripts(obj, scripts)
+    print(plot_list)
+    #
+    print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
 
-        print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
-        # print(obj)
-        tid = mydb.insertScripts(session, obj, plot_list)
-        print(" mydb.createTask >>>>>")
-        origin = 0
-        follow_id = 0
-        obj['uid'] = 'test20171004'
-        # obj['vid'] if obj['vid'] == None else 0
-        task = mydb.createTask(session, obj, tid, obj['uid'], origin, follow_id, len(plot_list))
-        session.close()
-    else:
-        task = None
+    print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
+    # print(obj)
+    tid = mydb.insertScripts(session, obj, plot_list)
+    print(" mydb.createTask >>>>>")
+    origin = 0
+    follow_id = 0
+    obj['uid'] = 'test20171004'
+    # obj['vid'] if obj['vid'] == None else 0
+    task = mydb.createTask(session, obj, tid, obj['uid'], origin, follow_id, len(plot_list))
+    session.close()
+    return 'OK' if task != None else 'Failed in creating task X0'
 
-    return 'true' if task != None else 'false'
-
-def getTEDVideoInfo(url):
+def getVideoInfo(url):
 
     #=========== メインビデオ情報の存在確認 + スクレーピング ===========#
     video = TEDScraper(url)
@@ -120,7 +108,6 @@ def getTEDVideoInfo(url):
 
     else:
         print('======= HAVE Vdata =======')
-        video_data = None
 
     return video_data
 
@@ -134,9 +121,9 @@ def add_text(text, filename):
         f.write(text)
         print('追記: %s' % text)
 
-def multi_spider(npages):
+def multi_spider():
     data = []
-    for page_num in range(1, npages+1):
+    for page_num in range(22, npages+1):
         root = html.parse(file_base1 % page_num)
         # print(root.xpath('//body//text()'))
         items = root.xpath('//div[@id="browse-results"]//div[@class="col"]')
@@ -147,16 +134,16 @@ def multi_spider(npages):
             link = parse_item(item)
             data.append(link)
 
-            video_data = getTEDVideoInfo(link)
+            video_data = getVideoInfo(link)
             if video_data == None:
-                add_text('skip:\n%s\n\n' % link, error_file)
+                add_text('skip:%s' % link, error_file)
                 continue
 
             save_text(video_data['subtitle'], file_base2 % (str(page_num),video_data['video_id']))
 
             res = createTask(video_data)
             if res == None:
-                add_text('error:\n%s\n\n' % link, error_file)
+                add_text('error:%s' % link, error_file)
                 continue
 
             print(res)
@@ -165,29 +152,22 @@ def multi_spider(npages):
 
     print(len(data))    # returns 36
     print(data)
-    save_text('Finished scraping :\n%s\n\n' % data, scraped_file % tstr)
-    print("===== FIN Multi :) =====")
+    save_text(data, 'link_list_20171004.txt')
+    print("===== FIN :) =====")
 
-def single_spider(page_num,order):
-
+def single_spider():
+    page_num = 1
     root = html.parse(file_base1 % page_num)
-    # print(root.xpath('//body//text()')) #test
+    # print(root.xpath('//body//text()'))
     items = root.xpath('//div[@id="browse-results"]//div[@class="col"]')
-    # print(len(items))
-    link = parse_item(items[order])
-    video_data = getTEDVideoInfo(link)
+    print(len(items))
+    # data = []
+    link = parse_item(items[0])
+    video_data = getVideoInfo(link)
+    save_text(video_data['subtitle'], file_base2 % (str(page_num),video_data['video_id']))
+    res = createTask(video_data)
+    print(res)
+    print("===== FIN :) =====")
 
-    if video_data is not None:
-        save_text(video_data['subtitle'], file_base2 % (str(page_num),video_data['video_id']))
-        res = createTask(video_data)
-        print(res)
-        # add_text('===== FIN :) ===== \n %s' % link, access_file)
-    else:
-        add_text('no video data : \n%s\n\n' % link, error_file)
-
-    save_text('Finished scraping : \n%s\n\n' % link , scraped_file % tstr)
-    print("===== FIN Single :) =====")
-
-single_spider(10,1)
-# npages = 72
-# multi_spider(72)
+#single_spider()
+multi_spider()
