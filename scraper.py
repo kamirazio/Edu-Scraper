@@ -115,6 +115,7 @@ def getVideoInfo(url):
 
     else:
         print('======= HAVE Vdata =======')
+        video_data = None
 
     return video_data
 
@@ -130,7 +131,7 @@ def add_text(text, filename):
 
 def multi_spider():
     data = []
-    for page_num in range(22, npages+1):
+    for page_num in range(1, npages+1):
         root = html.parse(file_base1 % page_num)
         # print(root.xpath('//body//text()'))
         items = root.xpath('//div[@id="browse-results"]//div[@class="col"]')
@@ -142,11 +143,16 @@ def multi_spider():
             data.append(link)
 
             video_data = getVideoInfo(link)
+            if video_data == None:
+                add_text('skip:%s' % link, error_file)
+                continue
+
             save_text(video_data['subtitle'], file_base2 % (str(page_num),video_data['video_id']))
 
             res = createTask(video_data)
             if res == None:
                 add_text('error:%s' % link, error_file)
+                continue
 
             print(res)
             print("==========")
