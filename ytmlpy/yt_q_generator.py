@@ -249,20 +249,23 @@ def getQuestionIndex1(q_cnt, prob_val_list):
     #探す対象リスト:my_arrayはnumpy
     prob_arr = np.array(prob_val_list)
     # ソートはされていない上位k件のインデックス
-    unsorted_max_indices = np.argpartition(-prob_arr, q_cnt)[:q_cnt]
-    # 上位 q_cnt 件の値
-    y = prob_arr[unsorted_max_indices]
-    # 大きい順にソートし、インデックスを取得
-    indices = np.argsort(-y)
-    print('1の特徴：類似度上位k件のインデックス')
-    max_k_indices = unsorted_max_indices[indices]
-    print(max_k_indices)
+    try:
+        unsorted_max_indices = np.argpartition(-prob_arr, q_cnt)[:q_cnt]
+        # 上位 q_cnt 件の値
+        y = prob_arr[unsorted_max_indices]
+        # 大きい順にソートし、インデックスを取得
+        indices = np.argsort(-y)
+        print('1の特徴：類似度上位k件のインデックス')
+        max_k_indices = unsorted_max_indices[indices]
+        print(max_k_indices)
 
-    for i in range(len(prob_val_list)):
-        if i in max_k_indices:
-            q_index_list.append(1)
-        else:
-            q_index_list.append(0)
+        for i in range(len(prob_val_list)):
+            if i in max_k_indices:
+                q_index_list.append(1)
+            else:
+                q_index_list.append(0)
+    except:
+        q_index_list = []
 
     print(q_index_list)
     return q_index_list
