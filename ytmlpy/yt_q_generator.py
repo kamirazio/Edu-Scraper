@@ -92,32 +92,37 @@ def analyzeScripts(obj, scripts):
             print('<<<<< getQuestionIndex1')
             question_list = getQuestionIndex1(q_cnt, prob_val_list)
 
-            print("======= plot : q_num %d ========" % i)
-            # バグ修正
-            # if len(anly_list['token'])!=len(jacet_list):
-            #     print(len(anly_list['token']))
-            #     print(anly_list['token'])
-            #     print(len(jacet_list))
+            if question_list is Not None:
 
-            plot = {
-                'q_num': len(plot_list)+1,
-                'timestamp': json.dumps(timestamp),
-                'script_main': yt_utils.cleanLine(script_main),
-                # 'script_local': yt_utils.cleanLine(script_local),
-                'question': json.dumps(question_list),
-                'token': json.dumps(anly_list['token']),
-                'stopword': json.dumps(anly_list['stopword']),
-                'tagged': json.dumps(anly_list['tagged']),
-                'tag_id': json.dumps(anly_list['tag_id']),
-                'lemma': json.dumps(anly_list['lemma']),
-                'jacet': json.dumps(anly_list['jacet']),
-                'probability': json.dumps(prob_val_list)
-            }
+                print("======= plot : q_num %d ========" % i)
+                # バグ修正
+                # if len(anly_list['token'])!=len(jacet_list):
+                #     print(len(anly_list['token']))
+                #     print(anly_list['token'])
+                #     print(len(jacet_list))
 
-            plot_list.append(plot)
-            timestamp = []
+                plot = {
+                    'q_num': len(plot_list)+1,
+                    'timestamp': json.dumps(timestamp),
+                    'script_main': yt_utils.cleanLine(script_main),
+                    # 'script_local': yt_utils.cleanLine(script_local),
+                    'question': json.dumps(question_list),
+                    'token': json.dumps(anly_list['token']),
+                    'stopword': json.dumps(anly_list['stopword']),
+                    'tagged': json.dumps(anly_list['tagged']),
+                    'tag_id': json.dumps(anly_list['tag_id']),
+                    'lemma': json.dumps(anly_list['lemma']),
+                    'jacet': json.dumps(anly_list['jacet']),
+                    'probability': json.dumps(prob_val_list)
+                }
+
+                plot_list.append(plot)
+                timestamp = []
+            else:
+                plot_list = None
         else:
             print('skip',i)
+
     return plot_list
 
 def getProbability(user_profile, anly_list):
@@ -245,26 +250,30 @@ def getProbability(user_profile, anly_list):
 #     return content
 
 def getQuestionIndex1(q_cnt, prob_val_list):
-    q_index_list=[]
-    #探す対象リスト:my_arrayはnumpy
-    prob_arr = np.array(prob_val_list)
-    # ソートはされていない上位k件のインデックス
-    unsorted_max_indices = np.argpartition(-prob_arr, q_cnt)[:q_cnt]
-    # 上位 q_cnt 件の値
-    y = prob_arr[unsorted_max_indices]
-    # 大きい順にソートし、インデックスを取得
-    indices = np.argsort(-y)
-    print('1の特徴：類似度上位k件のインデックス')
-    max_k_indices = unsorted_max_indices[indices]
-    print(max_k_indices)
+    try:
+        q_index_list=[]
+        #探す対象リスト:my_arrayはnumpy
+        prob_arr = np.array(prob_val_list)
+        # ソートはされていない上位k件のインデックス
+        unsorted_max_indices = np.argpartition(-prob_arr, q_cnt)[:q_cnt]
+        # 上位 q_cnt 件の値
+        y = prob_arr[unsorted_max_indices]
+        # 大きい順にソートし、インデックスを取得
+        indices = np.argsort(-y)
+        print('1の特徴：類似度上位k件のインデックス')
+        max_k_indices = unsorted_max_indices[indices]
+        print(max_k_indices)
 
-    for i in range(len(prob_val_list)):
-        if i in max_k_indices:
-            q_index_list.append(1)
-        else:
-            q_index_list.append(0)
+        for i in range(len(prob_val_list)):
+            if i in max_k_indices:
+                q_index_list.append(1)
+            else:
+                q_index_list.append(0)
 
-    print(q_index_list)
+        print(q_index_list)
+    except:
+        q_index_list = None
+
     return q_index_list
 
 # def getQuestionIndex2(q_cnt, prob_val_list):

@@ -72,20 +72,24 @@ def createTask(obj):
     print(scripts)
     if scripts:
         plot_list = yt_q_generator.analyzeScripts(obj, scripts)
-        print(plot_list)
-        #
-        print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
+        # print(plot_list)
 
-        print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
-        # print(obj)
-        tid = mydb.insertScripts(session, obj, plot_list)
-        print(" mydb.createTask >>>>>")
-        origin = 0
-        follow_id = 0
-        obj['uid'] = 'test20171004'
-        # obj['vid'] if obj['vid'] == None else 0
-        task = mydb.createTask(session, obj, tid, obj['uid'], origin, follow_id, len(plot_list))
-        session.close()
+        if plot_list is not None:
+
+            print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
+            print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
+            # print(obj)
+            tid = mydb.insertScripts(session, obj, plot_list)
+            print(" mydb.createTask >>>>>")
+            origin = 0
+            follow_id = 0
+            obj['uid'] = 'test20171004'
+            # obj['vid'] if obj['vid'] == None else 0
+            task = mydb.createTask(session, obj, tid, obj['uid'], origin, follow_id, len(plot_list))
+            session.close()
+        else:
+            add_text('might has error : \n%s\n\n' % obj['video_key'], error_file)
+
     else:
         task = None
 
