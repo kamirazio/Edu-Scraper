@@ -9,4 +9,5 @@ access.log
 error.log
 pip-selfcheck.json
 log/
-__pycache__/
+ytmlpy/__pycache__/
+.DS_Store
