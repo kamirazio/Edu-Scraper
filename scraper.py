@@ -103,8 +103,6 @@ def getTEDVideoInfo(url):
     video_data = mydb.getVideoInfo(session, video.video_key, video.sub_lang)
     task_data = mydb.getTaskByVideoKey(session, video.video_key)
 
-    if video_data[] is None:
-
     elif video_data is None:
         video.getVideoInfo()
         if video.video_info[0]['subtitle']:
