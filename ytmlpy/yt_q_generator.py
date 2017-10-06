@@ -9,6 +9,7 @@ from scipy.stats import norm
 
 from ytmlpy import yt_nlp
 from ytmlpy import yt_utils
+import pdb
 
 #===================================================== DB
 from ytmlpy.yt_mysql import ORMDB
@@ -31,11 +32,10 @@ mydb = ORMDB('ytml')
 
 def analyzeScripts(obj, scripts):
     # print(obj)
-
-    obj['chunk'] = 1
+    obj['chunk'] = 0
     obj['user_level'] = 3000
     obj['blank_rate'] = 30
-    end_sign = ['.','?','!',';',':']
+    end_sign = ['.','?','!',';',':',')']
     pattern = "(\.|\?|\!)(\'|\")"
     repatter = re.compile(pattern)
 
@@ -51,87 +51,109 @@ def analyzeScripts(obj, scripts):
             # 新しい sucript レコードを生成
             # [337423, 341424, 4001, false]/[頭,尻,再生時間,段落]
             timestamp = [script['startTime'], int(script['startTime']) + int(script['duration']), script['duration'], script['startOfParagraph']]
-            script_main = script['content']
+            script_main = script['content'].rstrip("\r\n")
+
         else:
-            # timelineとscriptをマージする
+            # timelineを上書きし、scriptをマージする
             timestamp[1] = timestamp[1] + script['duration']
             timestamp[2] = timestamp[2] + script['duration']
             script_main = str(script_main) +' '+ str(script['content'])
+            script_main = script_main.rstrip("\r\n")
 
         # print('正規表現 実験') # 文末かChunk Optionが選択されている時の処理 # P['"]$ //句読点
         # print(repatter.match(script_main))
+        # もし台詞の最後のletterが句読点・記号だったら or chunkする or 括弧があれば or [." ?"]などの終わり方
+        if len(scripts) > i+1:
+            if len(script_main.split(' ')) < 3 and obj['chunk'] == 0 :
+                print('skip-1 ::',i, len(scripts))
+                print(script_main)
+                # pdb.set_trace()
+                continue
 
-        if (script_main[-1] in end_sign) or (obj['chunk'] == 1) or (repatter.match(script_main)):
+            if script_main[-1] not in end_sign and obj['chunk'] == 0 :
+                print('skip-2 ::',i)
+                print(script_main)
+                # pdb.set_trace()
+                continue
 
-            print('# ====== 出来上がったスクリプトを分析する ====== #')
-            anly_list = yt_nlp.getNLTKRes(script_main)
+            if repatter.match(script_main) is not None and obj['chunk'] == 0:
+                print('skip-3 ::',i)
+                print(script_main)
+                # pdb.set_trace()
+                continue
 
-            print('# ============ #')
-            print(anly_list)
-            # # ====== Jaset Rank の作成 ====== #
-            # jacet_list = mydb.getJacet(session, anly_list['lemma'])
-            # print('# ============ #')
+        # if (script_main[-1] in end_sign) or (obj['chunk'] == 1) or (repatter.match(script_main)):
+        print('# ====== 出来上がったスクリプトを分析する ====== #')
+        anly_list = yt_nlp.getNLTKRes(script_main)
 
-            # ====== 出来上がったスクリプトにサブタイトルを振る ====== #
-            # script_local = fixScriptLocal(sub_scripts,timestamp)
+        print('# ============ #')
+        # print(anly_list)
+        # # ====== Jaset Rank の作成 ====== #
+        # jacet_list = mydb.getJacet(session, anly_list['lemma'])
+        # print('# ============ #')
 
-            # ====== user data の取得 ====== #
-            # これはインタラクティブに獲得
-            user_profile ={
-                'user_level': obj['user_level'],
-                'complete_list':[],
-                'success_list':[],
-                'review_list':[],
-                'cheat_list':[],
-                'repeat_list':[],
-                'skip_list':[],
-                'save_list':[],
-                'dict_list':[],
-            }
+        # ====== 出来上がったスクリプトにサブタイトルを振る ====== #
+        # script_local = fixScriptLocal(sub_scripts,timestamp)
 
-            print('======= question の生成(仮) =======')
-            question_list = []
-            print('<<<<< getProbability')
-            prob_val_list = getProbability(user_profile, anly_list)
-            print('==== 出現確率 ====')
-            print(prob_val_list)
+        # ====== user data の取得 ====== #
+        # これはインタラクティブに獲得
+        user_profile ={
+            'user_level': obj['user_level'],
+            'complete_list':[],
+            'success_list':[],
+            'review_list':[],
+            'cheat_list':[],
+            'repeat_list':[],
+            'skip_list':[],
+            'save_list':[],
+            'dict_list':[],
+        }
 
-            # 長さによって、どのくらいの文量をブランクにするか決める
-            # q_cnt = math.floor(len(anly_list['tagged']) * 0.2)
-            # blank_rate = 0.2
-            # print(len(anly_list['tagged']), int(obj['blank_rate']))
-            q_cnt = math.ceil(len(anly_list['tagged']) * int(obj['blank_rate'])/100)
-            print(q_cnt)
+        print('======= question の生成(仮) =======')
+        question_list = []
+        print('<<<<< getProbability')
+        prob_val_list = getProbability(user_profile, anly_list)
+        print('==== 出現確率 ====')
+        print(prob_val_list)
 
-            print('<<<<< getQuestionIndex1')
-            question_list = getQuestionIndex1(q_cnt, prob_val_list)
+        # 長さによって、どのくらいの文量をブランクにするか決める
+        # q_cnt = math.floor(len(anly_list['tagged']) * 0.2)
+        # blank_rate = 0.2
+        # print(len(anly_list['tagged']), int(obj['blank_rate']))
+        q_cnt = math.ceil(len(anly_list['tagged']) * int(obj['blank_rate'])/100)
+        print(q_cnt)
 
-            print("======= plot : q_num %d ========" % i)
-            # バグ修正
-            # if len(anly_list['token'])!=len(jacet_list):
-            #     print(len(anly_list['token']))
-            #     print(anly_list['token'])
-            #     print(len(jacet_list))
+        print('<<<<< getQuestionIndex1')
+        question_list = getQuestionIndex1(q_cnt, prob_val_list)
 
-            plot = {
-                'q_num': len(plot_list)+1,
-                'timestamp': json.dumps(timestamp),
-                'script_main': yt_utils.cleanLine(script_main),
-                # 'script_local': yt_utils.cleanLine(script_local),
-                'question': json.dumps(question_list),
-                'token': json.dumps(anly_list['token']),
-                'stopword': json.dumps(anly_list['stopword']),
-                'tagged': json.dumps(anly_list['tagged']),
-                'tag_id': json.dumps(anly_list['tag_id']),
-                'lemma': json.dumps(anly_list['lemma']),
-                'jacet': json.dumps(anly_list['jacet']),
-                'probability': json.dumps(prob_val_list)
-            }
+        print("======= plot : q_num %d ========" % i)
+        # バグ修正
+        # if len(anly_list['token'])!=len(jacet_list):
+        #     print(len(anly_list['token']))
+        #     print(anly_list['token'])
+        #     print(len(jacet_list))
 
-            plot_list.append(plot)
-            timestamp = []
-        else:
-            print('skip',i)
+        plot = {
+            'q_num': len(plot_list)+1,
+            'timestamp': json.dumps(timestamp),
+            'script_main': yt_utils.cleanLine(script_main),
+            # 'script_local': yt_utils.cleanLine(script_local),
+            'question': json.dumps(question_list),
+            'token': json.dumps(anly_list['token']),
+            'stopword': json.dumps(anly_list['stopword']),
+            'tagged': json.dumps(anly_list['tagged']),
+            'tag_id': json.dumps(anly_list['tag_id']),
+            'lemma': json.dumps(anly_list['lemma']),
+            'jacet': json.dumps(anly_list['jacet']),
+            'probability': json.dumps(prob_val_list)
+        }
+
+        print(script_main)
+        pdb.set_trace
+
+        plot_list.append(plot)
+        timestamp = []
+
     return plot_list
 
 
@@ -371,11 +393,12 @@ def getQuestionIndex1(q_cnt, prob_val_list):
         print(max_k_indices)
 
         for i in range(len(prob_val_list)):
-            if i in max_k_indices:
+            if prob_val_list[i] is 0:
+                q_index_list.append(0)
+            elif i in max_k_indices:
                 q_index_list.append(1)
             else:
                 q_index_list.append(0)
-
         print(q_index_list)
     except:
         q_index_list = None

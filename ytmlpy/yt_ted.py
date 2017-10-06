@@ -81,71 +81,69 @@ class TEDScraper:
         # ------ Extract the video Id of the TED talk video. ------ #
         # We need this to generate the subtitle page.
         # talk_id = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['targeting']['id']
-        talk_id = json_data['__INITIAL_DATA__']['current_talk']
+        try:
+            talk_id = json_data['__INITIAL_DATA__']['current_talk']
+        except:
+            talk_id = None
 
-        # Extract the speaker of the TED talk
-        # speaker = json_data['talks'][0]['speaker']
-        # speaker = self.soup.select('meta.thumb__image')[0]['src']
-        speaker_data = self.soup.find("meta", attrs={"name" : "author"})
-        speaker = speaker_data["content"] if speaker_data else "No meta speaker given"
+        try:
+            title = json_data['__INITIAL_DATA__']['talks'][0]['title']
+        except:
+            title = None
 
-        # # Extract the profession of the speaker of the TED talk
-        # speaker_profession = self.soup.select('div.talk-speaker__description')[0].text.strip()
-        speaker_id = json_data['__INITIAL_DATA__']['speakers'][0]['id']
-        speaker_profession = json_data['__INITIAL_DATA__']['speakers'][0]['description']
+        try:
+            description = json_data['__INITIAL_DATA__']['talks'][0]['description']
+        except:
+            description = None
 
-        # # Extract the short biography of the speaker of the TED talk
-        # speaker_bio = self.soup.select('div.talk-speaker__bio')[0].text.strip()
-        speaker_bio = json_data['__INITIAL_DATA__']['speakers'][0]['whotheyare']
-        whylisten = json_data['__INITIAL_DATA__']['speakers'][0]['whylisten']
-        s = HTMLTextExtractor()
-        s.feed(whylisten)
-        whylisten = s.get_text()
-        # whylisten = re.sub(r'(\s|\t|)*?<\/?(&nbsp;)?p[^>]*?(&nbsp;)?>', "", whylisten)
-        # print(whylisten)
+        try:
+            speaker_data = self.soup.find("meta", attrs={"name" : "author"})
+        except:
+            speaker_data = None
 
-        # # Extract the Url to the picture of the speaker of the TED talk
-        # speaker_picture = self.soup.select('img.thumb__image')[0]['src']
-        speaker_picture = json_data['__INITIAL_DATA__']['speakers'][0]['photo_url']
+        try:
+            duration = json_data['__INITIAL_DATA__']['talks'][0]['duration']
+        except:
+            duration = None
 
-        # # Extract the title of the TED talk
-        # # title = json_data['talks'][0]['title']
-        # title_data = self.soup.find("meta",  property="og:title")
-        title = json_data['__INITIAL_DATA__']['talks'][0]['title']
-        #
-        # # Extract the description of the TED talk
-        description = json_data['__INITIAL_DATA__']['talks'][0]['description']
-        # description_data = self.soup.find("meta",  property="og:description")
-        # description = description_data["content"] if description_data else "No meta description given"
+        try:
+            download_link = json_data['__INITIAL_DATA__']['talks'][0]['downloads']['nativeDownloads']['medium']
+        except:
+            download_link = None
 
-        # # Extract the upload date of the TED talk
-        # date = self.soup.find('div', class_="player-hero__meta")
-        # date = date.find_all('span')[1]
-        # date.strong.replace_with('')
-        # date = date.text.strip()
+        try:
+            speaker = speaker_data["content"] if speaker_data else "No meta speaker given"
+            speaker_id = json_data['__INITIAL_DATA__']['speakers'][0]['id']
+            speaker_profession = json_data['__INITIAL_DATA__']['speakers'][0]['description']
+            speaker_bio = json_data['__INITIAL_DATA__']['speakers'][0]['whotheyare']
+            whylisten = json_data['__INITIAL_DATA__']['speakers'][0]['whylisten']
+            speaker_picture = json_data['__INITIAL_DATA__']['speakers'][0]['photo_url']
+        except:
+            speaker = None
+            speaker_id = None
+            speaker_profession = None
+            speaker_bio = None
+            whylisten = None
+            speaker_picture = None
+
         try:
             event = json_data['__INITIAL_DATA__']['speakers'][0]['events'][0]['event']['name']
             event_id = json_data['__INITIAL_DATA__']['speakers'][0]['events'][0]['event']['id']
             event_date = json_data['__INITIAL_DATA__']['speakers'][0]['events'][0]['event']['starts_at']
-        except KeyError:
+        except:
             event = None
             event_id = None
             event_date = None
 
-        # Extract the length of the TED talk in minutes
-        duration = json_data['__INITIAL_DATA__']['talks'][0]['duration']
-        # duration_data = self.soup.find("meta",  property="video:duration")
-        # duration = duration_data["content"] if duration_data else "No meta duration given"
-
-        self.video_lang = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['nativeLanguage']
-        starting_point = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['introDuration']
-
-        download_link = json_data['__INITIAL_DATA__']['talks'][0]['downloads']['nativeDownloads']['medium']
-        # divmod(x, y)でxをyで割った商とあまりをタプルで返す
-        # length = divmod(length, 60)[0]
-
-        # Extract the thumbnail of the of the TED talk video
-        thumb = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['thumb']
+        try:
+            self.video_lang = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['nativeLanguage']
+            starting_point = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['introDuration']
+            # Extract the thumbnail of the of the TED talk video
+            thumb = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['thumb']
+        except:
+            self.video_lang = None
+            starting_point = None
+            thumb = None
 
         subtitles = [{'languageName': lang['languageName'],
                       'languageCode':lang['languageCode']}
@@ -157,33 +155,30 @@ class TEDScraper:
         subtitle_src = yt_utils.get_subtitle_link(talk_id, self.sub_lang)
         json_src = urlopen(subtitle_src)
         subtitle_data = json.loads(json_src.read().decode('utf-8'))
-        plot = json.dumps(subtitle_data, ensure_ascii=False)
+        if subtitle_data:
+            plot = json.dumps(subtitle_data, ensure_ascii=False)
+            # ====== Extract the subtitle text for analization ====== #
+            subtitle_txt = ""
+            for caption in subtitle_data['captions']:
+                subtitle_txt += caption['content'] + ' '
+            print(subtitle_txt)
 
-        # ====== Extract the subtitle text for analization ====== #
-        subtitle_txt = ""
-        for caption in subtitle_data['captions']:
-            subtitle_txt += caption['content'] + ' '
-        print(subtitle_txt)
+        try:
+            keywords_data = self.soup.find("meta",  attrs={"name" : "keywords"})
+            keywords = keywords_data["content"] if keywords_data else "No meta keywords given"
+        except:
+            keywords_data = None
+            keywords = None
 
-        # yt_nlp.getJacetScore(subtitle_txt)
-        # yt_nlp.getFeature(subtitle_txt)
+        try:
+            tags = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['targeting']['tag']
+        except:
+            tags = None
 
-        # print(":D :D :D")
-        # print(json.dumps(subtitle_data, ensure_ascii=False))
-
-        # # Extract the keywords for the TED talk
-        # keywords = self.soup.find('meta', attrs={'name': 'keywords'})['content']
-        keywords_data = self.soup.find("meta",  attrs={"name" : "keywords"})
-        keywords = keywords_data["content"] if keywords_data else "No meta keywords given"
-
-        tags = json_data['__INITIAL_DATA__']['talks'][0]['player_talks'][0]['targeting']['tag']
-
-        # keywords = [key.strip() for key in keywords.split(',')]
-        #
-        # # Extract the ratings list for the TED talk
-        viewed = json_data['__INITIAL_DATA__']['viewed_count']
-
-        # Append the meta-data to a list
+        try:
+            viewed = json_data['__INITIAL_DATA__']['viewed_count']
+        except:
+            viewed = None
 
         self.video_info.append({
             'video_id': talk_id,

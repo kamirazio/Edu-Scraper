@@ -441,10 +441,10 @@ class ORMDB:
 
     def insertScripts(self, session, obj, plot_list):
         tid = str(uuid.uuid4())
-        print(plot_list)
+        # print(plot_list)
         for plot in plot_list:
             res = self.insertScript(session, obj, plot, tid)
-            print(res)
+            # print(res)
         return tid
 
     def insertScript(self, session, obj, plot, tid):
@@ -652,7 +652,7 @@ class ORMDB:
     def createTask(self, session, obj, tid, uid, origin, follow_id, len):
         # self.session = self.Session()
         print("======= insert TASK info =======")
-        print(obj, tid, uid, origin, follow_id, len)
+        # print(obj, tid, uid, origin, follow_id, len)
         ins = self.tasksT.insert().values(
                 uuid = tid,
                 vid = obj['uuid'],
@@ -692,7 +692,7 @@ class ORMDB:
         session.commit()
         # session.close()
 
-        print('result %s' % result.inserted_primary_key)
+        # print('result %s' % result.inserted_primary_key)
         task_data = session.query(Tasks).filter(Tasks.id == result.inserted_primary_key[0]).one()
 
         return task_data

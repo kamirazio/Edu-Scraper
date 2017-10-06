@@ -46,7 +46,7 @@ def analyzeScripts(obj, scripts):
 
         # print('正規表現 実験') # 文末かChunk Optionが選択されている時の処理 # P['"]$ //句読点
         # print(repatter.match(script_main))
-
+        
         if (script_main[-1] in end_sign) or (obj['chunk'] == 1) or (repatter.match(script_main)):
 
             print('# ====== 出来上がったスクリプトを分析する ====== #')
