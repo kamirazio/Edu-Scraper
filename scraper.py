@@ -50,6 +50,7 @@ def getScriptJson(video_id):
     session = mydb.Session()
     video_data = mydb.getVideoInfoByID(session, video_id)
     session.close()
+    scripts =[]
     if video_data['plot']:
         try:
             print(video_data['plot'])
