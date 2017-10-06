@@ -105,7 +105,9 @@ def getTEDVideoInfo(url):
 
     if video_data is None:
         video.getVideoInfo()
-        if video.video_info[0]['subtitle']:
+
+        subtitle = video.video_info[0]['subtitle']
+        if subtitle is not None:
             content_size, content_difficulty, keyword_difficulty = yt_nlp.getJacetScore(video.video_info[0]['subtitle'])
             print(content_size)
             print(content_difficulty)
