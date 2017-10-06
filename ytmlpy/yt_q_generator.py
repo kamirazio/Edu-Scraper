@@ -41,6 +41,7 @@ def analyzeScripts(obj, scripts):
 
     timestamp = []
     plot_list =[]
+    q_num = 1
 
     for i in range(len(scripts)):
 
@@ -126,7 +127,7 @@ def analyzeScripts(obj, scripts):
         print('<<<<< getQuestionIndex1')
         question_list = getQuestionIndex1(q_cnt, prob_val_list)
 
-        print("======= plot : q_num %d ========" % i)
+        print("======= plot : q_num %d : script %d ========" % (q_num, i))
         # バグ修正
         # if len(anly_list['token'])!=len(jacet_list):
         #     print(len(anly_list['token']))
@@ -134,7 +135,8 @@ def analyzeScripts(obj, scripts):
         #     print(len(jacet_list))
 
         plot = {
-            'q_num': len(plot_list)+1,
+            # 'q_num': len(plot_list)+1,
+            'q_num': q_num,
             'timestamp': json.dumps(timestamp),
             'script_main': yt_utils.cleanLine(script_main),
             # 'script_local': yt_utils.cleanLine(script_local),
@@ -153,10 +155,9 @@ def analyzeScripts(obj, scripts):
 
         plot_list.append(plot)
         timestamp = []
+        q_num = q_num + 1
 
     return plot_list
-
-
 
 def analyzeScripts_old(obj, scripts):
     # print(obj)
