@@ -453,7 +453,7 @@ class ORMDB:
         print(plot)
         ins = self.scriptsT.insert().values(
                 tid = tid,
-                # vid = obj['vid'],
+                vid = obj['uuid'],
                 video_id = obj['video_id'],
                 q_num = int(plot['q_num']),
                 timestamp = plot['timestamp'],
@@ -655,7 +655,7 @@ class ORMDB:
         print(obj, tid, uid, origin, follow_id, len)
         ins = self.tasksT.insert().values(
                 uuid = tid,
-                # vid = obj['vid'],
+                vid = obj['uuid'],
                 # user_id = obj['user_id'],
                 uid = uid,
                 video_id = obj['video_id'],
@@ -905,6 +905,7 @@ class ORMDB:
         print("======= insertVideoInfo =======")
 
         ins = self.videosT.insert().values(
+            uuid = str(uuid.uuid4()),
             video_id = video_info_data['video_id'],
             video_key = video_info_data['video_key'],
             host = video_info_data['host'],

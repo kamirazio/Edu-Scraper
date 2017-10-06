@@ -64,7 +64,9 @@ def createTask(obj):
     if scripts:
         plot_list = yt_q_generator.analyzeScripts(obj, scripts)
         print(plot_list)
-        import pdb; pdb.set_trace()
+
+        # import pdb; pdb.set_trace()
+        
         if plot_list:
             print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
             print("mydb.insertScript >>>>>")
@@ -89,7 +91,6 @@ def getTEDVideoInfo(url):
 
     #=========== スクレーピング Class ===========#
     video = TEDScraper(url)
-
     #=========== DBで存在確認 ===========#
     session = mydb.Session()
     video_data = mydb.getVideoInfo(session, video.video_key, video.sub_lang)
@@ -193,6 +194,6 @@ def single_spider(page_num,order):
     save_text('Finished scraping : \n%s\n\n' % link , scraped_file % tstr)
     print("===== FIN Single :) =====")
 
-single_spider(20,1)
+# single_spider(20,1)
 # npages = 72
-# multi_spider(72)
+multi_spider(72)
