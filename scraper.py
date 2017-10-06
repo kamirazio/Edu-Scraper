@@ -51,7 +51,13 @@ def getScriptJson(video_id):
     video_data = mydb.getVideoInfoByID(session, video_id)
     session.close()
     if video_data['plot']:
+        # try:
+        print(video_data['plot'])
         scripts = json.loads(video_data['plot'])
+        # except:
+        #     scripts['captions'] = None
+        #     add_text('json.loadsエラー Error : \n%s\n\n' % video_id, error_file)
+        #     print(video_data['plot'])
     else:
         scripts['captions'] = None
         add_text('getScriptJson Error : \n%s\n\n' % video_id, error_file)
@@ -66,7 +72,7 @@ def createTask(obj):
         print(plot_list)
 
         # import pdb; pdb.set_trace()
-        
+
         if plot_list:
             print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
             print("mydb.insertScript >>>>>")
