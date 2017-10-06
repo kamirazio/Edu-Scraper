@@ -8,3 +8,5 @@ ted_spider/
 access.log
 error.log
 pip-selfcheck.json
+log/
+__pycache__/
