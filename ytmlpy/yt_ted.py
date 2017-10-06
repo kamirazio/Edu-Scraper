@@ -165,6 +165,7 @@ class TEDScraper:
                 print(subtitle_txt)
         except:
             subtitle_txt = None
+            plot = None
 
         try:
             keywords_data = self.soup.find("meta",  attrs={"name" : "keywords"})
