@@ -7,6 +7,13 @@ access_file = './log/access.txt'
 scraped_file = './log/link_list_%s.txt'
 
 from datetime import datetime as dt
+from lxml import html
+import time
+
+from ytmlpy.yt_ted import TEDScraper
+from ytmlpy import yt_nlp
+from ytmlpy import yt_q_generator
+
 tdatetime = dt.now()
 tstr = tdatetime.strftime('%Y-%m-%d')
 
@@ -34,51 +41,37 @@ class AlchemyEncoder(json.JSONEncoder):
             return fields
         return json.JSONEncoder.default(self, obj)
 
-#===================================================== DB
+#=====================================================
 
-
-
-from lxml import html
-import time
-
-def parse_item(item):
-    talk_link = item.xpath('.//h4[@class="h9 m5"]/a/@href')
-    return url_base % talk_link[0]
-
-from ytmlpy.yt_ted import TEDScraper
-from ytmlpy import yt_nlp
-from ytmlpy import yt_q_generator
-
-def getScriptJson(session, video_id, lang):
+def getScriptJson(video_id):
     print('======= ビデオ情報の取得 =======')
 
     print("<<<<< mydb.getVideoInfo")
     session = mydb.Session()
-    video_data = mydb.getVideoInfoByID(session, video_id, lang)
-
+    video_data = mydb.getVideoInfoByID(session, video_id)
+    session.close()
     if video_data['plot']:
         scripts = json.loads(video_data['plot'])
     else:
         scripts['captions'] = None
-    # sub_scripts = json.loads(video_data['plot_local'])
+        add_text('getScriptJson Error : \n%s\n\n' % video_id, error_file)
     return scripts['captions']
 
 def createTask(obj):
     print('=======  スクリプト分析 + タスクの生成 =======')
-    # # obj = request.form
-
-    session = mydb.Session()
-    scripts = getScriptJson(session, obj['video_id'], obj['lang'])
-    print(scripts)
+    scripts = getScriptJson(obj['video_id'])
+    # print(scripts)
     if scripts:
         plot_list = yt_q_generator.analyzeScripts(obj, scripts)
-        # print(plot_list)
+        print(plot_list)
 
-        if plot_list is not None:
-
+        # import pdb; pdb.set_trace()
+        
+        if plot_list:
             print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
-            print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
+            print("mydb.insertScript >>>>>")
             # print(obj)
+            session = mydb.Session()
             tid = mydb.insertScripts(session, obj, plot_list)
             print(" mydb.createTask >>>>>")
             origin = 0
@@ -96,11 +89,12 @@ def createTask(obj):
 
 def getTEDVideoInfo(url):
 
-    #=========== メインビデオ情報の存在確認 + スクレーピング ===========#
+    #=========== スクレーピング Class ===========#
     video = TEDScraper(url)
-
-    # DBで存在確認
-    video_data = mydb.getVideoInfo(video.video_key, video.sub_lang)
+    #=========== DBで存在確認 ===========#
+    session = mydb.Session()
+    video_data = mydb.getVideoInfo(session, video.video_key, video.sub_lang)
+    task_data = mydb.getTaskByVideoKey(session, video.video_key)
 
     if video_data is None:
         video.getVideoInfo()
@@ -113,18 +107,20 @@ def getTEDVideoInfo(url):
         video.video_info[0]['difficulty1'] = content_difficulty
         video.video_info[0]['difficulty2'] = keyword_difficulty
         # video.video_info[0]['tf-idf']
-        session = mydb.Session()
+        # session = mydb.Session()
         video_data = mydb.insertVideoInfo(session, video.video_info[0])
         session.close()
         # print(video_data)
         # # 台詞データから、TF-IDF分析を行う
         # video.analyzeVideo()
         print('======= save video info :D =======')
-
+    elif task_data and video_data:
+        print('======= Finished Video -> skip =======')
+        video_data = None
     else:
         print('======= HAVE Vdata =======')
-        video_data = None
 
+    session.close()
     return video_data
 
 def save_text(text, filename):
@@ -136,6 +132,10 @@ def add_text(text, filename):
     with open(filename, 'a') as f:
         f.write(text)
         print('追記: %s' % text)
+
+def parse_item(item):
+    talk_link = item.xpath('.//h4[@class="h9 m5"]/a/@href')
+    return url_base % talk_link[0]
 
 def multi_spider(npages):
     data = []
@@ -151,9 +151,12 @@ def multi_spider(npages):
             data.append(link)
 
             video_data = getTEDVideoInfo(link)
-            if video_data == None:
+
+            # ----- 取得済みデータ ----- #
+            if video_data is None:
                 add_text('skip:\n%s\n\n' % link, error_file)
                 continue
+            # ------------------------ #
 
             save_text(video_data['subtitle'], file_base2 % (str(page_num),video_data['video_id']))
 
@@ -164,7 +167,7 @@ def multi_spider(npages):
 
             print(res)
             print("==========")
-            time.sleep(20)
+            time.sleep(5)
 
     print(len(data))    # returns 36
     print(data)
@@ -191,6 +194,6 @@ def single_spider(page_num,order):
     save_text('Finished scraping : \n%s\n\n' % link , scraped_file % tstr)
     print("===== FIN Single :) =====")
 
-# single_spider(10,1)
+# single_spider(20,1)
 # npages = 72
 multi_spider(72)

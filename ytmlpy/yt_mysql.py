@@ -251,7 +251,7 @@ class ORMDB:
 
         if classroom_list:
             return classroom_list
-        else: "No"
+        else: "false"
 
     def getTasksetByTID(self, session, tid, classroom_id):
         taskset = session.query(Tasksets).filter(Tasksets.classroom_id == classroom_id, Tasksets.tid == tid, Tasksets.status==1).first()
@@ -440,22 +440,20 @@ class ORMDB:
 
 
     def insertScripts(self, session, obj, plot_list):
-        # self.session = self.Session()
         tid = str(uuid.uuid4())
-        for row in plot_list:
-            res = self.insertScript(session, obj, row, tid)
-            # res = self.insertGameRecords(tid, row['q_num'])
-            print(res)
+        # print(plot_list)
+        for plot in plot_list:
+            res = self.insertScript(session, obj, plot, tid)
+            # print(res)
         return tid
 
     def insertScript(self, session, obj, plot, tid):
-        # self.session = self.Session()
-        # q_num, script, timestamp
+
         print("======= insert SCRIPT info =======")
         print(plot)
         ins = self.scriptsT.insert().values(
                 tid = tid,
-                # vid = obj['vid'],
+                vid = obj['uuid'],
                 video_id = obj['video_id'],
                 q_num = int(plot['q_num']),
                 timestamp = plot['timestamp'],
@@ -475,7 +473,7 @@ class ORMDB:
         )
 
         result = self.conn.execute(ins)
-        self.session.commit()
+        session.commit()
         # self.session.close()
 
         # print('result %s' % result.inserted_primary_key)
@@ -502,14 +500,14 @@ class ORMDB:
         return task.__dict__
         # return json.dumps(task, cls=AlchemyEncoder, ensure_ascii=False)
 
-    def getTaskByID(self, task_id):
-        self.session = self.Session()
-        print("======= get TASK by ID =======")
-        print(task_id)
-        # task = self.session.query(Tasks).filter(Tasks.id == 2128).first()
-        task = self.session.query(Tasks).filter(Tasks.id == task_id).first()
-        # print(task)
-        return task.__dict__
+    # def getTaskByID(self, task_id):
+    #     self.session = self.Session()
+    #     print("======= get TASK by ID =======")
+    #     print(task_id)
+    #     # task = self.session.query(Tasks).filter(Tasks.id == 2128).first()
+    #     task = self.session.query(Tasks).filter(Tasks.id == task_id).first()
+    #     # print(task)
+    #     return task.__dict__
 
     def getTaskByTID(self, session, tid):
         # self.session = self.Session()
@@ -575,6 +573,11 @@ class ORMDB:
         }
 
         return task_dict
+
+    def getTaskByVideoKey(self, session, video_key):
+        print("======= get TASK =======")
+        task = session.query(Tasks).filter(Tasks.video_key == video_key).first()
+        return task
 
     def getTasks(self, session, user_id, status):
         # self.session = self.Session()
@@ -649,10 +652,10 @@ class ORMDB:
     def createTask(self, session, obj, tid, uid, origin, follow_id, len):
         # self.session = self.Session()
         print("======= insert TASK info =======")
-        print(obj, tid, uid, origin, follow_id, len)
+        # print(obj, tid, uid, origin, follow_id, len)
         ins = self.tasksT.insert().values(
                 uuid = tid,
-                # vid = obj['vid'],
+                vid = obj['uuid'],
                 # user_id = obj['user_id'],
                 uid = uid,
                 video_id = obj['video_id'],
@@ -689,7 +692,7 @@ class ORMDB:
         session.commit()
         # session.close()
 
-        print('result %s' % result.inserted_primary_key)
+        # print('result %s' % result.inserted_primary_key)
         task_data = session.query(Tasks).filter(Tasks.id == result.inserted_primary_key[0]).one()
 
         return task_data
@@ -782,7 +785,17 @@ class ORMDB:
     #  ========================================================================================== VIDEO #
     #  ======================================================================== GET #
 
-    def getVideoInfo(self, video_key, lang):
+    def getVideoInfo(self, session, video_key, lang):
+        # self.session = self.Session()
+        print("======= getVideoInfo =======")
+        # print(video_key, lang)
+        video_data = session.query(Videos).filter(Videos.video_key == video_key, Videos.lang == lang).first()
+        if video_data:
+            return video_data.__dict__
+        else:
+            return None
+
+    def getVideoTaskInfo(self, video_key, lang):
         self.session = self.Session()
         print("======= getVideoInfo =======")
         # print(video_key, lang)
@@ -792,20 +805,20 @@ class ORMDB:
         else:
             return None
 
-    def getVideoInfoByID(self, session, video_id, lang):
+    def getVideoInfoByID(self, session, video_id):
         # self.session = self.Session()
         print("======= getVideoInfo by ID=======")
         # print(video_id, lang, local_lang)
-        res = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == lang).first()
+        res = session.query(Videos).filter(Videos.video_id == video_id).first()
         # res2 = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == local_lang).first()
-        print(res.id)
+        # print(res.id)
         # print(res2)
         if res:
             video_dict = {
                 # 'vid': res2.id,
                 'vid': res.id,
                 'video_id': res.video_id,
-                'lang': lang,
+                'lang': res.lang,
                 # 'local_lang': local_lang,
 
                 'vid': res.id,
@@ -892,6 +905,7 @@ class ORMDB:
         print("======= insertVideoInfo =======")
 
         ins = self.videosT.insert().values(
+            uuid = str(uuid.uuid4()),
             video_id = video_info_data['video_id'],
             video_key = video_info_data['video_key'],
             host = video_info_data['host'],

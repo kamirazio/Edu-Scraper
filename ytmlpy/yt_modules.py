@@ -234,6 +234,7 @@ class Videos(Base):
     __tablename__ = 'videos_ex'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    uuid = Column(String, index=True)
     video_id = Column(String, index=True)
     video_key = Column(String, index=True)
     host = Column(String)
