@@ -298,7 +298,7 @@ def findStopwords(lemma_list):
     stop_words1 = set(stopwords.words("english"))
     # tokens = word_tokenize(string)
     stop_words2 = ['i','it','its','this','that','these','a','an','the','and','but','or','there','so',\
-    'am','is','are','was','were','be','been','have','has','had','having','do','doing','do','does','did','not']
+    'am','is','are','was','were','be','been','have','has','had','having','do','doing','do','does','did','not','yeah','wow','oh']
     stop_words3 = ['\'m','\'re','\'s','\'t','\'ve','\'ll','\'d','s','t','don','doesn','didn','isn','aren','weren','haven','couldn','mustn','won','wouldn','shouldn','shan']
     stop_words4 = ['?','!','.',',','’','“','”','\'','\"','\n',':',';','-','+','¥','$','%','`','|']
     stop_words5 = [' ','--','','\b','\t','\n','\r','\r\n','\`\`','\'\'','\'\'\'']

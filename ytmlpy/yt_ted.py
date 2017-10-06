@@ -153,15 +153,18 @@ class TEDScraper:
         # subtitle_src = "https://www.ted.com/talks/subtitles/id/%s/lang/%s" % (talk_id, self.sub_lang)
 
         subtitle_src = yt_utils.get_subtitle_link(talk_id, self.sub_lang)
-        json_src = urlopen(subtitle_src)
-        subtitle_data = json.loads(json_src.read().decode('utf-8'))
-        if subtitle_data:
-            plot = json.dumps(subtitle_data, ensure_ascii=False)
-            # ====== Extract the subtitle text for analization ====== #
-            subtitle_txt = ""
-            for caption in subtitle_data['captions']:
-                subtitle_txt += caption['content'] + ' '
-            print(subtitle_txt)
+        try:
+            json_src = urlopen(subtitle_src)
+            subtitle_data = json.loads(json_src.read().decode('utf-8'))
+            if subtitle_data:
+                plot = json.dumps(subtitle_data, ensure_ascii=False)
+                # ====== Extract the subtitle text for analization ====== #
+                subtitle_txt = ""
+                for caption in subtitle_data['captions']:
+                    subtitle_txt += caption['content'] + ' '
+                print(subtitle_txt)
+        except:
+            subtitle_txt = None
 
         try:
             keywords_data = self.soup.find("meta",  attrs={"name" : "keywords"})

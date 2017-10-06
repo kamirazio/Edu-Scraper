@@ -310,6 +310,9 @@ def getProbability(user_profile, anly_list):
         if anly_list['tagged'][i] == 'NE' or anly_list['tagged'][i] =='CD' or anly_list['tagged'][i] =='FW':
             #固有名詞 # cardinal digit # 外来語
             prob = prob * 0
+        elif anly_list['tagged'][i]=='UH':
+            # Interjection 感嘆詞
+            prob = prob * 0
         elif anly_list['tagged'][i]=='DT':
             # determiner 決定詞、限定詞 this, these, that, those
             prob = prob * 0.1
