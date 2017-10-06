@@ -4,3 +4,18 @@ https://www.ted.com/talks/seema_bansal_how_to_fix_a_broken_education_system_with
 skip:
 https://www.ted.com/talks/helen_pearson_lessons_from_the_longest_study_on_human_development
 
+skip:
+https://www.ted.com/talks/helen_pearson_lessons_from_the_longest_study_on_human_development
+
+skip:
+https://www.ted.com/talks/helen_pearson_lessons_from_the_longest_study_on_human_development
+
+skip:
+https://www.ted.com/talks/euna_lee_what_i_learned_as_a_prisoner_in_north_korea
+
+skip:
+https://www.ted.com/talks/helen_pearson_lessons_from_the_longest_study_on_human_development
+
+skip:
+https://www.ted.com/talks/euna_lee_what_i_learned_as_a_prisoner_in_north_korea
+

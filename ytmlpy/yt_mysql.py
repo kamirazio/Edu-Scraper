@@ -251,7 +251,7 @@ class ORMDB:
 
         if classroom_list:
             return classroom_list
-        else: "No"
+        else: "false"
 
     def getTasksetByTID(self, session, tid, classroom_id):
         taskset = session.query(Tasksets).filter(Tasksets.classroom_id == classroom_id, Tasksets.tid == tid, Tasksets.status==1).first()
@@ -475,7 +475,7 @@ class ORMDB:
         )
 
         result = self.conn.execute(ins)
-        self.session.commit()
+        session.commit()
         # self.session.close()
 
         # print('result %s' % result.inserted_primary_key)
@@ -502,14 +502,14 @@ class ORMDB:
         return task.__dict__
         # return json.dumps(task, cls=AlchemyEncoder, ensure_ascii=False)
 
-    def getTaskByID(self, task_id):
-        self.session = self.Session()
-        print("======= get TASK by ID =======")
-        print(task_id)
-        # task = self.session.query(Tasks).filter(Tasks.id == 2128).first()
-        task = self.session.query(Tasks).filter(Tasks.id == task_id).first()
-        # print(task)
-        return task.__dict__
+    # def getTaskByID(self, task_id):
+    #     self.session = self.Session()
+    #     print("======= get TASK by ID =======")
+    #     print(task_id)
+    #     # task = self.session.query(Tasks).filter(Tasks.id == 2128).first()
+    #     task = self.session.query(Tasks).filter(Tasks.id == task_id).first()
+    #     # print(task)
+    #     return task.__dict__
 
     def getTaskByTID(self, session, tid):
         # self.session = self.Session()
@@ -575,6 +575,11 @@ class ORMDB:
         }
 
         return task_dict
+
+    def getTaskByVideoKey(self, session, video_key):
+        print("======= get TASK =======")
+        task = session.query(Tasks).filter(Tasks.video_key == video_key).first()
+        return task
 
     def getTasks(self, session, user_id, status):
         # self.session = self.Session()
@@ -782,11 +787,11 @@ class ORMDB:
     #  ========================================================================================== VIDEO #
     #  ======================================================================== GET #
 
-    def getVideoInfo(self, video_key, lang):
-        self.session = self.Session()
+    def getVideoInfo(self, session, video_key, lang):
+        # self.session = self.Session()
         print("======= getVideoInfo =======")
         # print(video_key, lang)
-        video_data = self.session.query(Videos).filter(Videos.video_key == video_key, Videos.lang == lang).first()
+        video_data = session.query(Videos).filter(Videos.video_key == video_key, Videos.lang == lang).first()
         if video_data:
             return video_data.__dict__
         else:

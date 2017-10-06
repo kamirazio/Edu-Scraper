@@ -51,15 +51,7 @@ def analyzeScripts(obj, scripts):
 
             print('# ====== 出来上がったスクリプトを分析する ====== #')
             anly_list = yt_nlp.getNLTKRes(script_main)
-
-            print('# ============ #')
             print(anly_list)
-            # # ====== Jaset Rank の作成 ====== #
-            # jacet_list = mydb.getJacet(session, anly_list['lemma'])
-            # print('# ============ #')
-
-            # ====== 出来上がったスクリプトにサブタイトルを振る ====== #
-            # script_local = fixScriptLocal(sub_scripts,timestamp)
 
             # ====== user data の取得 ====== #
             # これはインタラクティブに獲得
@@ -74,33 +66,23 @@ def analyzeScripts(obj, scripts):
                 'save_list':[],
                 'dict_list':[],
             }
-
+            
             print('======= question の生成(仮) =======')
-            question_list = []
             print('<<<<< getProbability')
-            prob_val_list = getProbability(user_profile, anly_list)
             print('==== 出現確率 ====')
+            question_list = []
+            prob_val_list = getProbability(user_profile, anly_list)
             print(prob_val_list)
 
-            # 長さによって、どのくらいの文量をブランクにするか決める
-            # q_cnt = math.floor(len(anly_list['tagged']) * 0.2)
-            # blank_rate = 0.2
-            # print(len(anly_list['tagged']), int(obj['blank_rate']))
+            print('# ====== 問題数 ====== #') # 長さによって、どのくらいの文量をブランクにするか決める
             q_cnt = math.ceil(len(anly_list['tagged']) * int(obj['blank_rate'])/100)
             print(q_cnt)
 
-            print('<<<<< getQuestionIndex1')
+            print('==== 問題生成 ====')
             question_list = getQuestionIndex1(q_cnt, prob_val_list)
-
+            print(question_list)
             if question_list is not None:
-
                 print("======= plot : q_num %d ========" % i)
-                # バグ修正
-                # if len(anly_list['token'])!=len(jacet_list):
-                #     print(len(anly_list['token']))
-                #     print(anly_list['token'])
-                #     print(len(jacet_list))
-
                 plot = {
                     'q_num': len(plot_list)+1,
                     'timestamp': json.dumps(timestamp),
@@ -115,11 +97,11 @@ def analyzeScripts(obj, scripts):
                     'jacet': json.dumps(anly_list['jacet']),
                     'probability': json.dumps(prob_val_list)
                 }
-
                 plot_list.append(plot)
                 timestamp = []
-            else:
-                plot_list = None
+            # else:
+            #     plot = {}
+            #     plot_list.append()
         else:
             print('skip',i)
 
