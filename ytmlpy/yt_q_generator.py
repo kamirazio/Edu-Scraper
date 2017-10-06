@@ -15,6 +15,20 @@ from ytmlpy.yt_mysql import ORMDB
 mydb = ORMDB('ytml')
 #=====================================================
 
+# def createTimeStampList():
+#     if timestamp == []:
+#         # 新しい sucript レコードを生成
+#         # [337423, 341424, 4001, false]/[頭,尻,再生時間,段落]
+#         timestamp = [script['startTime'], int(script['startTime']) + int(script['duration']), script['duration'], script['startOfParagraph']]
+#         script_main = script['content']
+#         return script_main, timestamp
+#     else:
+#         # timelineとscriptをマージする
+#         timestamp[1] = timestamp[1] + script['duration']
+#         timestamp[2] = timestamp[2] + script['duration']
+#         script_main = str(script_main) +' '+ str(script['content'])
+#         return script_main, timestamp
+
 def analyzeScripts(obj, scripts):
     # print(obj)
 
@@ -26,27 +40,33 @@ def analyzeScripts(obj, scripts):
     repatter = re.compile(pattern)
 
     timestamp = []
-    plot_list =[]
+    plot_list = []
+
+    print("分析する文章のラインの長さ：%d" % len(scripts))
 
     for i in range(len(scripts)):
 
-        print("======= script分析:%d ========" % i)
+        print("======= script分析スタート:%d ========" % i)
         script = scripts[i]
-
+        print("======= timeline 合体分析:%d ========" % i)
+        # script_main, timestamp = createTimeStampList(script, i)
         if timestamp == []:
             # 新しい sucript レコードを生成
             # [337423, 341424, 4001, false]/[頭,尻,再生時間,段落]
             timestamp = [script['startTime'], int(script['startTime']) + int(script['duration']), script['duration'], script['startOfParagraph']]
             script_main = script['content']
+            return script_main, timestamp
         else:
             # timelineとscriptをマージする
             timestamp[1] = timestamp[1] + script['duration']
             timestamp[2] = timestamp[2] + script['duration']
             script_main = str(script_main) +' '+ str(script['content'])
+            return script_main, timestamp
+
 
         # print('正規表現 実験') # 文末かChunk Optionが選択されている時の処理 # P['"]$ //句読点
         # print(repatter.match(script_main))
-
+        print("======= 句読点のチェック:%d ========" % i)
         if (script_main[-1] in end_sign) or (obj['chunk'] == 1) or (repatter.match(script_main)):
 
             print('# ====== 出来上がったスクリプトを分析する ====== #')
@@ -57,10 +77,8 @@ def analyzeScripts(obj, scripts):
             # # ====== Jaset Rank の作成 ====== #
             # jacet_list = mydb.getJacet(session, anly_list['lemma'])
             # print('# ============ #')
-
             # ====== 出来上がったスクリプトにサブタイトルを振る ====== #
             # script_local = fixScriptLocal(sub_scripts,timestamp)
-
             # ====== user data の取得 ====== #
             # これはインタラクティブに獲得
             user_profile ={
@@ -93,7 +111,6 @@ def analyzeScripts(obj, scripts):
             question_list = getQuestionIndex1(q_cnt, prob_val_list)
 
             if question_list is not None:
-
                 print("======= plot : q_num %d ========" % i)
                 # バグ修正
                 # if len(anly_list['token'])!=len(jacet_list):

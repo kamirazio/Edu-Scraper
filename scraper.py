@@ -65,16 +65,13 @@ def getScriptJson(session, video_id, lang):
 
 def createTask(obj):
     print('=======  スクリプト分析 + タスクの生成 =======')
-    # # obj = request.form
 
     session = mydb.Session()
     scripts = getScriptJson(session, obj['video_id'], obj['lang'])
-    print(scripts)
+    # print(scripts)
     if scripts:
         plot_list = yt_q_generator.analyzeScripts(obj, scripts)
-        # print(plot_list)
-
-        if plot_list is not None:
+        if plot_list:
 
             print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
             print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
@@ -191,6 +188,6 @@ def single_spider(page_num,order):
     save_text('Finished scraping : \n%s\n\n' % link , scraped_file % tstr)
     print("===== FIN Single :) =====")
 
-# single_spider(10,1)
+single_spider(20,1)
 # npages = 72
-multi_spider(72)
+# multi_spider(72)

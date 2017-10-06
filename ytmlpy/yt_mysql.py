@@ -440,17 +440,14 @@ class ORMDB:
 
 
     def insertScripts(self, session, obj, plot_list):
-        # self.session = self.Session()
         tid = str(uuid.uuid4())
-        for row in plot_list:
-            res = self.insertScript(session, obj, row, tid)
-            # res = self.insertGameRecords(tid, row['q_num'])
+        for plot in plot_list:
+            res = self.insertScript(session, obj, plot, tid)
             print(res)
         return tid
 
     def insertScript(self, session, obj, plot, tid):
-        # self.session = self.Session()
-        # q_num, script, timestamp
+
         print("======= insert SCRIPT info =======")
         print(plot)
         ins = self.scriptsT.insert().values(
@@ -792,13 +789,23 @@ class ORMDB:
         else:
             return None
 
+    def getVideoTaskInfo(self, video_key, lang):
+        self.session = self.Session()
+        print("======= getVideoInfo =======")
+        # print(video_key, lang)
+        video_data = self.session.query(Videos).filter(Videos.video_key == video_key, Videos.lang == lang).first()
+        if video_data:
+            return video_data.__dict__
+        else:
+            return None
+
     def getVideoInfoByID(self, session, video_id, lang):
         # self.session = self.Session()
         print("======= getVideoInfo by ID=======")
         # print(video_id, lang, local_lang)
         res = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == lang).first()
         # res2 = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == local_lang).first()
-        print(res.id)
+        # print(res.id)
         # print(res2)
         if res:
             video_dict = {
