@@ -40,6 +40,113 @@ def analyzeScripts(obj, scripts):
     repatter = re.compile(pattern)
 
     timestamp = []
+    plot_list =[]
+
+    for i in range(len(scripts)):
+
+        print("======= script分析:%d ========" % i)
+        script = scripts[i]
+
+        if timestamp == []:
+            # 新しい sucript レコードを生成
+            # [337423, 341424, 4001, false]/[頭,尻,再生時間,段落]
+            timestamp = [script['startTime'], int(script['startTime']) + int(script['duration']), script['duration'], script['startOfParagraph']]
+            script_main = script['content']
+        else:
+            # timelineとscriptをマージする
+            timestamp[1] = timestamp[1] + script['duration']
+            timestamp[2] = timestamp[2] + script['duration']
+            script_main = str(script_main) +' '+ str(script['content'])
+
+        # print('正規表現 実験') # 文末かChunk Optionが選択されている時の処理 # P['"]$ //句読点
+        # print(repatter.match(script_main))
+
+        if (script_main[-1] in end_sign) or (obj['chunk'] == 1) or (repatter.match(script_main)):
+
+            print('# ====== 出来上がったスクリプトを分析する ====== #')
+            anly_list = yt_nlp.getNLTKRes(script_main)
+
+            print('# ============ #')
+            print(anly_list)
+            # # ====== Jaset Rank の作成 ====== #
+            # jacet_list = mydb.getJacet(session, anly_list['lemma'])
+            # print('# ============ #')
+
+            # ====== 出来上がったスクリプトにサブタイトルを振る ====== #
+            # script_local = fixScriptLocal(sub_scripts,timestamp)
+
+            # ====== user data の取得 ====== #
+            # これはインタラクティブに獲得
+            user_profile ={
+                'user_level': obj['user_level'],
+                'complete_list':[],
+                'success_list':[],
+                'review_list':[],
+                'cheat_list':[],
+                'repeat_list':[],
+                'skip_list':[],
+                'save_list':[],
+                'dict_list':[],
+            }
+
+            print('======= question の生成(仮) =======')
+            question_list = []
+            print('<<<<< getProbability')
+            prob_val_list = getProbability(user_profile, anly_list)
+            print('==== 出現確率 ====')
+            print(prob_val_list)
+
+            # 長さによって、どのくらいの文量をブランクにするか決める
+            # q_cnt = math.floor(len(anly_list['tagged']) * 0.2)
+            # blank_rate = 0.2
+            # print(len(anly_list['tagged']), int(obj['blank_rate']))
+            q_cnt = math.ceil(len(anly_list['tagged']) * int(obj['blank_rate'])/100)
+            print(q_cnt)
+
+            print('<<<<< getQuestionIndex1')
+            question_list = getQuestionIndex1(q_cnt, prob_val_list)
+
+            print("======= plot : q_num %d ========" % i)
+            # バグ修正
+            # if len(anly_list['token'])!=len(jacet_list):
+            #     print(len(anly_list['token']))
+            #     print(anly_list['token'])
+            #     print(len(jacet_list))
+
+            plot = {
+                'q_num': len(plot_list)+1,
+                'timestamp': json.dumps(timestamp),
+                'script_main': yt_utils.cleanLine(script_main),
+                # 'script_local': yt_utils.cleanLine(script_local),
+                'question': json.dumps(question_list),
+                'token': json.dumps(anly_list['token']),
+                'stopword': json.dumps(anly_list['stopword']),
+                'tagged': json.dumps(anly_list['tagged']),
+                'tag_id': json.dumps(anly_list['tag_id']),
+                'lemma': json.dumps(anly_list['lemma']),
+                'jacet': json.dumps(anly_list['jacet']),
+                'probability': json.dumps(prob_val_list)
+            }
+
+            plot_list.append(plot)
+            timestamp = []
+        else:
+            print('skip',i)
+    return plot_list
+
+
+
+def analyzeScripts_old(obj, scripts):
+    # print(obj)
+
+    obj['chunk'] = 1
+    obj['user_level'] = 3000
+    obj['blank_rate'] = 30
+    end_sign = ['.','?','!',';',':']
+    pattern = "(\.|\?|\!)(\'|\")"
+    repatter = re.compile(pattern)
+
+    timestamp = []
     plot_list = []
 
     print("分析する文章のラインの長さ：%d" % len(scripts))
@@ -86,7 +193,7 @@ def analyzeScripts(obj, scripts):
                 'save_list':[],
                 'dict_list':[],
             }
-            
+
             print('======= question の生成(仮) =======')
             print('<<<<< getProbability')
             print('==== 出現確率 ====')
@@ -119,11 +226,8 @@ def analyzeScripts(obj, scripts):
                 }
                 plot_list.append(plot)
                 timestamp = []
-            # else:
-            #     plot = {}
-            #     plot_list.append()
-        else:
-            print('skip',i)
+            else:
+                print('skip',i)
 
     return plot_list
 

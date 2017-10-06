@@ -441,6 +441,7 @@ class ORMDB:
 
     def insertScripts(self, session, obj, plot_list):
         tid = str(uuid.uuid4())
+        print(plot_list)
         for plot in plot_list:
             res = self.insertScript(session, obj, plot, tid)
             print(res)
@@ -804,11 +805,11 @@ class ORMDB:
         else:
             return None
 
-    def getVideoInfoByID(self, session, video_id, lang):
+    def getVideoInfoByID(self, session, video_id):
         # self.session = self.Session()
         print("======= getVideoInfo by ID=======")
         # print(video_id, lang, local_lang)
-        res = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == lang).first()
+        res = session.query(Videos).filter(Videos.video_id == video_id).first()
         # res2 = session.query(Videos).filter(Videos.video_id == video_id, Videos.lang == local_lang).first()
         # print(res.id)
         # print(res2)
@@ -817,7 +818,7 @@ class ORMDB:
                 # 'vid': res2.id,
                 'vid': res.id,
                 'video_id': res.video_id,
-                'lang': lang,
+                'lang': res.lang,
                 # 'local_lang': local_lang,
 
                 'vid': res.id,

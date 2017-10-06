@@ -43,33 +43,33 @@ class AlchemyEncoder(json.JSONEncoder):
 
 #=====================================================
 
-def getScriptJson(session, video_id, lang):
+def getScriptJson(video_id):
     print('======= ビデオ情報の取得 =======')
 
     print("<<<<< mydb.getVideoInfo")
     session = mydb.Session()
-    video_data = mydb.getVideoInfoByID(session, video_id, lang)
-
+    video_data = mydb.getVideoInfoByID(session, video_id)
+    session.close()
     if video_data['plot']:
         scripts = json.loads(video_data['plot'])
     else:
         scripts['captions'] = None
-    # sub_scripts = json.loads(video_data['plot_local'])
+        add_text('getScriptJson Error : \n%s\n\n' % video_id, error_file)
     return scripts['captions']
 
 def createTask(obj):
     print('=======  スクリプト分析 + タスクの生成 =======')
-
-    session = mydb.Session()
-    scripts = getScriptJson(session, obj['video_id'], obj['lang'])
+    scripts = getScriptJson(obj['video_id'])
     # print(scripts)
     if scripts:
         plot_list = yt_q_generator.analyzeScripts(obj, scripts)
+        print(plot_list)
+        import pdb; pdb.set_trace()
         if plot_list:
-
             print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
-            print("mydb.insertScript >>>>> + mydb.insertGameRecords >>>>>")
+            print("mydb.insertScript >>>>>")
             # print(obj)
+            session = mydb.Session()
             tid = mydb.insertScripts(session, obj, plot_list)
             print(" mydb.createTask >>>>>")
             origin = 0
