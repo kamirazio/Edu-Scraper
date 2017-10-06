@@ -51,13 +51,13 @@ def getScriptJson(video_id):
     video_data = mydb.getVideoInfoByID(session, video_id)
     session.close()
     if video_data['plot']:
-        # try:
-        print(video_data['plot'])
-        scripts = json.loads(video_data['plot'])
-        # except:
-        #     scripts['captions'] = None
-        #     add_text('json.loadsエラー Error : \n%s\n\n' % video_id, error_file)
-        #     print(video_data['plot'])
+        try:
+            print(video_data['plot'])
+            scripts = json.loads(video_data['plot'])
+        except:
+            scripts['captions'] = None
+            add_text('json.loadsエラー Error : \n%s\n\n' % video_id, error_file)
+            add_text(video_data['plot'], error_file)
     else:
         scripts['captions'] = None
         add_text('getScriptJson Error : \n%s\n\n' % video_id, error_file)
