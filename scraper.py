@@ -103,24 +103,32 @@ def getTEDVideoInfo(url):
     video_data = mydb.getVideoInfo(session, video.video_key, video.sub_lang)
     task_data = mydb.getTaskByVideoKey(session, video.video_key)
 
-    if video_data is None:
-        video.getVideoInfo()
-        content_size, content_difficulty, keyword_difficulty = yt_nlp.getJacetScore(video.video_info[0]['subtitle'])
-        print(content_size)
-        print(content_difficulty)
-        print(keyword_difficulty)
+    if video_data[] is None:
 
-        video.video_info[0]['size'] = content_size
-        video.video_info[0]['difficulty1'] = content_difficulty
-        video.video_info[0]['difficulty2'] = keyword_difficulty
-        # video.video_info[0]['tf-idf']
-        # session = mydb.Session()
-        video_data = mydb.insertVideoInfo(session, video.video_info[0])
-        session.close()
-        # print(video_data)
-        # # 台詞データから、TF-IDF分析を行う
-        # video.analyzeVideo()
-        print('======= save video info :D =======')
+    elif video_data is None:
+        video.getVideoInfo()
+        if video.video_info[0]['subtitle']:
+            content_size, content_difficulty, keyword_difficulty = yt_nlp.getJacetScore(video.video_info[0]['subtitle'])
+            print(content_size)
+            print(content_difficulty)
+            print(keyword_difficulty)
+
+            video.video_info[0]['size'] = content_size
+            video.video_info[0]['difficulty1'] = content_difficulty
+            video.video_info[0]['difficulty2'] = keyword_difficulty
+            # video.video_info[0]['tf-idf']
+            # session = mydb.Session()
+            video_data = mydb.insertVideoInfo(session, video.video_info[0])
+            session.close()
+            # print(video_data)
+            # # 台詞データから、TF-IDF分析を行う
+            # video.analyzeVideo()
+            print('======= save video info :D =======')
+        else:
+            print('======= No Subtitle data -> skip =======')
+            video_data = None
+            add_text('No Subtitle data : \n%s\n\n' % video.video_key, error_file)
+
     elif task_data and video_data:
         print('======= Finished Video -> skip =======')
         video_data = None
