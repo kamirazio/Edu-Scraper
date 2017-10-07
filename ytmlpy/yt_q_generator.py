@@ -305,6 +305,8 @@ def getProbability(user_profile, anly_list):
         if i==0:
             # 先頭の単語
             prob = prob * 0.05
+        else:
+            prob = prob * 1
 
         # ------ 3rd branch ------#
         if anly_list['tagged'][i] == 'NE' or anly_list['tagged'][i] =='CD' or anly_list['tagged'][i] =='FW':
