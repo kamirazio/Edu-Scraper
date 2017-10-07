@@ -150,9 +150,7 @@ def analyzeScripts(obj, scripts):
             'probability': json.dumps(prob_val_list)
         }
 
-        print(script_main)
-        pdb.set_trace
-
+        # print(script_main)
         plot_list.append(plot)
         timestamp = []
         q_num = q_num + 1
@@ -399,7 +397,7 @@ def getQuestionIndex1(q_cnt, prob_val_list):
         print(max_k_indices)
 
         for i in range(len(prob_val_list)):
-            if prob_val_list[i] is 0:
+            if prob_val_list[i] == 0 or prob_val_list[i] == 0.0:
                 q_index_list.append(0)
             elif i in max_k_indices:
                 q_index_list.append(1)

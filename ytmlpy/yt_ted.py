@@ -98,8 +98,9 @@ class TEDScraper:
 
         try:
             speaker_data = self.soup.find("meta", attrs={"name" : "author"})
+            speaker = speaker_data["content"] if speaker_data else "No meta speaker given"
         except:
-            speaker_data = None
+            speaker = None
 
         try:
             duration = json_data['__INITIAL_DATA__']['talks'][0]['duration']
@@ -112,14 +113,17 @@ class TEDScraper:
             download_link = None
 
         try:
-            speaker = speaker_data["content"] if speaker_data else "No meta speaker given"
+
             speaker_id = json_data['__INITIAL_DATA__']['speakers'][0]['id']
             speaker_profession = json_data['__INITIAL_DATA__']['speakers'][0]['description']
             speaker_bio = json_data['__INITIAL_DATA__']['speakers'][0]['whotheyare']
             whylisten = json_data['__INITIAL_DATA__']['speakers'][0]['whylisten']
-            speaker_picture = json_data['__INITIAL_DATA__']['speakers'][0]['photo_url']
+            speaker_picture = json_data['__INITIAL_DATA__']['speakers'][0]['photo_url']           
+            s = HTMLTextExtractor()
+            s.feed(whylisten)
+            whylisten = s.get_text()
+
         except:
-            speaker = None
             speaker_id = None
             speaker_profession = None
             speaker_bio = None

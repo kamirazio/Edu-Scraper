@@ -7,7 +7,7 @@ from flask import jsonify
 from flask.json import JSONEncoder
 import json, re, datetime, math, hashlib
 
-import bcrypt, base64
+import bcrypt
 from bson import json_util, ObjectId
 from pprint import pprint
 
