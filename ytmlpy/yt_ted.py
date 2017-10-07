@@ -122,6 +122,7 @@ class TEDScraper:
             s = HTMLTextExtractor()
             s.feed(whylisten)
             whylisten = s.get_text()
+
         except:
             speaker_id = None
             speaker_profession = None
