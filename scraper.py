@@ -17,6 +17,21 @@ from ytmlpy import yt_q_generator
 tdatetime = dt.now()
 tstr = tdatetime.strftime('%Y-%m-%d')
 
+chunk = 0
+user = 'test_20171018'
+
+mode = 'blank'
+user_level = 1000
+blank_rate = 25
+
+scraper = True
+# for single
+page = 2
+item_index = 1
+# for multi
+npages = 72
+
+
 #===================================================== DB
 
 from ytmlpy.yt_mysql import ORMDB
@@ -83,9 +98,14 @@ def createTask(obj):
             print(" mydb.createTask >>>>>")
             origin = 0
             follow_id = 0
-            obj['uid'] = 'test20171004'
+
+            # obj['uid'] = user
+            obj['mode'] = mode
+            obj['level'] = user_level
+            obj['blank_rate'] = blank_rate
+
             # obj['vid'] if obj['vid'] == None else 0
-            task = mydb.createTask(session, obj, tid, obj['uid'], origin, follow_id, len(plot_list))
+            task = mydb.createTask(session, obj, tid, user, origin, follow_id, len(plot_list))
             session.close()
         else:
             add_text('might has error : \n%s\n\n' % obj['video_key'], error_file)
@@ -101,11 +121,10 @@ def getTEDVideoInfo(url):
     #=========== DBで存在確認 ===========#
     session = mydb.Session()
     video_data = mydb.getVideoInfo(session, video.video_key, video.sub_lang)
-    task_data = mydb.getTaskByVideoKey(session, video.video_key)
+    task_data = mydb.getTaskByVideoKey(session, video.video_key, user_level, blank_rate)
 
     if video_data is None:
         video.getVideoInfo()
-
         subtitle = video.video_info[0]['subtitle']
         if subtitle is not None:
             content_size, content_difficulty, keyword_difficulty = yt_nlp.getJacetScore(video.video_info[0]['subtitle'])
@@ -119,7 +138,7 @@ def getTEDVideoInfo(url):
             # video.video_info[0]['tf-idf']
             # session = mydb.Session()
             video_data = mydb.insertVideoInfo(session, video.video_info[0])
-            session.close()
+            # session.close()
             # print(video_data)
             # # 台詞データから、TF-IDF分析を行う
             # video.analyzeVideo()
@@ -130,8 +149,11 @@ def getTEDVideoInfo(url):
             add_text('No Subtitle data : \n%s\n\n' % video.video_key, error_file)
 
     elif task_data and video_data:
-        print('======= Finished Video -> skip =======')
-        video_data = None
+        print(scraper)
+        # scraperモードでないときは、DBからの情報で新たな条件でタスクを作成する
+        if scraper == True:
+            print('======= Finished Video -> skip =======')
+            video_data = None
     else:
         print('======= HAVE Vdata =======')
 
@@ -189,13 +211,13 @@ def multi_spider(npages):
     save_text('Finished scraping :\n%s\n\n' % data, scraped_file % tstr)
     print("===== FIN Multi :) =====")
 
-def single_spider(page_num,order):
+def single_spider(page_num, index):
 
     root = html.parse(file_base1 % page_num)
     # print(root.xpath('//body//text()')) #test
     items = root.xpath('//div[@id="browse-results"]//div[@class="col"]')
     # print(len(items))
-    link = parse_item(items[order])
+    link = parse_item(items[index])
     video_data = getTEDVideoInfo(link)
 
     if video_data is not None:
@@ -209,6 +231,6 @@ def single_spider(page_num,order):
     save_text('Finished scraping : \n%s\n\n' % link , scraped_file % tstr)
     print("===== FIN Single :) =====")
 
-# single_spider(20,1)
-# npages = 72
-multi_spider(72)
+
+single_spider(page, item_index)
+# multi_spider(npages)

@@ -80,70 +80,70 @@ class Jacet(Base):
     def __repr__(self):
         return "<Jacet class>"
 
-class Classrooms(Base):
-    __tablename__ = 'classrooms'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    uuid = Column(String, index=True)
-    status = Column(Integer, index=True)
-
-    uid = Column(String,index=True)
-    role = Column(Integer)
-
-    title = Column(String)
-    memo = Column(String)
-    task_ids = Column(String)
-    tags = Column(String)
-
-    created = Column(DateTime(timezone=False), default=func.now())
-    modified = Column(DateTime(timezone=False), default=func.now())
-
-    def __repr__(self):
-        return "<Classrooms class>"
-
-
-class Tasksets(Base):
-    __tablename__ = 'tasksets'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    classroom_id = Column(String,index=True)
-    tid = Column(String)
-    status = Column(Integer, index=True)
-    user_id = Column(String)
-    uid = Column(String)
-    created = Column(DateTime(timezone=False), default=func.now())
-    modified = Column(DateTime(timezone=False), default=func.now())
-
-    def __repr__(self):
-        return "<Tasksets class>"
+# class Classrooms(Base):
+#     __tablename__ = 'classrooms'
+#
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     uuid = Column(String, index=True)
+#     status = Column(Integer, index=True)
+#
+#     uid = Column(String,index=True)
+#     role = Column(Integer)
+#
+#     title = Column(String)
+#     memo = Column(String)
+#     task_ids = Column(String)
+#     tags = Column(String)
+#
+#     created = Column(DateTime(timezone=False), default=func.now())
+#     modified = Column(DateTime(timezone=False), default=func.now())
+#
+#     def __repr__(self):
+#         return "<Classrooms class>"
 
 
-class Games(Base):
-    __tablename__ = 'games'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    task_id = Column(String, index=True)
-    tid = Column(String, index=True)
-    video_id = Column(String, index=True)
-    # user_id = Column(String)
-    # mode = Column(String)
-
-    q_num = Column(Integer, index=True)
-    done = Column(Integer)
-    fullmarks = Column(Integer)
-    score = Column(Integer)
-
-    completed = Column(String)
-    fail_list = Column(String)
-    fine_list = Column(String)
-    success_list = Column(String)
-    comment = Column(String)
-
-    created = Column(DateTime(timezone=False), default=func.now())
-    # modified = Column(DateTime, default=datetime.now, nullable=False)
+# class Tasksets(Base):
+#     __tablename__ = 'tasksets'
+#
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     classroom_id = Column(String,index=True)
+#     tid = Column(String)
+#     status = Column(Integer, index=True)
+#     user_id = Column(String)
+#     uid = Column(String)
+#     created = Column(DateTime(timezone=False), default=func.now())
+#     modified = Column(DateTime(timezone=False), default=func.now())
+#
+#     def __repr__(self):
+#         return "<Tasksets class>"
 
 
-    def __repr__(self):
-        return "<Games class>"
+# class Games(Base):
+#     __tablename__ = 'games'
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     task_id = Column(String, index=True)
+#     tid = Column(String, index=True)
+#     video_id = Column(String, index=True)
+#     # user_id = Column(String)
+#     # mode = Column(String)
+#
+#     q_num = Column(Integer, index=True)
+#     done = Column(Integer)
+#     fullmarks = Column(Integer)
+#     score = Column(Integer)
+#
+#     completed = Column(String)
+#     fail_list = Column(String)
+#     fine_list = Column(String)
+#     success_list = Column(String)
+#     comment = Column(String)
+#
+#     created = Column(DateTime(timezone=False), default=func.now())
+#     # modified = Column(DateTime, default=datetime.now, nullable=False)
+#
+#
+#     def __repr__(self):
+#         return "<Games class>"
 
 class Scripts(Base):
     __tablename__ = 'scripts_ex'
@@ -203,11 +203,12 @@ class Tasks(Base):
     mode = Column(String)
     chunk = Column(Integer)
     level = Column(Integer)
+    blank_rate = Column(Integer)
     score = Column(Integer)
     progress = Column(Integer)
 
     user_id = Column(String)
-    uid = Column(String, index=True)
+    uid = Column(String)
 
     owner_id = Column(String)
     follow_id = Column(String)

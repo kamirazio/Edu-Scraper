@@ -11,6 +11,9 @@ from ytmlpy import yt_nlp
 from ytmlpy import yt_utils
 import pdb
 
+used_lemma_list =[]
+used_token_list =[]
+
 #===================================================== DB
 from ytmlpy.yt_mysql import ORMDB
 mydb = ORMDB('ytml')
@@ -33,15 +36,19 @@ mydb = ORMDB('ytml')
 def analyzeScripts(obj, scripts):
     # print(obj)
     obj['chunk'] = 0
-    obj['user_level'] = 3000
-    obj['blank_rate'] = 30
+    obj['user_level'] = 1000
+    obj['blank_rate'] = 25
+
     end_sign = ['.','?','!',';',':',')']
     pattern = "(\.|\?|\!)(\'|\")"
     repatter = re.compile(pattern)
 
-    timestamp = []
+    timestamp =[]
     plot_list =[]
     q_num = 1
+    # 初期化
+    used_lemma_list =[]
+    used_token_list =[]
 
     for i in range(len(scripts)):
 
@@ -266,7 +273,9 @@ def getProbability(user_profile, anly_list):
 
     for i in range( len(anly_list['lemma']) ):
         prob = 1
+
         w = anly_list['lemma'][i]
+
         # ------ 1st branch ------#
         if anly_list['stopword'][i] in [3,4,5]:
             # stopwordで、出題しない単語
@@ -347,10 +356,22 @@ def getProbability(user_profile, anly_list):
         # ------ 4th Dependancy branch  ------#
 
 
-        # ------ 5th branch Experience ------#
+        # ------ 5th branch Repetition ------#
+
+        if anly_list['token'][i] in used_token_list:
+            print("ダブった >< %s" % anly_list['token'][i])
+            prob = prob * 0.1
+        elif anly_list['lemma'][i] in used_lemma_list:
+            print("かすった ;_; %s" % anly_list['lemma'][i])
+            prob = prob * 0.6
+        else:
+            used_token_list.append(anly_list['token'][i])
+            used_lemma_list.append(anly_list['lemma'][i])
+
+        # ------ 6th branch Experience ------#
 
 
-        # ------ 6th branch Jacet8000 ------#
+        # ------ 7th branch Jacet8000 ------#
         u_level = int(user_profile['user_level']) if user_profile['user_level'] else 3000
         u_level = 1/8000 * u_level
 
