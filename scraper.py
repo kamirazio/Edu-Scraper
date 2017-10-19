@@ -27,7 +27,7 @@ blank_rate = 25
 scraper = True
 # for single
 page = 2
-item_index = 1
+item_index = 9
 # for multi
 npages = 72
 
@@ -84,8 +84,8 @@ def createTask(obj):
     scripts = getScriptJson(obj['video_id'])
     # print(scripts)
     if scripts:
-        plot_list = yt_q_generator.analyzeScripts(obj, scripts)
-        print(plot_list)
+        plot_list, readability = yt_q_generator.analyzeScripts(obj, scripts)
+        # print(plot_list)
 
         # import pdb; pdb.set_trace()
 

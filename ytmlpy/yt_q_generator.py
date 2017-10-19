@@ -39,9 +39,9 @@ def analyzeScripts(obj, scripts):
     obj['user_level'] = 1000
     obj['blank_rate'] = 25
 
-    end_sign = ['.','?','!',';',':',')']
-    pattern = "(\.|\?|\!)(\'|\")"
-    repatter = re.compile(pattern)
+    end_sign = ['.','?','!',';',':',')','"',"'"]
+    # pattern = "(\.|\?|\!)(\'|\")"
+    # repatter = re.compile(pattern)
 
     timestamp =[]
     plot_list =[]
@@ -49,6 +49,8 @@ def analyzeScripts(obj, scripts):
     # 初期化
     used_lemma_list =[]
     used_token_list =[]
+    tw_cnt=0
+    tc_cnt=0
 
     for i in range(len(scripts)):
 
@@ -84,15 +86,19 @@ def analyzeScripts(obj, scripts):
                 # pdb.set_trace()
                 continue
 
-            if repatter.match(script_main) is not None and obj['chunk'] == 0:
-                print('skip-3 ::',i)
-                print(script_main)
-                # pdb.set_trace()
-                continue
+            # if repatter.match(script_main) is not None and obj['chunk'] == 0:
+            #     print('skip-3 ::',i)
+            #     print(script_main)
+            #     # pdb.set_trace()
+            #     continue
 
         # if (script_main[-1] in end_sign) or (obj['chunk'] == 1) or (repatter.match(script_main)):
         print('# ====== 出来上がったスクリプトを分析する ====== #')
         anly_list = yt_nlp.getNLTKRes(script_main)
+
+        # readability calcuration
+        tw_cnt += anly_list['w_cnt']
+        tc_cnt += anly_list['c_cnt']
 
         print('# ============ #')
         # print(anly_list)
@@ -162,7 +168,10 @@ def analyzeScripts(obj, scripts):
         timestamp = []
         q_num = q_num + 1
 
-    return plot_list
+    readability = (5.89 * (tc_cnt / tw_cnt)) - (0.3 * 100/tw_cnt/len(plot_list) ) - 15.8
+    print("readability:%s:%s:%s" % (tw_cnt,tc_cnt,readability))
+
+    return plot_list,readability
 
 def analyzeScripts_old(obj, scripts):
     # print(obj)
@@ -202,7 +211,7 @@ def analyzeScripts_old(obj, scripts):
         # print('正規表現 実験') # 文末かChunk Optionが選択されている時の処理 # P['"]$ //句読点
         # print(repatter.match(script_main))
         print("======= 句読点のチェック:%d ========" % i)
-        if (script_main[-1] in end_sign) or (obj['chunk'] == 1) or (repatter.match(script_main)):
+        if (script_main[-1] in end_sign) or (obj['chunk'] == 1):
 
             print('# ====== 出来上がったスクリプトを分析する ====== #')
             anly_list = yt_nlp.getNLTKRes(script_main)
@@ -313,78 +322,85 @@ def getProbability(user_profile, anly_list):
             # 先頭の単語
             prob = prob * 0.05
         else:
-            prob = prob * 1
+            pass
 
         # ------ 3rd branch ------#
-        if anly_list['tagged'][i] == 'NE' or anly_list['tagged'][i] =='CD' or anly_list['tagged'][i] =='FW':
-            #固有名詞 # cardinal digit # 外来語
-            prob = prob * 0
-        elif anly_list['tagged'][i]=='UH':
-            # Interjection 感嘆詞
-            prob = prob * 0
-        elif anly_list['tagged'][i]=='DT':
-            # determiner 決定詞、限定詞 this, these, that, those
-            prob = prob * 0.1
-        elif anly_list['tagged'][i].startswith('V'):
-            prob = prob * 0.9
-        elif anly_list['tagged'][i].startswith('N'):
-            prob = prob * 0.8
-        elif anly_list['tagged'][i].startswith('R'):
-            prob = prob * 0.7
-        elif anly_list['tagged'][i].startswith('J'):
-            # Ajective
-            prob = prob * 0.7
-        elif anly_list['tagged'][i].startswith('W'):
-            # 5w1h
-            prob = prob * 0.8
-        elif anly_list['tagged'][i].startswith('IN'):
-            # preposition/subordinating conjunction
-            prob = prob * 0.7
-        elif anly_list['tagged'][i].startswith('CC'):
-            # coordinating conjunction
-            prob = prob * 0.5
-        elif anly_list['tagged'][i].startswith('MD'):
-            # 助動詞
-            prob = prob * 0.7
+        if prob is 0:
+            pass
         else:
-            prob = prob * 0.1
+            if anly_list['tagged'][i] == 'NE' or anly_list['tagged'][i] =='CD' or anly_list['tagged'][i] =='FW':
+                #固有名詞 # cardinal digit # 外来語
+                prob = prob * 0
+            elif anly_list['tagged'][i]=='UH':
+                # Interjection 感嘆詞
+                prob = prob * 0
+            elif anly_list['tagged'][i]=='DT':
+                # determiner 決定詞、限定詞 this, these, that, those
+                prob = prob * 0.1
+            elif anly_list['tagged'][i].startswith('V'):
+                prob = prob * 0.9
+            elif anly_list['tagged'][i].startswith('N'):
+                prob = prob * 0.8
+            elif anly_list['tagged'][i].startswith('R'):
+                prob = prob * 0.7
+            elif anly_list['tagged'][i].startswith('J'):
+                # Ajective
+                prob = prob * 0.7
+            elif anly_list['tagged'][i].startswith('W'):
+                # 5w1h
+                prob = prob * 0.8
+            elif anly_list['tagged'][i].startswith('IN'):
+                # preposition/subordinating conjunction
+                prob = prob * 0.7
+            elif anly_list['tagged'][i].startswith('CC'):
+                # coordinating conjunction
+                prob = prob * 0.5
+            elif anly_list['tagged'][i].startswith('MD'):
+                # 助動詞
+                prob = prob * 0.7
+            else:
+                prob = prob * 0.1
 
-        # print(w)
-        # print(anly_list['stopword'][i])
-        # print(anly_list['jacet'][i])
+            # print(w)
+            # print(anly_list['stopword'][i])
+            # print(anly_list['jacet'][i])
 
-        # ------ 4th Dependancy branch  ------#
-
-
-        # ------ 5th branch Repetition ------#
-
-        if anly_list['token'][i] in used_token_list:
-            print("ダブった >< %s" % anly_list['token'][i])
-            prob = prob * 0.1
-        elif anly_list['lemma'][i] in used_lemma_list:
-            print("かすった ;_; %s" % anly_list['lemma'][i])
-            prob = prob * 0.6
-        else:
-            used_token_list.append(anly_list['token'][i])
-            used_lemma_list.append(anly_list['lemma'][i])
-
-        # ------ 6th branch Experience ------#
+            # ------ 4th Dependancy branch  ------#
 
 
-        # ------ 7th branch Jacet8000 ------#
-        u_level = int(user_profile['user_level']) if user_profile['user_level'] else 3000
-        u_level = 1/8000 * u_level
+            # ------ 5th branch Repetition ------#
+            if prob is 0:
+                pass
+            else:
+                if anly_list['token'][i] in used_token_list:
+                    print("ダブった >< %s:%s" % (anly_list['token'][i],prob))
+                    prob = prob * 0.1
+                    print(prob)
+                elif anly_list['lemma'][i] in used_lemma_list:
+                    print("かすった ;_; %s" % anly_list['lemma'][i])
+                    prob = prob * 0.6
+                else:
+                    used_token_list.append(anly_list['token'][i])
+                    used_lemma_list.append(anly_list['lemma'][i])
 
-        # x = np.arange(0, 1, 0.01)
-        # y = norm.pdf(x,  loc=user_level, scale=1)
+                # ------ 6th branch Experience ------#
 
-        v_level = int(anly_list['jacet'][i])
-        # print("v_level = %d" % v_level)
-        x1 = 1/8000 * v_level
-        y1 = norm.pdf(x1,  loc=u_level, scale=1)
-        # distance = abs(int(anly_list['jacet'][i]) - ( level * 0.001 ))
-        # print("p value = %d" % y1)
-        prob = round(prob * y1, 10)
+
+                # ------ 7th branch Jacet8000 ------#
+                u_level = int(user_profile['user_level']) if user_profile['user_level'] else 3000
+                u_level = 1/8000 * u_level
+
+                # x = np.arange(0, 1, 0.01)
+                # y = norm.pdf(x,  loc=user_level, scale=1)
+
+                v_level = int(anly_list['jacet'][i])
+                # print("v_level = %d" % v_level)
+                x1 = 1/8000 * v_level
+                y1 = norm.pdf(x1,  loc=u_level, scale=1)
+                # distance = abs(int(anly_list['jacet'][i]) - ( level * 0.001 ))
+                # print("p value = %d" % y1)
+                prob = round(prob * y1, 10)
+
         # print("prob = %d" % prob)
         prob_val_list.append(prob)
 

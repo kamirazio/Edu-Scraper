@@ -195,7 +195,7 @@ def getNLTKRes(script):
         tokens.extend(word_tokenize(sentence))
 
     # print('====== getTagged ======')
-    taggeds, tagids, lemmas = getTagged(tokens)
+    taggeds, tagids, lemmas, w_cnt, c_cnt = getTagged(tokens)
     # taggeds_temp, lemmas_temp = getTagged(tokens)
     # taggeds.extend(taggeds_temp)
     # lemmas.extend(lemmas_temp)
@@ -215,7 +215,9 @@ def getNLTKRes(script):
         'tagged': taggeds,
         'tag_id': tagids,
         'lemma': lemmas,
-        'jacet': jacets
+        'jacet': jacets,
+        'w_cnt': w_cnt,
+        'c_cnt': c_cnt
     }
 
     return sent
@@ -234,8 +236,10 @@ def getSentenceList(str):
 #                         for t in tree]}
 
 def getTagged(tokens):
-
+    print("tokens")
+    # print(tokens)
     tagged = pos_tag(tokens)
+    # print(tagged)
     # 固有名詞
     chunked = ne_chunk(tagged,binary=True)
 
@@ -243,10 +247,13 @@ def getTagged(tokens):
     tagged_id_list = []
     lemma_list =[]
     lemmatizer = WordNetLemmatizer()
+    w_cnt = 0
+    c_cnt = 0
 
     for i in range(len(tagged)):
         # tuppleからlistに変換するため
         tagged_data =[]
+        # 固有名詞を調べる
         if "NE" in str(chunked.label()):
             # print(tagged[i])
             # print(chunked[i])
@@ -267,6 +274,7 @@ def getTagged(tokens):
             tagged_id_list.append(num)
             # 品詞があるか調べる
             pos = getWN(tagged[i][1])
+            # 品詞に基づいたlemmaを取得する
             if pos:
                 lemma = lemmatizer.lemmatize(tagged[i][0], pos='%s' % pos)
             else:
@@ -274,8 +282,12 @@ def getTagged(tokens):
 
         lemma_list.append(lemma.lower())
 
-    print(len(tagged_list),len(lemma_list))
-    return tagged_list, tagged_id_list, lemma_list
+        if tagged[i][1] in tags:
+            w_cnt += 1
+            c_cnt += len(tagged[i][0])
+
+    # print(len(tagged_list),len(lemma_list))
+    return tagged_list, tagged_id_list, lemma_list, w_cnt, c_cnt
 
 def getWN(tag):
 

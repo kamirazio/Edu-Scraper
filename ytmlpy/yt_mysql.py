@@ -451,7 +451,7 @@ class ORMDB:
     def insertScript(self, session, obj, plot, tid):
 
         print("======= insert SCRIPT info =======")
-        print(plot)
+        # print(plot)
         ins = self.scriptsT.insert().values(
                 tid = tid,
                 vid = obj['uuid'],
