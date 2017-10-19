@@ -53,7 +53,7 @@ def getJacetScore(script):
     # tokens_l = [w.lower() for w in tokens]
     # print("Number of features: {}\n".format( len(set(tokens_l)) ))
 
-    taggeds, tagids, lemmas = getTagged(tokens)
+    taggeds, tagids, lemmas, w_cnt, c_cnt = getTagged(tokens)
     # print(taggeds)
     # print(tagids)
     # print("Lemma list: {}\n".format( lemmas ))
@@ -136,7 +136,8 @@ def getJacetScore(script):
     content_size = {}
     content_size['s_size'] = len(sents)
     content_size['v_size'] = len(tokens)
-    content_size['v_num'] = len(fdist_all_key)
+    content_size['v_num'] = w_cnt #len(fdist_all_key) #Number of Vocabularies
+    content_size['c_num'] = c_cnt #len(''.join(fdist_all_key)) #Number of Vocabularie's chara ,
     content_size['k_num'] = len(keywords)
 
     c_data = np.array(c_jacets)
@@ -162,7 +163,7 @@ def getJacetScore(script):
     keyword_difficulty['std'] = np.std(k_data)
     keyword_difficulty['levels'] = levels
 
-    return content_size, content_difficulty, keyword_difficulty
+    return content_size, content_difficulty, keyword_difficulty, w_cnt, c_cnt
 
 def getJacets(word_list):
     session = mydb.Session()

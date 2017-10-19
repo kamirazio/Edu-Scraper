@@ -18,16 +18,18 @@ tdatetime = dt.now()
 tstr = tdatetime.strftime('%Y-%m-%d')
 
 chunk = 0
-user = 'test_20171018'
+user = 'test_20171019_2'
 
 mode = 'blank'
 user_level = 1000
 blank_rate = 25
 
-scraper = True
+# offline -> False
+scraper = False
+vformat = True
 # for single
 page = 2
-item_index = 9
+item_index = 11
 # for multi
 npages = 72
 
@@ -86,7 +88,6 @@ def createTask(obj):
     if scripts:
         plot_list, readability = yt_q_generator.analyzeScripts(obj, scripts)
         # print(plot_list)
-
         # import pdb; pdb.set_trace()
 
         if plot_list:
@@ -94,7 +95,7 @@ def createTask(obj):
             print("mydb.insertScript >>>>>")
             # print(obj)
             session = mydb.Session()
-            tid = mydb.insertScripts(session, obj, plot_list)
+            tid = mydb.insertScripts(session, obj, plot_list, user)
             print(" mydb.createTask >>>>>")
             origin = 0
             follow_id = 0
@@ -118,26 +119,46 @@ def getTEDVideoInfo(url):
 
     #=========== スクレーピング Class ===========#
     video = TEDScraper(url)
+    video_anal = {}
     #=========== DBで存在確認 ===========#
     session = mydb.Session()
     video_data = mydb.getVideoInfo(session, video.video_key, video.sub_lang)
     task_data = mydb.getTaskByVideoKey(session, video.video_key, user_level, blank_rate)
 
-    if video_data is None:
+    if video_data is not None and vformat == True:
+        # vformat -> True : dbのanalizeをupdateする
+        print("DBから取得")
+        subtitle = video_data['subtitle']
+        if subtitle is not None:
+            content_size, content_difficulty, keyword_difficulty, w_cnt, c_cnt = yt_nlp.getJacetScore(subtitle)
+
+            # # 台詞データから、TF-IDF分析を行う
+            # video.analyzeVideo()
+
+            video_anal['size'] = content_size
+            video_anal['difficulty1'] = content_difficulty
+            video_anal['difficulty2'] = keyword_difficulty
+            # ['tf-idf']
+
+            video_data = mydb.updateVideoInfo(session, video_anal, video_data['uuid'], user)
+
+    elif video_data is None:
+        # Webからスクレープ
         video.getVideoInfo()
         subtitle = video.video_info[0]['subtitle']
-        if subtitle is not None:
-            content_size, content_difficulty, keyword_difficulty = yt_nlp.getJacetScore(video.video_info[0]['subtitle'])
-            print(content_size)
-            print(content_difficulty)
-            print(keyword_difficulty)
 
-            video.video_info[0]['size'] = content_size
-            video.video_info[0]['difficulty1'] = content_difficulty
-            video.video_info[0]['difficulty2'] = keyword_difficulty
+        if subtitle is not None:
+            content_size, content_difficulty, keyword_difficulty, w_cnt, c_cnt = yt_nlp.getJacetScore(subtitle)
+            # print(content_size)
+            # print(content_difficulty)
+            # print(keyword_difficulty)
+
+            video_anal['size'] = content_size
+            video_anal['difficulty1'] = content_difficulty
+            video_anal['difficulty2'] = keyword_difficulty
             # video.video_info[0]['tf-idf']
             # session = mydb.Session()
-            video_data = mydb.insertVideoInfo(session, video.video_info[0])
+            video_data = mydb.insertVideoInfo(session, video.video_info[0], video_anal, user)
             # session.close()
             # print(video_data)
             # # 台詞データから、TF-IDF分析を行う
@@ -204,7 +225,8 @@ def multi_spider(npages):
 
             print(res)
             print("==========")
-            time.sleep(5)
+            if scraper == True:
+                time.sleep(5)
 
     print(len(data))    # returns 36
     print(data)
@@ -232,5 +254,5 @@ def single_spider(page_num, index):
     print("===== FIN Single :) =====")
 
 
-single_spider(page, item_index)
-# multi_spider(npages)
+# single_spider(page, item_index)
+multi_spider(npages)

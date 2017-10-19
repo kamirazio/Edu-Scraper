@@ -440,20 +440,21 @@ class ORMDB:
     #     return 'true'
     #
     #
-    def insertScripts(self, session, obj, plot_list):
+    def insertScripts(self, session, obj, plot_list, uid):
         tid = str(uuid.uuid4())
         # print(plot_list)
         for plot in plot_list:
-            res = self.insertScript(session, obj, plot, tid)
+            res = self.insertScript(session, obj, plot, tid, uid)
             # print(res)
         return tid
 
-    def insertScript(self, session, obj, plot, tid):
+    def insertScript(self, session, obj, plot, tid, uid):
 
-        print("======= insert SCRIPT info =======")
+        # print("======= insert SCRIPT info =======")
         # print(plot)
         ins = self.scriptsT.insert().values(
                 tid = tid,
+                uid = uid,
                 vid = obj['uuid'],
                 video_id = obj['video_id'],
                 q_num = int(plot['q_num']),
@@ -903,7 +904,7 @@ class ORMDB:
     #
     #     return video_data.__dict__
     #
-    def insertVideoInfo(self, session, video_info_data):
+    def insertVideoInfo(self, session, video_info_data, video_anal, uid):
         # self.session = self.Session()
         print("======= insertVideoInfo =======")
 
@@ -911,6 +912,7 @@ class ORMDB:
             uuid = str(uuid.uuid4()),
             video_id = video_info_data['video_id'],
             video_key = video_info_data['video_key'],
+            uid = uid,
             host = video_info_data['host'],
             video_lang = video_info_data['video_lang'],
             lang = video_info_data['lang'],
@@ -937,9 +939,9 @@ class ORMDB:
             duration = video_info_data['duration'],
             adjustment = video_info_data['adjustment'],
 
-            size = str(video_info_data['size']),
-            difficulty1 = str(video_info_data['difficulty1']),
-            difficulty2 = str(video_info_data['difficulty2']),
+            size = str(video_anal['size']),
+            difficulty1 = str(video_anal['difficulty1']),
+            difficulty2 = str(video_anal['difficulty2']),
 
             keywords = video_info_data['keywords'],
             tags = video_info_data['tags'],
@@ -956,6 +958,20 @@ class ORMDB:
         video_data = session.query(Videos).filter(Videos.id == result.inserted_primary_key[0]).one()
 
         return video_data.__dict__
+
+    def updateVideoInfo(self, session, video_anal, vid, uid):
+        # self.session = self.Session()
+        print("======= updateVideoInfo =======")
+        res = session.query(Videos).filter(Videos.uuid == vid).update({
+            Videos.size : str(video_anal['size']),
+            Videos.difficulty1 : str(video_anal['difficulty1']),
+            Videos.difficulty2 : str(video_anal['difficulty2']),
+            Videos.modified : datetime.now()
+            })
+        session.commit()
+        video_data = session.query(Videos).filter(Videos.uuid == vid).first()
+        return video_data.__dict__
+
 
     # #  ========================================================================================== LOGIN #
     # #  ======================================================================== POST #
