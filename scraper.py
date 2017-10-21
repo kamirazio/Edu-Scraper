@@ -86,7 +86,7 @@ def createTask(obj):
     scripts = getScriptJson(obj['video_id'])
     # print(scripts)
     if scripts:
-        plot_list, readability = yt_q_generator.analyzeScripts(obj, scripts)
+        plot_list = yt_q_generator.analyzeScripts(obj, scripts)
         # print(plot_list)
         # import pdb; pdb.set_trace()
 
@@ -254,5 +254,5 @@ def single_spider(page_num, index):
     print("===== FIN Single :) =====")
 
 
-# single_spider(page, item_index)
-multi_spider(npages)
+single_spider(page, item_index)
+# multi_spider(npages)

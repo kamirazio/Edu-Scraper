@@ -168,10 +168,10 @@ def analyzeScripts(obj, scripts):
         timestamp = []
         q_num = q_num + 1
 
-    readability = (5.89 * (tc_cnt / tw_cnt)) - (0.3 * 100/tw_cnt/len(plot_list) ) - 15.8
-    print("readability:%s:%s:%s" % (tw_cnt,tc_cnt,readability))
+    # readability = (5.89 * (tc_cnt / tw_cnt)) - (0.3 * 100/tw_cnt/len(plot_list) ) - 15.8
+    # print("readability:%s:%s:%s" % (tw_cnt,tc_cnt,readability))
 
-    return plot_list,readability
+    return plot_list
 
 def analyzeScripts_old(obj, scripts):
     # print(obj)
@@ -445,6 +445,8 @@ def getQuestionIndex1(q_cnt, prob_val_list):
         q_index_list = None
 
     return q_index_list
+
+
 
 # def getQuestionIndex2(q_cnt, prob_val_list):
 #     q_index_list=[]

@@ -47,30 +47,30 @@ def getJacetScore(script):
 
     sents = sent_tokenize(script)
     print("sentence size: {}\n".format( len(sents) ))
-
     tokens = word_tokenize(script)
     print("Vocabulary size: {}\n".format( len(tokens) ))
-    # tokens_l = [w.lower() for w in tokens]
-    # print("Number of features: {}\n".format( len(set(tokens_l)) ))
-
-    taggeds, tagids, lemmas, w_cnt, c_cnt = getTagged(tokens)
+    tokens_low = [w.lower() for w in tokens]
+    taggeds, tagids, lemmas, w_cnt, c_cnt = getTagged(tokens_low)
+    stopwords = findStopwords(lemmas)
+    words, c_jacets = getJacets(lemmas) #  TODO: words は必要?
+    # print(words)
+    # print(c_jacets)
     # print(taggeds)
     # print(tagids)
     # print("Lemma list: {}\n".format( lemmas ))
 
-    # create text object for getting keywords
-
+    # create text object for getting keywords # トークンリスト(lemma)からnltk.Textオブジェクトを作る
     texts = nltk.Text(lemmas)
-    stopwords = findStopwords(lemmas)
-    words, c_jacets = getJacets(lemmas)
-    print(words)
-    print(c_jacets)
     fdist_all = nltk.FreqDist( texts[i] for i in range(len(texts)) if (stopwords[i] == 0 or stopwords[i] == 1 or stopwords[i] == 2) )
     fdist_all_key = fdist_all.keys()
     print("Number of Vocabularies: {}\n".format( len(fdist_all_key) ))
 
     fdist = nltk.FreqDist( texts[i] for i in range(len(texts)) if stopwords[i] == 0 )
     fdist_key = fdist.keys()
+
+    print("文書中の単語の頻度分布: {}\n".format( fdist[list(fdist_key)[0]] ))
+    print("文書中の単語の頻度分布: {}\n".format( fdist.freq( list(fdist_key)[0]) ))
+
     # print("Number of keywords: {}\n".format( fdist.N() ))
     # print(list(fdist_key))
     keywords, k_jacets = getJacets(list(fdist_key))
@@ -94,7 +94,7 @@ def getJacetScore(script):
         else:
             levels[0] += 1
     levels[0] += len(fdist_all_key)-len(keywords)
-    print(levels)
+    # print(levels)
 
     # session = mydb.Session()
     # jacet_res = mydb.getJacet(session, list(fdist_key))
@@ -110,11 +110,10 @@ def getJacetScore(script):
     #         k_jacets.append(jacet_res[i])
 
     print("Number of keywords: {}\n".format( len(keywords) ))
-    print(keywords)
-    print(k_jacets)
+    # print(keywords)
+    # print(k_jacets)
 
-    print( fdist[list(fdist_key)[0]] )
-    print( fdist.freq( list(fdist_key)[0]) )
+
 
 
     # print( "合計: {}\n".format( np.sum(data) ))
@@ -133,7 +132,9 @@ def getJacetScore(script):
     # print( "標準偏差: {}\n".format( np.std(data) ))
     # # print( "共分散: {}\n".format( jacets.cov() )
 
+
     content_size = {}
+    content_size['r_ability'] = getReadability(c_cnt, w_cnt, len(sents))
     content_size['s_size'] = len(sents)
     content_size['v_size'] = len(tokens)
     content_size['v_num'] = w_cnt #len(fdist_all_key) #Number of Vocabularies
@@ -164,6 +165,16 @@ def getJacetScore(script):
     keyword_difficulty['levels'] = levels
 
     return content_size, content_difficulty, keyword_difficulty, w_cnt, c_cnt
+
+def getReadability(total_chr_cnt, total_word_cnt, sentence_len):
+    # cpw (average number of characters per word)
+    cpw =  total_chr_cnt / total_word_cnt
+    # wps (average number of words per sentence)
+    wps =  total_word_cnt / sentence_len
+    # cli Coleman-Liau index
+    cli = (5.89 * cpw) - (0.3 * (100/wps)) - 15.8
+    print("readability:%s" % round(cli, 3))
+    return round(cli, 3)
 
 def getJacets(word_list):
     session = mydb.Session()
@@ -196,8 +207,8 @@ def getNLTKRes(script):
         tokens.extend(word_tokenize(sentence))
 
     # print('====== getTagged ======')
-    taggeds, tagids, lemmas, w_cnt, c_cnt = getTagged(tokens)
-    # taggeds_temp, lemmas_temp = getTagged(tokens)
+    tokens_low = [w.lower() for w in tokens]
+    taggeds, tagids, lemmas, w_cnt, c_cnt = getTagged(tokens_low)
     # taggeds.extend(taggeds_temp)
     # lemmas.extend(lemmas_temp)
 
@@ -341,42 +352,16 @@ def findStopwords(lemma_list):
     print(stopword_list)
     return stopword_list
 
-def getLemmas(tokens,tagged_list):
-    lemmatizer = WordNetLemmatizer()
-    Lemma_list =[]
-    for i in range(len(tokens)):
-        res = lemmatizer.lemmatize(tokens[i], pos="%s" % tagged_list[i])
-        print(res.lower())
-        Lemma_list.append(res.lower())
-    # print(len(Lemma_list))
-    return lemma_list
+# def getLemmas(tokens, tagged_list):
+#     lemmatizer = WordNetLemmatizer()
+#     Lemma_list =[]
+#     for i in range(len(tokens)):
+#         res = lemmatizer.lemmatize(tokens[i], pos="%s" % tagged_list[i])
+#         print(res.lower())
+#         Lemma_list.append(res.lower())
+#     # print(len(Lemma_list))
+#     return lemma_list
 
 if __name__ == "__main__":
 
     getJacetScore(script)
-
-    # print('====== sentence_list ======')
-    # sent_list =[]
-    # sent_list = getSentenceList(script)
-    # sentence = sent_list[1]
-    # print(sentence)
-    #
-    # print('====== Tokens ======')
-    # tokens = word_tokenize(sentence)
-    # print(len(tokens))
-    # print(tokens)
-    #
-    # print('====== getTagged ======')
-    # # print(getTagged(tokens))
-    # tagged_list, tagged_id_list, lemma_list = getTagged(tokens)
-    # print(tagged_list)
-    # print(tagged_id_list)
-    # print(lemma_list)
-    #
-    # print('====== stopwords ======')
-    # print(findStopwords(lemma_list))
-    # # print('====== getLemma ======')
-    # # print(getLemmas(tokens, tagged_list))
-    #
-    # print('====== getJACET ======')
-    # print(getJACET(session, lemma_list))
