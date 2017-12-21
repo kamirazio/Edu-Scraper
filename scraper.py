@@ -2,6 +2,7 @@
 url_base = 'https://www.ted.com%s'
 file_base1 = './row_html/ted_talks_%s.html'
 file_base2 = './subtitle/ted_talks_%s_%s.txt'
+file_base3 = './subtitle_key/ted_talks_%s_%s.txt'
 error_file = './log/error.txt'
 access_file = './log/access.txt'
 scraped_file = './log/link_list_%s.txt'
@@ -17,13 +18,11 @@ from ytmlpy import yt_q_generator
 tdatetime = dt.now()
 tstr = tdatetime.strftime('%Y-%m-%d')
 
-chunk = 0
-user = 'test_20171019_2'
+# ===== Change based on the trial ===== #
 
-mode = 'blank'
-user_level = 1000
+user = 'test_20171027'
+user_level = 1001
 blank_rate = 25
-
 # offline -> False
 scraper = False
 vformat = True
@@ -32,7 +31,11 @@ page = 2
 item_index = 11
 # for multi
 npages = 72
+video_key ="lee_cronin_print_your_own_medicine"
 
+# ===================================== #
+mode = 'blank'
+chunk = 0
 
 #===================================================== DB
 
@@ -61,16 +64,16 @@ class AlchemyEncoder(json.JSONEncoder):
 #=====================================================
 
 def getScriptJson(video_id):
-    print('======= ビデオ情報の取得 =======')
+    # print('======= ビデオ情報の取得 =======')
 
-    print("<<<<< mydb.getVideoInfo")
+    # print("<<<<< mydb.getVideoInfo")
     session = mydb.Session()
     video_data = mydb.getVideoInfoByID(session, video_id)
     session.close()
     scripts = {}
     if video_data['plot']:
         try:
-            print(video_data['plot'])
+            # print(video_data['plot'])
             scripts = json.loads(video_data['plot'])
         except:
             scripts['captions'] = None
@@ -82,7 +85,7 @@ def getScriptJson(video_id):
     return scripts['captions']
 
 def createTask(obj):
-    print('=======  スクリプト分析 + タスクの生成 =======')
+    # print('=======  スクリプト分析 + タスクの生成 =======')
     scripts = getScriptJson(obj['video_id'])
     # print(scripts)
     if scripts:
@@ -91,12 +94,12 @@ def createTask(obj):
         # import pdb; pdb.set_trace()
 
         if plot_list:
-            print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
-            print("mydb.insertScript >>>>>")
+            # print('======= @ スクリプトの保存 + ゲーム記録スペースの保存  =======')
+            # print("mydb.insertScript >>>>>")
             # print(obj)
             session = mydb.Session()
             tid = mydb.insertScripts(session, obj, plot_list, user)
-            print(" mydb.createTask >>>>>")
+            # print(" mydb.createTask >>>>>")
             origin = 0
             follow_id = 0
 
@@ -251,8 +254,30 @@ def single_spider(page_num, index):
         add_text('no video data : \n%s\n\n' % link, error_file)
 
     save_text('Finished scraping : \n%s\n\n' % link , scraped_file % tstr)
+    print(link)
     print("===== FIN Single :) =====")
 
+# Create Task by Specific Link
+def link_spider(key):
 
-single_spider(page, item_index)
+    link = 'https://www.ted.com/talks/'+ key
+    video_data = getTEDVideoInfo(link)
+
+    if video_data is not None:
+        save_text(video_data['subtitle'], file_base3 % (str(key),video_data['video_id']))
+        res = createTask(video_data)
+        print(res)
+        # add_text('===== FIN :) ===== \n %s' % link, access_file)
+    else:
+        add_text('no video data : \n%s\n\n' % link, error_file)
+
+    save_text('Finished scraping : \n%s\n\n' % link , scraped_file % tstr)
+    print(link)
+    print("===== FIN Single by Link :) =====")
+
+
+# ===== Chose which function you want to use ===== #
+# single_spider(page, item_index)
+link_spider('asha_de_vos_why_you_should_care_about_whale_poo')
+# https://www.ted.com/talks/asha_de_vos_why_you_should_care_about_whale_poo?language=ja
 # multi_spider(npages)

@@ -238,7 +238,7 @@ def getNLTKRes(script):
 
 def getSentenceList(str):
     sents = sent_tokenize(str)
-    print(len(sents))
+    # print(len(sents))
     return sents
 
 # ======================================
@@ -348,8 +348,8 @@ def findStopwords(lemma_list):
         else:
             stopword_list.append(0)
 
-    print(len(stopword_list))
-    print(stopword_list)
+    # print(len(stopword_list))
+    # print(stopword_list)
     return stopword_list
 
 # def getLemmas(tokens, tagged_list):

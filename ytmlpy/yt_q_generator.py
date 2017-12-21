@@ -35,9 +35,9 @@ mydb = ORMDB('ytml')
 
 def analyzeScripts(obj, scripts):
     # print(obj)
-    obj['chunk'] = 0
-    obj['user_level'] = 1000
-    obj['blank_rate'] = 25
+    # obj['chunk'] = 0
+    # obj['user_level'] = 1000
+    # obj['blank_rate'] = 25
 
     end_sign = ['.','?','!',';',':',')','"',"'"]
     # pattern = "(\.|\?|\!)(\'|\")"
@@ -54,7 +54,7 @@ def analyzeScripts(obj, scripts):
 
     for i in range(len(scripts)):
 
-        print("======= script分析:%d ========" % i)
+        # print("======= script分析:%d ========" % i)
         script = scripts[i]
 
         if timestamp == []:
@@ -93,14 +93,14 @@ def analyzeScripts(obj, scripts):
             #     continue
 
         # if (script_main[-1] in end_sign) or (obj['chunk'] == 1) or (repatter.match(script_main)):
-        print('# ====== 出来上がったスクリプトを分析する ====== #')
+        # print('# ====== 出来上がったスクリプトを分析する ====== #')
         anly_list = yt_nlp.getNLTKRes(script_main)
 
         # readability calcuration
         tw_cnt += anly_list['w_cnt']
         tc_cnt += anly_list['c_cnt']
 
-        print('# ============ #')
+        # print('# ============ #')
         # print(anly_list)
         # # ====== Jaset Rank の作成 ====== #
         # jacet_list = mydb.getJacet(session, anly_list['lemma'])
@@ -125,22 +125,22 @@ def analyzeScripts(obj, scripts):
 
         print('======= question の生成(仮) =======')
         question_list = []
-        print('<<<<< getProbability')
+        # print('<<<<< getProbability')
         prob_val_list = getProbability(user_profile, anly_list)
-        print('==== 出現確率 ====')
-        print(prob_val_list)
+        # print('==== 出現確率 ====')
+        # print(prob_val_list)
 
         # 長さによって、どのくらいの文量をブランクにするか決める
         # q_cnt = math.floor(len(anly_list['tagged']) * 0.2)
         # blank_rate = 0.2
         # print(len(anly_list['tagged']), int(obj['blank_rate']))
         q_cnt = math.ceil(len(anly_list['tagged']) * int(obj['blank_rate'])/100)
-        print(q_cnt)
+        # print(q_cnt)
 
         print('<<<<< getQuestionIndex1')
         question_list = getQuestionIndex1(q_cnt, prob_val_list)
 
-        print("======= plot : q_num %d : script %d ========" % (q_num, i))
+        # print("======= plot : q_num %d : script %d ========" % (q_num, i))
         # バグ修正
         # if len(anly_list['token'])!=len(jacet_list):
         #     print(len(anly_list['token']))
@@ -432,14 +432,23 @@ def getQuestionIndex1(q_cnt, prob_val_list):
         print('1の特徴：類似度上位k件のインデックス')
         max_k_indices = unsorted_max_indices[indices]
         print(max_k_indices)
+        # q_index_list = np.full((len(max_k_indices),len(prob_val_list)),0)
+        # array([ [0,0,0,0,1,0], [0,0,0,1,1,0], [0,1,0,1,1,0] ])
+        ini_list = = np.full(len(prob_val_list),0)
+        # array([0, 0, 0])
 
-        for i in range(len(prob_val_list)):
-            if prob_val_list[i] == 0 or prob_val_list[i] == 0.0:
-                q_index_list.append(0)
-            elif i in max_k_indices:
-                q_index_list.append(1)
-            else:
-                q_index_list.append(0)
+        q_index_list = []
+        for i in range(len(max_k_indices)):
+            ini_list[max_k_indices[1]]=1
+            q_index_list.append(ini_list)
+
+        # for i in range(len(prob_val_list)):
+        #     if prob_val_list[i] == 0 or prob_val_list[i] == 0.0:
+        #         q_index_list.append(0)
+        #     elif i in max_k_indices:
+        #         q_index_list.append(1)
+        #     else:
+        #         q_index_list.append(0)
         print(q_index_list)
     except:
         q_index_list = None
