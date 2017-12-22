@@ -20,9 +20,6 @@ tstr = tdatetime.strftime('%Y-%m-%d')
 
 # ===== Change based on the trial ===== #
 
-user = 'test_20171027'
-user_level = 1001
-blank_rate = 25
 # offline -> False
 scraper = False
 vformat = True
@@ -34,8 +31,14 @@ npages = 72
 video_key ="lee_cronin_print_your_own_medicine"
 
 # ===================================== #
-mode = 'blank'
-chunk = 0
+
+profile = {
+    'user' : 'test_20171027',
+    'user_level' : 1000,
+    'mode' : 'blank',
+    'blank_rate' : 25,
+    'chunk' : 0
+}
 
 #===================================================== DB
 
@@ -89,7 +92,7 @@ def createTask(obj):
     scripts = getScriptJson(obj['video_id'])
     # print(scripts)
     if scripts:
-        plot_list = yt_q_generator.analyzeScripts(obj, scripts)
+        plot_list = yt_q_generator.analyzeScripts(obj, scripts, profile)
         # print(plot_list)
         # import pdb; pdb.set_trace()
 
@@ -98,18 +101,18 @@ def createTask(obj):
             # print("mydb.insertScript >>>>>")
             # print(obj)
             session = mydb.Session()
-            tid = mydb.insertScripts(session, obj, plot_list, user)
+            tid = mydb.insertScripts(session, obj, profile, plot_list)
             # print(" mydb.createTask >>>>>")
             origin = 0
             follow_id = 0
 
             # obj['uid'] = user
-            obj['mode'] = mode
-            obj['level'] = user_level
-            obj['blank_rate'] = blank_rate
+            obj['mode'] = profile['mode']
+            obj['level'] = profile['user_level']
+            obj['blank_rate'] = profile['blank_rate']
 
             # obj['vid'] if obj['vid'] == None else 0
-            task = mydb.createTask(session, obj, tid, user, origin, follow_id, len(plot_list))
+            task = mydb.createTask(session, obj, tid, profile, origin, follow_id, len(plot_list))
             session.close()
         else:
             add_text('might has error : \n%s\n\n' % obj['video_key'], error_file)
@@ -126,7 +129,7 @@ def getTEDVideoInfo(url):
     #=========== DBで存在確認 ===========#
     session = mydb.Session()
     video_data = mydb.getVideoInfo(session, video.video_key, video.sub_lang)
-    task_data = mydb.getTaskByVideoKey(session, video.video_key, user_level, blank_rate)
+    task_data = mydb.getTaskByVideoKey(session, video.video_key, profile['user_level'], profile['blank_rate'])
 
     if video_data is not None and vformat == True:
         # vformat -> True : dbのanalizeをupdateする
@@ -143,7 +146,7 @@ def getTEDVideoInfo(url):
             video_anal['difficulty2'] = keyword_difficulty
             # ['tf-idf']
 
-            video_data = mydb.updateVideoInfo(session, video_anal, video_data['uuid'], user)
+            video_data = mydb.updateVideoInfo(session, video_anal, video_data['uuid'], profile['user'])
 
     elif video_data is None:
         # Webからスクレープ
@@ -161,7 +164,7 @@ def getTEDVideoInfo(url):
             video_anal['difficulty2'] = keyword_difficulty
             # video.video_info[0]['tf-idf']
             # session = mydb.Session()
-            video_data = mydb.insertVideoInfo(session, video.video_info[0], video_anal, user)
+            video_data = mydb.insertVideoInfo(session, video.video_info[0], video_anal, profile['user'])
             # session.close()
             # print(video_data)
             # # 台詞データから、TF-IDF分析を行う

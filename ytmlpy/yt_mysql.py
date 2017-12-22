@@ -440,23 +440,25 @@ class ORMDB:
     #     return 'true'
     #
     #
-    def insertScripts(self, session, obj, plot_list, uid):
+    def insertScripts(self, session, obj, profile, plot_list):
         tid = str(uuid.uuid4())
         # print(plot_list)
         for plot in plot_list:
-            res = self.insertScript(session, obj, plot, tid, uid)
+            res = self.insertScript(session, obj, profile, plot, tid)
             # print(res)
         return tid
 
-    def insertScript(self, session, obj, plot, tid, uid):
+    def insertScript(self, session, obj, profile, plot, tid):
 
         # print("======= insert SCRIPT info =======")
         # print(plot)
         ins = self.scriptsT.insert().values(
                 tid = tid,
-                uid = uid,
                 vid = obj['uuid'],
                 video_id = obj['video_id'],
+                uid = profile['user'],
+                user_level = profile['user_level'],
+                blank_rate = profile['blank_rate'],
                 q_num = int(plot['q_num']),
                 timestamp = plot['timestamp'],
                 script_main = plot['script_main'],
@@ -468,8 +470,6 @@ class ORMDB:
                 tag_id = plot['tag_id'],
                 lemma = plot['lemma'],
                 jacet = plot['jacet'],
-                user_level = obj['user_level'],
-                blank_rate = obj['blank_rate'],
                 probability = plot['probability'],
                 created = datetime.now()
         )
@@ -651,7 +651,7 @@ class ORMDB:
     #
     # #  ======================================================================== INSERT #
     #
-    def createTask(self, session, obj, tid, uid, origin, follow_id, len):
+    def createTask(self, session, obj, tid, profile, origin, follow_id, len):
         # self.session = self.Session()
         print("======= insert TASK info =======")
         # print(obj, tid, uid, origin, follow_id, len)
@@ -659,7 +659,7 @@ class ORMDB:
                 uuid = tid,
                 vid = obj['uuid'],
                 # user_id = obj['user_id'],
-                uid = uid,
+                uid = profile['user'],
                 video_id = obj['video_id'],
                 video_key = obj['video_key'],
                 lang = obj['lang'],
@@ -669,9 +669,9 @@ class ORMDB:
                 status = 1,
                 memo = obj['memo'],
                 mode = obj['mode'],
-                chunk = bool(obj['chunk']),
+                chunk = bool(profile['chunk']),
                 level = obj['level'],
-                blank_rate = obj['blank_rate'],
+                blank_rate = profile['blank_rate'],
 
                 # score = obj['score'],
                 # progress = obj['progress'],

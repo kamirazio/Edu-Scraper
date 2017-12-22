@@ -33,7 +33,7 @@ mydb = ORMDB('ytml')
 #         script_main = str(script_main) +' '+ str(script['content'])
 #         return script_main, timestamp
 
-def analyzeScripts(obj, scripts):
+def analyzeScripts(obj, scripts, profile):
     # print(obj)
     # obj['chunk'] = 0
     # obj['user_level'] = 1000
@@ -74,13 +74,13 @@ def analyzeScripts(obj, scripts):
         # print(repatter.match(script_main))
         # もし台詞の最後のletterが句読点・記号だったら or chunkする or 括弧があれば or [." ?"]などの終わり方
         if len(scripts) > i+1:
-            if len(script_main.split(' ')) < 3 and obj['chunk'] == 0 :
+            if len(script_main.split(' ')) < 3 and profile['chunk'] == 0 :
                 print('skip-1 ::',i, len(scripts))
                 print(script_main)
                 # pdb.set_trace()
                 continue
 
-            if script_main[-1] not in end_sign and obj['chunk'] == 0 :
+            if script_main[-1] not in end_sign and profile['chunk'] == 0 :
                 print('skip-2 ::',i)
                 print(script_main)
                 # pdb.set_trace()
@@ -111,8 +111,7 @@ def analyzeScripts(obj, scripts):
 
         # ====== user data の取得 ====== #
         # これはインタラクティブに獲得
-        user_profile ={
-            'user_level': obj['user_level'],
+        profile.update({
             'complete_list':[],
             'success_list':[],
             'review_list':[],
@@ -121,12 +120,12 @@ def analyzeScripts(obj, scripts):
             'skip_list':[],
             'save_list':[],
             'dict_list':[],
-        }
+        })
 
         print('======= question の生成(仮) =======')
         question_list = []
         # print('<<<<< getProbability')
-        prob_val_list = getProbability(user_profile, anly_list)
+        prob_val_list = getProbability(profile, anly_list)
         # print('==== 出現確率 ====')
         # print(prob_val_list)
 
@@ -134,7 +133,7 @@ def analyzeScripts(obj, scripts):
         # q_cnt = math.floor(len(anly_list['tagged']) * 0.2)
         # blank_rate = 0.2
         # print(len(anly_list['tagged']), int(obj['blank_rate']))
-        q_cnt = math.ceil(len(anly_list['tagged']) * int(obj['blank_rate'])/100)
+        q_cnt = math.ceil(len(anly_list['tagged']) * int(profile['blank_rate'])/100)
         # print(q_cnt)
 
         print('<<<<< getQuestionIndex1')
@@ -153,7 +152,7 @@ def analyzeScripts(obj, scripts):
             'timestamp': json.dumps(timestamp),
             'script_main': yt_utils.cleanLine(script_main),
             # 'script_local': yt_utils.cleanLine(script_local),
-            'question': json.dumps(question_list),
+            'question': json.dumps(np.asarray(question_list).tolist()),
             'token': json.dumps(anly_list['token']),
             'stopword': json.dumps(anly_list['stopword']),
             'tagged': json.dumps(anly_list['tagged']),
@@ -219,7 +218,7 @@ def analyzeScripts_old(obj, scripts):
 
             # ====== user data の取得 ====== #
             # これはインタラクティブに獲得
-            user_profile ={
+            profile ={
                 'user_level': obj['user_level'],
                 'complete_list':[],
                 'success_list':[],
@@ -235,7 +234,7 @@ def analyzeScripts_old(obj, scripts):
             print('<<<<< getProbability')
             print('==== 出現確率 ====')
             question_list = []
-            prob_val_list = getProbability(user_profile, anly_list)
+            prob_val_list = getProbability(profile, anly_list)
             print(prob_val_list)
 
             print('# ====== 問題数 ====== #') # 長さによって、どのくらいの文量をブランクにするか決める
@@ -268,10 +267,11 @@ def analyzeScripts_old(obj, scripts):
 
     return plot_list
 
-def getProbability(user_profile, anly_list):
+def getProbability(profile, anly_list):
 
-    print(anly_list)
-    print(user_profile)
+    # print(anly_list)
+    print("======= profile =======")
+    print(profile)
 
     bracket_flag = False
     start_signs = ['(', '[', '<', '{', '<<', '[[', '«']
@@ -373,11 +373,11 @@ def getProbability(user_profile, anly_list):
                 pass
             else:
                 if anly_list['token'][i] in used_token_list:
-                    print("ダブった >< %s:%s" % (anly_list['token'][i],prob))
+                    # print("ダブった >< %s:%s" % (anly_list['token'][i],prob))
                     prob = prob * 0.1
-                    print(prob)
+                    # print(prob)
                 elif anly_list['lemma'][i] in used_lemma_list:
-                    print("かすった ;_; %s" % anly_list['lemma'][i])
+                    # print("かすった ;_; %s" % anly_list['lemma'][i])
                     prob = prob * 0.6
                 else:
                     used_token_list.append(anly_list['token'][i])
@@ -387,7 +387,7 @@ def getProbability(user_profile, anly_list):
 
 
                 # ------ 7th branch Jacet8000 ------#
-                u_level = int(user_profile['user_level']) if user_profile['user_level'] else 3000
+                u_level = int(profile['user_level']) if profile['user_level'] else 3000
                 u_level = 1/8000 * u_level
 
                 # x = np.arange(0, 1, 0.01)
@@ -419,28 +419,33 @@ def getProbability(user_profile, anly_list):
 #     return content
 
 def getQuestionIndex1(q_cnt, prob_val_list):
+    print('問題形式の生成：0/1の生成順序を行列で表現')
     try:
-        q_index_list=[]
-        #探す対象リスト:my_arrayはnumpy
         prob_arr = np.array(prob_val_list)
-        # ソートはされていない上位k件のインデックス
+
+        # ソートされていない上位k件のインデックス
         unsorted_max_indices = np.argpartition(-prob_arr, q_cnt)[:q_cnt]
+        print(unsorted_max_indices)
+
         # 上位 q_cnt 件の値
         y = prob_arr[unsorted_max_indices]
+        print(y)
         # 大きい順にソートし、インデックスを取得
         indices = np.argsort(-y)
-        print('1の特徴：類似度上位k件のインデックス')
+        print(indices)
+        print('出現確率の１次元配列:上位k件')
         max_k_indices = unsorted_max_indices[indices]
         print(max_k_indices)
-        # q_index_list = np.full((len(max_k_indices),len(prob_val_list)),0)
+        q_index_list = np.full((len(max_k_indices),len(prob_val_list)),0)
         # array([ [0,0,0,0,1,0], [0,0,0,1,1,0], [0,1,0,1,1,0] ])
-        ini_list = = np.full(len(prob_val_list),0)
+        ini_list = np.full(len(prob_val_list),0)
         # array([0, 0, 0])
 
-        q_index_list = []
+        # q_index_list = []
         for i in range(len(max_k_indices)):
-            ini_list[max_k_indices[1]]=1
-            q_index_list.append(ini_list)
+            ini_list[max_k_indices[i]]=1
+            # print(ini_list)
+            q_index_list[i] = ini_list
 
         # for i in range(len(prob_val_list)):
         #     if prob_val_list[i] == 0 or prob_val_list[i] == 0.0:
