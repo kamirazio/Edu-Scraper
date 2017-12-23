@@ -1,4 +1,4 @@
-
+# this clowl the targeted web service to get original information
 npages = 72
 url_base = 'http://www.ted.com/talks?page=%s'
 file_base = './row_html/ted_talks_%s.html'

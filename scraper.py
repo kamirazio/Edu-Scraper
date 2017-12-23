@@ -1,3 +1,4 @@
+# based on the data in row_html, subtitle, this generates wuestion
 
 url_base = 'https://www.ted.com%s'
 file_base1 = './row_html/ted_talks_%s.html'
