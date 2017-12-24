@@ -464,6 +464,7 @@ class ORMDB:
                 script_main = plot['script_main'],
                 # script_local = plot['script_local'],
                 question = plot['question'],
+                question_aqg = plot['question_aqg'],
                 token = plot['token'],
                 stopword = plot['stopword'],
                 tagged = plot['tagged'],
