@@ -26,7 +26,7 @@ scraper = False
 vformat = True
 # for single
 page = 2
-item_index = 11
+item_index = 2
 # for multi
 npages = 72
 video_key ="lee_cronin_print_your_own_medicine"
@@ -281,7 +281,7 @@ def link_spider(key):
 
 
 # ===== Chose which function you want to use ===== #
-# single_spider(page, item_index)
-link_spider('asha_de_vos_why_you_should_care_about_whale_poo')
+single_spider(page, item_index)
+# link_spider('asha_de_vos_why_you_should_care_about_whale_poo')
 # https://www.ted.com/talks/asha_de_vos_why_you_should_care_about_whale_poo?language=ja
 # multi_spider(npages)
