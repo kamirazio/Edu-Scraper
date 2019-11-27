@@ -1,6 +1,7 @@
-data/
-row_html/
-subtitle/
+requirements.txt
+/data
+/row_html
+/subtitle
 
 bin/
 include/
